@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>闻冬过</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-      background: #ffffff;
-      color: #111111;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurelius</title>
 
-    .container {
-      text-align: center;
-    }
+<style>
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    background: #ffffff;
+    color: #111;
+    max-width: 700px;
+    margin: 40px auto;
+}
 
-    h1 {
-      font-weight: 500;
-      margin-bottom: 40px;
-    }
+h1 {
+    font-weight: 500;
+    margin-bottom: 40px;
+}
 
-    a {
-      display: block;
-      margin: 15px 0;
-      text-decoration: none;
-      color: #111111;
-      font-size: 18px;
-      transition: opacity 0.2s;
-    }
+details {
+    margin-bottom: 15px;
+}
 
-    a:hover {
-      opacity: 0.5;
-    }
-  </style>
+summary {
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    color: #111;
+    margin: 8px 0 8px 15px;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+
+a:hover {
+    opacity: 0.5;
+}
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>闻冬过</h1>
 
-    <a href="https://你的链接1.com" target="_blank">项目一</a>
-    <a href="https://你的链接2.com" target="_blank">小说</a>
-    <a href="https://你的链接3.com" target="_blank">笔记</a>
-    <a href="https://你的链接4.com" target="_blank">其他</a>
+<h1>Aurelius</h1>
 
-  </div>
+<details open>
+  <summary>📚 分类1</summary>
+  <a href="https://www.jiumodiary.com/" target="_blank">鸠摩搜书</a>
+  <a href="https://shadowlibraries.github.io/" target="_blank">影子图书馆</a>
+</details>
+
+<details>
+  <summary>🎬 分类2</summary>
+  <a href="https://3movs.com" target="_blank">Example 1</a>
+</details>
+
+<details>
+  <summary>🛠 分类3</summary>
+  <a href="https://example.com" target="_blank">Example 1</a>
+</details>
+
+<details>
+  <summary>🌐 分类4</summary>
+  <a href="https://example.com" target="_blank">Example 1</a>
+</details>
+
 </body>
 </html>
