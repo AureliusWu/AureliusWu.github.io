@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aurelius</title>
-
 <style>
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
@@ -13,84 +12,154 @@ body {
     max-width: 700px;
     margin: 40px auto;
 }
-
 h1 {
     font-weight: 500;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
-
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 30px;
+    font-size: 14px;
+    border: 1px solid #eee;
+}
 details {
     margin-bottom: 15px;
 }
-
 summary {
     cursor: pointer;
     font-size: 16px;
     padding: 8px 0;
     border-bottom: 1px solid #eee;
 }
-
 a {
     display: block;
     text-decoration: none;
     color: #111;
     margin: 8px 0 8px 15px;
     font-size: 14px;
-    transition: opacity 0.2s;
 }
-
-a:hover {
-    opacity: 0.5;
+.count {
+    font-size: 13px;
+    opacity: 0.6;
+    margin-left: 6px;
+}
+.hidden {
+    display: none;
 }
 </style>
 </head>
-
 <body>
 
 <h1>Aurelius</h1>
 
+<input type="text" id="search" placeholder="Search..." onkeyup="filterSites()">
+
+<div id="content">
 <details>
-  <summary>📚 Books</summary>
-  <a href="https://www.jiumodiary.com/" target="_blank">鸠摩搜书</a>
-  <a href="https://shadowlibraries.github.io/" target="_blank">影子图书馆</a>
-  <a href="https://z-lib.ai/" target="_blank">Z-library</a> 
+<summary>📚 Books<span class="count">(5)</span></summary>
+<a href="https://z-lib.ai/" target="_blank">Z-library</a>
+<a href="https://z-library.sk/" target="_blank">Z-Library</a>
+<a href="https://z-lib.is" target="_blank">Z-Library</a>
+<a href="https://shadowlibraries.github.io/" target="_blank">影子图书馆</a>
+<a href="https://www.jiumodiary.com/" target="_blank">鸠摩搜书</a>
 </details>
 
 <details>
-  <summary>🎬 Movies</summary>
-  <a href="https://example.com" target="_blank">Example 1</a>
+<summary>🎬 Movies<span class="count">(1)</span></summary>
+<a href="https://xunlei8.org/" target="_blank">迅雷电影天堂</a>
 </details>
-    
+
 <details>
-  <summary>📺 Anime</summary>
-  <a href="https://dilidili.io" target="_blank">嘀哩嘀哩</a>
-  <a href="https://dmhy.org" target="_blank">动漫花园</a>
-  <a href="https://yhdm33.com/" target="_blank">樱花动漫</a>
+<summary>📺 Anime<span class="count">(6)</span></summary>
+<a href="https://dilidili.io" target="_blank">嘀哩嘀哩</a>
+<a href="https://yhdm33.com/" target="_blank">樱花动漫</a>
+<a href="https://mgnacg.com" target="_blank">橘子动漫</a>
+<a href="https://www.comicat.org/" target="_blank">漫猫动漫</a>
+<a href="https://kisssub.org" target="_blank">爱恋动漫</a>
+<a href="https://dmhy.org" target="_blank">花园动漫</a>
 </details>
-    
+
 <details>
-  <summary>🛠 Tools</summary>
-  <a href="https://example.com" target="_blank">Example 1</a>
+<summary>🔞 Adult<span class="count">(47)</span></summary>
+<a href="https://91porn.com/" target="_blank">91porn</a>
+<a href="https://avtoday.io" target="_blank">avtoday</a>
+<a href="https://beeg.com" target="_blank">beeg</a>
+<a href="https://cumlouder.com" target="_blank">Cumlouder</a>
+<a href="https://hhd800.com" target="_blank">hhd800</a>
+<a href="https://hohoj.tv" target="_blank">HoHoJ</a>
+<a href="https://hqporner.com" target="_blank">HQPORNER</a>
+<a href="https://www.javbus.com/" target="_blank">javbus</a>
+<a href="https://www.javlibrary.com/" target="_blank">javlibrary</a>
+<a href="https://javmenu.com" target="_blank">JAVMENU</a>
+<a href="https://motherless.com" target="_blank">motherless</a>
+<a href="https://niceteenmodels.com" target="_blank">niceteenmodels</a>
+<a href="https://nyaa.si" target="_blank">nyaa</a>
+<a href="https://ok.xxx" target="_blank">ok</a>
+<a href="https://porn00.org" target="_blank">porn00</a>
+<a href="https://porndig.com" target="_blank">porndig</a>
+<a href="https://porndoe.com" target="_blank">porndoe</a>
+<a href="https://porngo.com" target="_blank">porngo</a>
+<a href="https://pornhat.com" target="_blank">pornhat</a>
+<a href="https://pornmate.com" target="_blank">pornmate</a>
+<a href="https://pornone.com" target="_blank">pornone</a>
+<a href="https://porntrex.com" target="_blank">porntrex</a>
+<a href="https://redtube.com" target="_blank">redtube</a>
+<a href="https://spankbang.com" target="_blank">spankbang</a>
+<a href="https://supjav.com/" target="_blank">supjav</a>
+<a href="https://sxyprn.com" target="_blank">sxyprn</a>
+<a href="https://thepornbest.com" target="_blank">thepornbest</a>
+<a href="https://theporndude.com" target="_blank">theporndude</a>
+<a href="https://thepornlinks.com" target="_blank">thepornlinks</a>
+<a href="https://tktube.com" target="_blank">tktube</a>
+<a href="https://tktube.com/" target="_blank">tktube</a>
+<a href="https://tube8.com" target="_blank">tube8</a>
+<a href="https://txxx.com" target="_blank">txxx</a>
+<a href="https://xhamster.com" target="_blank">xhamster</a>
+<a href="https://xmoviesforyou.com" target="_blank">xmoviesforyou</a>
+<a href="https://xojav.tv" target="_blank">xojav</a>
+<a href="https://xvideos.com" target="_blank">xvideos</a>
+<a href="https://www.youporn.com/" target="_blank">youporn</a>
+<a href="https://tokyotosho.info" target="_blank">东京图书馆</a>
+<a href="https://cn.pornhub.com" target="_blank">中文Pornhub</a>
+<a href="https://jiao.se" target="_blank">娇色导航</a>
+<a href="https://www.tongyan21.info/p2p.html" target="_blank">性吧</a>
+<a href="https://haijiao.com/" target="_blank">海角</a>
+<a href="https://sexgps.net" target="_blank">色情导航</a>
+<a href="https://www.sehuatang.org/" target="_blank">色花堂</a>
+<a href="https://t66y.com" target="_blank">草榴社区</a>
+<a href="https://www.kin8tengoku.com/" target="_blank">金发天国</a>
 </details>
-    
-<details>
-  <summary>🔞 Adult</summary>
-  <a href="https://3movs.com" target="_blank">3movs</a>
-  <a href="https://avtoday.io" target="_blank">avtoday</a>
-  <a href="https://beeg.com" target="_blank">beeg</a>
-  <a href="https://cn.pornhub.com" target="_blank">中文Pornhub</a>
-  <a href="https://cumlouder.com" target="_blank">Cumlouder</a>
-  <a href="https://www.youporn.com/" target="_blank">youporn</a>
-  <a href="https://hhd800.com" target="_blank">hhd800</a>
-  <a href="https://hohoj.tv" target="_blank">HoHoJ</a>
-  <a href="https://hqporner.com" target="_blank">HQPORNER</a>
-  <a href="https://javmenu.com" target="_blank">JAVMENU</a>
-</details>
-    
-<details>
-  <summary>🌐 Other</summary>
-  <a href="https://example.com" target="_blank">Example 1</a>
-</details>
+
+
+</div>
+
+<script>
+function filterSites() {
+    const input = document.getElementById("search").value.toLowerCase();
+    const details = document.querySelectorAll("details");
+
+    details.forEach(section => {
+        let hasVisible = false;
+        const links = section.querySelectorAll("a");
+
+        links.forEach(link => {
+            if (link.textContent.toLowerCase().includes(input)) {
+                link.classList.remove("hidden");
+                hasVisible = true;
+            } else {
+                link.classList.add("hidden");
+            }
+        });
+
+        if (hasVisible) {
+            section.classList.remove("hidden");
+        } else {
+            section.classList.add("hidden");
+        }
+    });
+}
+</script>
 
 </body>
 </html>
