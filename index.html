@@ -60,73 +60,71 @@ a {
 <script>
 const siteGroups = [
     {
-        category: "📚 Books",
+        category: "🎬 Movies",
         links: [
-            { title: "Z-LIBRARY", url: "https://z-lib.ai/", tags: ["books", "ebook", "library"] },
-            { title: "Z-LIBRARY", url: "https://z-library.sk/", tags: ["books", "ebook", "library"] },
-            { title: "影子图书馆", url: "https://shadowlibraries.github.io/", tags: ["图书", "电子书"] },
-            { title: "鸠摩搜书", url: "https://www.jiumodiary.com/", tags: ["图书", "搜书"] }
+            { title: "迅雷电影天堂", url: "https://xunlei8.org", tags: [] }
         ]
     },
     {
-        category: "🎬 Movies",
+        category: "📚 Books",
         links: [
-            { title: "迅雷电影天堂", url: "https://xunlei8.org/", tags: ["电影", "下载"] }
+            { title: "Z-LIBRARY", url: "https://z-lib.ai", tags: [] },
+            { title: "Z-LIBRARY", url: "https://z-library.sk", tags: [] },
+            { title: "影子图书馆", url: "https://shadowlibraries.github.io", tags: [] },
+            { title: "鸠摩搜书", url: "https://jiumodiary.com", tags: [] }
         ]
     },
     {
         category: "📺 Anime",
         links: [
-            { title: "嘀哩嘀哩", url: "https://dilidili.io", tags: ["anime", "动漫"] },
-            { title: "樱花动漫", url: "https://yhdm33.com/", tags: ["anime", "动漫"] },
-            { title: "橘子动漫", url: "https://mgnacg.com", tags: ["anime", "动漫"] },
-            { title: "漫猫动漫", url: "https://www.comicat.org/", tags: ["anime", "动漫"] },
-            { title: "爱恋动漫", url: "https://kisssub.org", tags: ["anime", "动漫"] },
-            { title: "花园动漫", url: "https://dmhy.org", tags: ["anime", "动漫"] }
+            { title: "嘀哩嘀哩", url: "https://dilidili.io", tags: [] },
+            { title: "樱花动漫", url: "https://yhdm33.com", tags: [] },
+            { title: "橘子动漫", url: "https://mgnacg.com", tags: [] },
+            { title: "漫猫动漫", url: "https://comicat.org", tags: [] },
+            { title: "爱恋动漫", url: "https://kisssub.org", tags: [] },
+            { title: "花园动漫", url: "https://dmhy.org", tags: [] }
         ]
     },
     {
         category: "🔞 Adult",
         links: [
-            { title: "91PORN", url: "https://91porn.com/", tags: ["adult", "video"] },
-            { title: "BEEG", url: "https://beeg.com", tags: ["adult", "video"] },
-            { title: "CUMLOUDER", url: "https://cumlouder.com", tags: ["adult", "video"] },
-            { title: "HHD800", url: "https://hhd800.com", tags: ["adult", "video"] },
-            { title: "HOHOJ", url: "https://hohoj.tv", tags: ["adult", "video"] },
-            { title: "HQPORNER", url: "https://hqporner.com", tags: ["adult", "video"] },
-            { title: "JAVBUS", url: "https://www.javbus.com/", tags: ["adult", "jav"] },
-            { title: "JAVLIBRARY", url: "https://www.javlibrary.com/", tags: ["adult", "jav"] },
-            { title: "JAVMENU", url: "https://javmenu.com", tags: ["adult", "jav"] },
-            { title: "MOTHERLESS", url: "https://motherless.com", tags: ["adult", "video"] },
-            { title: "NICETEENMODELS", url: "https://niceteenmodels.com", tags: ["adult", "video"] },
-            { title: "NYAA", url: "https://nyaa.si", tags: ["torrent", "anime"] },
-            { title: "OK", url: "https://ok.xxx", tags: ["adult", "video"] },
-            { title: "PORN00", url: "https://porn00.org", tags: ["adult", "video"] },
-            { title: "PORNDIG", url: "https://porndig.com", tags: ["adult", "video"] },
-            { title: "PORNHAT", url: "https://pornhat.com", tags: ["adult", "video"] },
-            { title: "PORNMATE", url: "https://pornmate.com", tags: ["adult", "video"] },
-            { title: "PORNONE", url: "https://pornone.com", tags: ["adult", "video"] },
-            { title: "REDTUBE", url: "https://redtube.com", tags: ["adult", "video"] },
-            { title: "SPANKBANG", url: "https://spankbang.com", tags: ["adult", "video"] },
-            { title: "SUPJAV", url: "https://supjav.com/", tags: ["adult", "jav"] },
-            { title: "SXYPRN", url: "https://sxyprn.com", tags: ["adult", "video"] },
-            { title: "THEPORNBEST", url: "https://thepornbest.com", tags: ["adult", "video"] },
-            { title: "THEPORNDUDE", url: "https://theporndude.com", tags: ["adult", "navigation"] },
-            { title: "THEPORNLINKS", url: "https://thepornlinks.com", tags: ["adult", "navigation"] },
-            { title: "TKTUBE", url: "https://tktube.com/", tags: ["adult", "video"] },
-            { title: "TUBE8", url: "https://tube8.com", tags: ["adult", "video"] },
-            { title: "TXXX", url: "https://txxx.com", tags: ["adult", "video"] },
-            { title: "XHAMSTER", url: "https://xhamster.com", tags: ["adult", "video"] },
-            { title: "XVIDEOS", url: "https://xvideos.com", tags: ["adult", "video"] },
-            { title: "YOUPORN", url: "https://www.youporn.com/", tags: ["adult", "video"] },
-            { title: "东京图书馆", url: "https://tokyotosho.info", tags: ["torrent", "资源"] },
-            { title: "PORNHUB", url: "https://www.pornhub.com/", tags: ["adult", "video"] },
-            { title: "娇色导航", url: "https://jiao.se", tags: ["adult", "navigation"] },
-            { title: "海角", url: "https://haijiao.com/", tags: ["adult", "forum"] },
-            { title: "色情导航", url: "https://sexgps.net", tags: ["adult", "navigation"] },
-            { title: "色花堂", url: "https://www.sehuatang.org/", tags: ["adult", "forum"] },
-            { title: "草榴社区", url: "https://t66y.com", tags: ["adult", "forum"] },
-            { title: "金发天国", url: "https://www.kin8tengoku.com/", tags: ["adult", "video"] }
+            { title: "91PORN", url: "https://91porn.com", tags: [] },
+            { title: "BEEG", url: "https://beeg.com", tags: [] },
+            { title: "CUMLOUDER", url: "https://cumlouder.com", tags: [] },
+            { title: "HHD800", url: "https://hhd800.com", tags: [] },
+            { title: "HOHOJ", url: "https://hohoj.tv", tags: [] },
+            { title: "HQPORNER", url: "https://hqporner.com", tags: [] },
+            { title: "JAVBUS", url: "https://javbus.com", tags: [] },
+            { title: "JAVLIBRARY", url: "https://javlibrary.com", tags: [] },
+            { title: "JAVMENU", url: "https://javmenu.com", tags: [] },
+            { title: "MOTHERLESS", url: "https://motherless.com", tags: [] },
+            { title: "NICETEENMODELS", url: "https://niceteenmodels.com", tags: [] },
+            { title: "NYAA", url: "https://nyaa.si", tags: [] },
+            { title: "OK", url: "https://ok.xxx", tags: [] },
+            { title: "PORN00", url: "https://porn00.org", tags: [] },
+            { title: "PORNDIG", url: "https://porndig.com", tags: ["可直接下载.mp4"] },
+            { title: "PORNHAT", url: "https://pornhat.com", tags: [] },
+            { title: "REDTUBE", url: "https://redtube.com", tags: [] },
+            { title: "SPANKBANG", url: "https://spankbang.com", tags: [] },
+            { title: "SUPJAV", url: "https://supjav.com", tags: [] },
+            { title: "SXYPRN", url: "https://sxyprn.com", tags: [] },
+            { title: "THEPORNBEST", url: "https://thepornbest.com", tags: [] },
+            { title: "THEPORNDUDE", url: "https://theporndude.com", tags: [] },
+            { title: "THEPORNLINKS", url: "https://thepornlinks.com", tags: [] },
+            { title: "TKTUBE", url: "https://tktube.com", tags: [] },
+            { title: "TUBE8", url: "https://tube8.com", tags: [] },
+            { title: "TXXX", url: "https://txxx.com", tags: [] },
+            { title: "XHAMSTER", url: "https://xhamster.com", tags: [] },
+            { title: "XVIDEOS", url: "https://xvideos.com", tags: [] },
+            { title: "YOUPORN", url: "https://youporn.com", tags: [] },
+            { title: "东京图书馆", url: "https://tokyotosho.info", tags: [] },
+            { title: "PORNHUB", url: "https://pornhub.com", tags: [] },
+            { title: "娇色导航", url: "https://jiao.se", tags: [] },
+            { title: "色情导航", url: "https://sexgps.net", tags: [] },
+            { title: "色花堂", url: "https://sehuatang.org", tags: [] },
+            { title: "草榴社区", url: "https://t66y.com", tags: [] },
+            { title: "MYJAV", url: "https://myjav.tv", tags: ["可磁链下载"] },
+            { title: "XNXX", url: "https://xnxx.com", tags: ["可直接下载.mp4"] }
         ]
     }
 ];
