@@ -64,7 +64,6 @@ const siteGroups = [
         links: [
             { title: "Z-LIBRARY", url: "https://z-lib.ai/", tags: ["books", "ebook", "library"] },
             { title: "Z-LIBRARY", url: "https://z-library.sk/", tags: ["books", "ebook", "library"] },
-            { title: "Z-LIBRARY", url: "https://z-lib.is", tags: ["books", "ebook", "library"] },
             { title: "影子图书馆", url: "https://shadowlibraries.github.io/", tags: ["图书", "电子书"] },
             { title: "鸠摩搜书", url: "https://www.jiumodiary.com/", tags: ["图书", "搜书"] }
         ]
@@ -90,7 +89,6 @@ const siteGroups = [
         category: "🔞 Adult",
         links: [
             { title: "91PORN", url: "https://91porn.com/", tags: ["adult", "video"] },
-            { title: "AVTODAY", url: "https://avtoday.io", tags: ["adult", "video"] },
             { title: "BEEG", url: "https://beeg.com", tags: ["adult", "video"] },
             { title: "CUMLOUDER", url: "https://cumlouder.com", tags: ["adult", "video"] },
             { title: "HHD800", url: "https://hhd800.com", tags: ["adult", "video"] },
@@ -105,12 +103,9 @@ const siteGroups = [
             { title: "OK", url: "https://ok.xxx", tags: ["adult", "video"] },
             { title: "PORN00", url: "https://porn00.org", tags: ["adult", "video"] },
             { title: "PORNDIG", url: "https://porndig.com", tags: ["adult", "video"] },
-            { title: "PORNDOE", url: "https://porndoe.com", tags: ["adult", "video"] },
-            { title: "PORNGO", url: "https://porngo.com", tags: ["adult", "video"] },
             { title: "PORNHAT", url: "https://pornhat.com", tags: ["adult", "video"] },
             { title: "PORNMATE", url: "https://pornmate.com", tags: ["adult", "video"] },
             { title: "PORNONE", url: "https://pornone.com", tags: ["adult", "video"] },
-            { title: "PORNTREX", url: "https://porntrex.com", tags: ["adult", "video"] },
             { title: "REDTUBE", url: "https://redtube.com", tags: ["adult", "video"] },
             { title: "SPANKBANG", url: "https://spankbang.com", tags: ["adult", "video"] },
             { title: "SUPJAV", url: "https://supjav.com/", tags: ["adult", "jav"] },
@@ -122,14 +117,11 @@ const siteGroups = [
             { title: "TUBE8", url: "https://tube8.com", tags: ["adult", "video"] },
             { title: "TXXX", url: "https://txxx.com", tags: ["adult", "video"] },
             { title: "XHAMSTER", url: "https://xhamster.com", tags: ["adult", "video"] },
-            { title: "XMOVIESFORYOU", url: "https://xmoviesforyou.com", tags: ["adult", "video"] },
-            { title: "XOJAV", url: "https://xojav.tv", tags: ["adult", "jav"] },
             { title: "XVIDEOS", url: "https://xvideos.com", tags: ["adult", "video"] },
             { title: "YOUPORN", url: "https://www.youporn.com/", tags: ["adult", "video"] },
             { title: "东京图书馆", url: "https://tokyotosho.info", tags: ["torrent", "资源"] },
-            { title: "中文PORNHUB", url: "https://cn.pornhub.com", tags: ["adult", "video"] },
+            { title: "PORNHUB", url: "https://www.pornhub.com/", tags: ["adult", "video"] },
             { title: "娇色导航", url: "https://jiao.se", tags: ["adult", "navigation"] },
-            { title: "性吧", url: "https://www.tongyan21.info/p2p.html", tags: ["adult", "forum"] },
             { title: "海角", url: "https://haijiao.com/", tags: ["adult", "forum"] },
             { title: "色情导航", url: "https://sexgps.net", tags: ["adult", "navigation"] },
             { title: "色花堂", url: "https://www.sehuatang.org/", tags: ["adult", "forum"] },
@@ -199,6 +191,7 @@ function filterSites() {
 
 document.addEventListener("DOMContentLoaded", () => {
     renderSites();
+
     const searchInput = document.getElementById("search");
     searchInput.addEventListener("input", filterSites);
     searchInput.focus();
