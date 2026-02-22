@@ -53,117 +53,158 @@ a {
 
 <h1>Aurelius</h1>
 
-<input type="text" id="search" placeholder="Search..." onkeyup="filterSites()">
+<input type="text" id="search" placeholder="Search by name, URL, tag, or category...">
 
-<div id="content">
-<details>
-<summary>📚 Books<span class="count">(5)</span></summary>
-<a href="https://z-lib.ai/" target="_blank">Z-library</a>
-<a href="https://z-library.sk/" target="_blank">Z-Library</a>
-<a href="https://z-lib.is" target="_blank">Z-Library</a>
-<a href="https://shadowlibraries.github.io/" target="_blank">影子图书馆</a>
-<a href="https://www.jiumodiary.com/" target="_blank">鸠摩搜书</a>
-</details>
-
-<details>
-<summary>🎬 Movies<span class="count">(1)</span></summary>
-<a href="https://xunlei8.org/" target="_blank">迅雷电影天堂</a>
-</details>
-
-<details>
-<summary>📺 Anime<span class="count">(6)</span></summary>
-<a href="https://dilidili.io" target="_blank">嘀哩嘀哩</a>
-<a href="https://yhdm33.com/" target="_blank">樱花动漫</a>
-<a href="https://mgnacg.com" target="_blank">橘子动漫</a>
-<a href="https://www.comicat.org/" target="_blank">漫猫动漫</a>
-<a href="https://kisssub.org" target="_blank">爱恋动漫</a>
-<a href="https://dmhy.org" target="_blank">花园动漫</a>
-</details>
-
-<details>
-<summary>🔞 Adult<span class="count">(47)</span></summary>
-<a href="https://91porn.com/" target="_blank">91porn</a>
-<a href="https://avtoday.io" target="_blank">avtoday</a>
-<a href="https://beeg.com" target="_blank">beeg</a>
-<a href="https://cumlouder.com" target="_blank">Cumlouder</a>
-<a href="https://hhd800.com" target="_blank">hhd800</a>
-<a href="https://hohoj.tv" target="_blank">HoHoJ</a>
-<a href="https://hqporner.com" target="_blank">HQPORNER</a>
-<a href="https://www.javbus.com/" target="_blank">javbus</a>
-<a href="https://www.javlibrary.com/" target="_blank">javlibrary</a>
-<a href="https://javmenu.com" target="_blank">JAVMENU</a>
-<a href="https://motherless.com" target="_blank">motherless</a>
-<a href="https://niceteenmodels.com" target="_blank">niceteenmodels</a>
-<a href="https://nyaa.si" target="_blank">nyaa</a>
-<a href="https://ok.xxx" target="_blank">ok</a>
-<a href="https://porn00.org" target="_blank">porn00</a>
-<a href="https://porndig.com" target="_blank">porndig</a>
-<a href="https://porndoe.com" target="_blank">porndoe</a>
-<a href="https://porngo.com" target="_blank">porngo</a>
-<a href="https://pornhat.com" target="_blank">pornhat</a>
-<a href="https://pornmate.com" target="_blank">pornmate</a>
-<a href="https://pornone.com" target="_blank">pornone</a>
-<a href="https://porntrex.com" target="_blank">porntrex</a>
-<a href="https://redtube.com" target="_blank">redtube</a>
-<a href="https://spankbang.com" target="_blank">spankbang</a>
-<a href="https://supjav.com/" target="_blank">supjav</a>
-<a href="https://sxyprn.com" target="_blank">sxyprn</a>
-<a href="https://thepornbest.com" target="_blank">thepornbest</a>
-<a href="https://theporndude.com" target="_blank">theporndude</a>
-<a href="https://thepornlinks.com" target="_blank">thepornlinks</a>
-<a href="https://tktube.com" target="_blank">tktube</a>
-<a href="https://tktube.com/" target="_blank">tktube</a>
-<a href="https://tube8.com" target="_blank">tube8</a>
-<a href="https://txxx.com" target="_blank">txxx</a>
-<a href="https://xhamster.com" target="_blank">xhamster</a>
-<a href="https://xmoviesforyou.com" target="_blank">xmoviesforyou</a>
-<a href="https://xojav.tv" target="_blank">xojav</a>
-<a href="https://xvideos.com" target="_blank">xvideos</a>
-<a href="https://www.youporn.com/" target="_blank">youporn</a>
-<a href="https://tokyotosho.info" target="_blank">东京图书馆</a>
-<a href="https://cn.pornhub.com" target="_blank">中文Pornhub</a>
-<a href="https://jiao.se" target="_blank">娇色导航</a>
-<a href="https://www.tongyan21.info/p2p.html" target="_blank">性吧</a>
-<a href="https://haijiao.com/" target="_blank">海角</a>
-<a href="https://sexgps.net" target="_blank">色情导航</a>
-<a href="https://www.sehuatang.org/" target="_blank">色花堂</a>
-<a href="https://t66y.com" target="_blank">草榴社区</a>
-<a href="https://www.kin8tengoku.com/" target="_blank">金发天国</a>
-</details>
-
-
-</div>
+<div id="content"></div>
 
 <script>
-function filterSites() {
-    const input = document.getElementById("search").value.toLowerCase();
-    const details = document.querySelectorAll("details");
+const siteGroups = [
+    {
+        category: "📚 Books",
+        links: [
+            { title: "Z-library", url: "https://z-lib.ai/", tags: ["books", "ebook", "library"] },
+            { title: "Z-Library", url: "https://z-library.sk/", tags: ["books", "ebook", "library"] },
+            { title: "Z-Library", url: "https://z-lib.is", tags: ["books", "ebook", "library"] },
+            { title: "影子图书馆", url: "https://shadowlibraries.github.io/", tags: ["图书", "电子书"] },
+            { title: "鸠摩搜书", url: "https://www.jiumodiary.com/", tags: ["图书", "搜书"] }
+        ]
+    },
+    {
+        category: "🎬 Movies",
+        links: [
+            { title: "迅雷电影天堂", url: "https://xunlei8.org/", tags: ["电影", "下载"] }
+        ]
+    },
+    {
+        category: "📺 Anime",
+        links: [
+            { title: "嘀哩嘀哩", url: "https://dilidili.io", tags: ["anime", "动漫"] },
+            { title: "樱花动漫", url: "https://yhdm33.com/", tags: ["anime", "动漫"] },
+            { title: "橘子动漫", url: "https://mgnacg.com", tags: ["anime", "动漫"] },
+            { title: "漫猫动漫", url: "https://www.comicat.org/", tags: ["anime", "动漫"] },
+            { title: "爱恋动漫", url: "https://kisssub.org", tags: ["anime", "动漫"] },
+            { title: "花园动漫", url: "https://dmhy.org", tags: ["anime", "动漫"] }
+        ]
+    },
+    {
+        category: "🔞 Adult",
+        links: [
+            { title: "91porn", url: "https://91porn.com/", tags: ["adult", "video"] },
+            { title: "avtoday", url: "https://avtoday.io", tags: ["adult", "video"] },
+            { title: "beeg", url: "https://beeg.com", tags: ["adult", "video"] },
+            { title: "Cumlouder", url: "https://cumlouder.com", tags: ["adult", "video"] },
+            { title: "hhd800", url: "https://hhd800.com", tags: ["adult", "video"] },
+            { title: "HoHoJ", url: "https://hohoj.tv", tags: ["adult", "video"] },
+            { title: "HQPORNER", url: "https://hqporner.com", tags: ["adult", "video"] },
+            { title: "javbus", url: "https://www.javbus.com/", tags: ["adult", "jav"] },
+            { title: "javlibrary", url: "https://www.javlibrary.com/", tags: ["adult", "jav"] },
+            { title: "JAVMENU", url: "https://javmenu.com", tags: ["adult", "jav"] },
+            { title: "motherless", url: "https://motherless.com", tags: ["adult", "video"] },
+            { title: "niceteenmodels", url: "https://niceteenmodels.com", tags: ["adult", "video"] },
+            { title: "nyaa", url: "https://nyaa.si", tags: ["torrent", "anime"] },
+            { title: "ok", url: "https://ok.xxx", tags: ["adult", "video"] },
+            { title: "porn00", url: "https://porn00.org", tags: ["adult", "video"] },
+            { title: "porndig", url: "https://porndig.com", tags: ["adult", "video"] },
+            { title: "porndoe", url: "https://porndoe.com", tags: ["adult", "video"] },
+            { title: "porngo", url: "https://porngo.com", tags: ["adult", "video"] },
+            { title: "pornhat", url: "https://pornhat.com", tags: ["adult", "video"] },
+            { title: "pornmate", url: "https://pornmate.com", tags: ["adult", "video"] },
+            { title: "pornone", url: "https://pornone.com", tags: ["adult", "video"] },
+            { title: "porntrex", url: "https://porntrex.com", tags: ["adult", "video"] },
+            { title: "redtube", url: "https://redtube.com", tags: ["adult", "video"] },
+            { title: "spankbang", url: "https://spankbang.com", tags: ["adult", "video"] },
+            { title: "supjav", url: "https://supjav.com/", tags: ["adult", "jav"] },
+            { title: "sxyprn", url: "https://sxyprn.com", tags: ["adult", "video"] },
+            { title: "thepornbest", url: "https://thepornbest.com", tags: ["adult", "video"] },
+            { title: "theporndude", url: "https://theporndude.com", tags: ["adult", "navigation"] },
+            { title: "thepornlinks", url: "https://thepornlinks.com", tags: ["adult", "navigation"] },
+            { title: "tktube", url: "https://tktube.com/", tags: ["adult", "video"] },
+            { title: "tube8", url: "https://tube8.com", tags: ["adult", "video"] },
+            { title: "txxx", url: "https://txxx.com", tags: ["adult", "video"] },
+            { title: "xhamster", url: "https://xhamster.com", tags: ["adult", "video"] },
+            { title: "xmoviesforyou", url: "https://xmoviesforyou.com", tags: ["adult", "video"] },
+            { title: "xojav", url: "https://xojav.tv", tags: ["adult", "jav"] },
+            { title: "xvideos", url: "https://xvideos.com", tags: ["adult", "video"] },
+            { title: "youporn", url: "https://www.youporn.com/", tags: ["adult", "video"] },
+            { title: "东京图书馆", url: "https://tokyotosho.info", tags: ["torrent", "资源"] },
+            { title: "中文Pornhub", url: "https://cn.pornhub.com", tags: ["adult", "video"] },
+            { title: "娇色导航", url: "https://jiao.se", tags: ["adult", "navigation"] },
+            { title: "性吧", url: "https://www.tongyan21.info/p2p.html", tags: ["adult", "forum"] },
+            { title: "海角", url: "https://haijiao.com/", tags: ["adult", "forum"] },
+            { title: "色情导航", url: "https://sexgps.net", tags: ["adult", "navigation"] },
+            { title: "色花堂", url: "https://www.sehuatang.org/", tags: ["adult", "forum"] },
+            { title: "草榴社区", url: "https://t66y.com", tags: ["adult", "forum"] },
+            { title: "金发天国", url: "https://www.kin8tengoku.com/", tags: ["adult", "video"] }
+        ]
+    }
+];
 
-    details.forEach(section => {
+function createLinkElement(link) {
+    const a = document.createElement("a");
+    a.href = link.url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.textContent = link.title;
+    a.dataset.title = link.title.toLowerCase();
+    a.dataset.url = link.url.toLowerCase();
+    a.dataset.tags = (link.tags || []).join(" ").toLowerCase();
+    return a;
+}
+
+function renderSites() {
+    const content = document.getElementById("content");
+    content.innerHTML = "";
+
+    siteGroups.forEach(group => {
+        const section = document.createElement("details");
+        section.dataset.category = group.category.toLowerCase();
+
+        const summary = document.createElement("summary");
+        summary.textContent = group.category;
+
+        const count = document.createElement("span");
+        count.className = "count";
+        count.textContent = `(${group.links.length})`;
+        summary.appendChild(count);
+
+        section.appendChild(summary);
+        group.links.forEach(link => section.appendChild(createLinkElement(link)));
+        content.appendChild(section);
+    });
+}
+
+function filterSites() {
+    const query = document.getElementById("search").value.toLowerCase().trim();
+    const sections = document.querySelectorAll("#content details");
+
+    sections.forEach(section => {
+        const categoryText = section.dataset.category || "";
         let hasVisible = false;
         const links = section.querySelectorAll("a");
 
         links.forEach(link => {
-            if (link.textContent.toLowerCase().includes(input)) {
-                link.classList.remove("hidden");
+            const inTitle = link.dataset.title.includes(query);
+            const inUrl = link.dataset.url.includes(query);
+            const inTags = link.dataset.tags.includes(query);
+            const inCategory = categoryText.includes(query);
+            const isMatch = query === "" || inTitle || inUrl || inTags || inCategory;
+
+            link.classList.toggle("hidden", !isMatch);
+            if (isMatch) {
                 hasVisible = true;
-            } else {
-                link.classList.add("hidden");
             }
         });
 
-        if (hasVisible) {
-            section.classList.remove("hidden");
-        } else {
-            section.classList.add("hidden");
-        }
+        section.classList.toggle("hidden", !hasVisible);
     });
 }
-    document.addEventListener("DOMContentLoaded", () => {
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderSites();
+
     const searchInput = document.getElementById("search");
-    if (searchInput) {
-        searchInput.focus();
-    }
+    searchInput.addEventListener("input", filterSites);
+    searchInput.focus();
 });
 </script>
 
