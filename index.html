@@ -159,6 +159,12 @@ function filterSites() {
         }
     });
 }
+    document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("search");
+    if (searchInput) {
+        searchInput.focus();
+    }
+});
 </script>
 
 </body>
