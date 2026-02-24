@@ -76,11 +76,42 @@ function render() {
     const sec = d.createElement('details');
     sec.dataset.category = g.category.toLowerCase();
     const sum = d.createElement('summary');
-    sum.innerHTML = `<span>${g.category}</span><span class="count">(${g.links.length})</span>`;
+    const titleSpan = d.createElement('span');
+    titleSpan.textContent = g.category;
+    const countSpan = d.createElement('span');
+    countSpan.className = 'count';
+    countSpan.textContent = `(${g.links.length})`;
+    sum.appendChild(titleSpan);
+    sum.appendChild(countSpan);
     sec.appendChild(sum);
     g.links.forEach(l => sec.appendChild(createLink(l)));
     c.appendChild(sec);
   });
+}
+
+function validateSiteGroups(data) {
+  if (!Array.isArray(data)) return null;
+
+  const cleaned = data
+    .filter(group => group && typeof group === 'object')
+    .map(group => {
+      const category = typeof group.category === 'string' ? group.category.trim() : '';
+      const links = Array.isArray(group.links) ? group.links : [];
+
+      const cleanedLinks = links
+        .filter(link => link && typeof link === 'object')
+        .map(link => ({
+          title: typeof link.title === 'string' ? link.title.trim() : '',
+          url: typeof link.url === 'string' ? link.url.trim() : '',
+          tags: typeof link.tags === 'string' ? link.tags.trim() : ''
+        }))
+        .filter(link => link.title && link.url);
+
+      return { category, links: cleanedLinks };
+    })
+    .filter(group => group.category && group.links.length);
+
+  return cleaned;
 }
 
 // 搜索过滤
@@ -145,7 +176,10 @@ fileInput.addEventListener('change', (e) => {
   const reader = new FileReader();
   reader.onload = (evt) => {
     try {
-      siteGroups = JSON.parse(evt.target.result);
+      const parsed = JSON.parse(evt.target.result);
+      const validated = validateSiteGroups(parsed);
+      if (!validated) throw new Error('Invalid JSON schema');
+      siteGroups = validated;
       render();
       updateTime();
       alert('导入成功！');
@@ -160,7 +194,8 @@ fileInput.addEventListener('change', (e) => {
 async function init() {
   try {
     const res = await fetch('data.json');
-    siteGroups = await res.json();
+    const loaded = validateSiteGroups(await res.json());
+    siteGroups = loaded || [];
   } catch (e) {
     console.warn('无法加载 data.json，使用默认数据');
     siteGroups = [];
@@ -176,7 +211,7 @@ async function init() {
   importBtn.addEventListener('click', importData);
   s.focus();
   
-  setInterval(updateTime, 60000); // 每分钟更新一次时间
+  setInterval(updateTime, 600000); // 每10分钟更新一次时间
 }
 
 d.addEventListener('DOMContentLoaded', init);
