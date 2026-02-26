@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aurelius</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;background:#fff;color:#111;max-width:700px;margin:40px auto;padding:20px}h1{font-size:2em;margin-bottom:20px}#search{width:100%;padding:10px;margin-bottom:10px;border:1px solid #ddd;border-radius:4px;font-size:1em}.toolbar{display:flex;gap:10px;margin-bottom:20px}#search{flex:1}button{padding:8px 12px;background:#f0f0f0;border:1px solid #ddd;border-radius:4px;cursor:pointer;font-size:1em}button:hover{background:#e0e0e0}#content{margin:20px 0}details{margin:15px 0;padding:10px;background:#f9f9f9;border-radius:4px}details[open]{background:#f0f0f0}summary{cursor:pointer;font-weight:bold;user-select:none}summary:hover{color:#0066cc}summary span{margin-right:10px}summary .count{color:#888;font-weight:normal}a{display:block;padding:8px 0;color:#0066cc;text-decoration:none;border-bottom:1px solid #eee}a:hover{color:#0052a3;text-decoration:underline}a.hidden{display:none}#update-time{margin-top:20px;padding-top:20px;border-top:1px solid #ddd;color:#666;font-size:0.9em;text-align:center}body.dark{background:#1e1e1e;color:#e0e0e0}body.dark #search{background:#333;color:#e0e0e0;border-color:#555}body.dark button{background:#333;border-color:#555;color:#e0e0e0}body.dark button:hover{background:#444}body.dark details{background:#2a2a2a}body.dark details[open]{background:#333}body.dark summary{color:#e0e0e0}body.dark a{color:#4da6ff;border-color:#444}body.dark a:hover{color:#80c3ff}body.dark #update-time{border-color:#444;color:#aaa}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;background:#fff;color:#111;max-width:700px;margin:40px auto;padding:20px}h1{font-size:2em;margin-bottom:20px}#search{width:100%;padding:10px;margin-bottom:10px;border:1px solid #ddd;border-radius:4px;font-size:1em}.toolbar{display:flex;gap:10px;margin-bottom:20px}#search{flex:1}#content{margin:20px 0}details{margin:15px 0;padding:10px;background:#f9f9f9;border-radius:4px}details[open]{background:#f0f0f0}summary{cursor:pointer;font-weight:bold;user-select:none}summary:hover{color:#0066cc}summary span{margin-right:10px}summary .count{color:#888;font-weight:normal}a{display:block;padding:8px 0;color:#0066cc;text-decoration:none;border-bottom:1px solid #eee}a:hover{color:#0052a3;text-decoration:underline}a.hidden{display:none}#update-time{margin-top:20px;padding-top:20px;border-top:1px solid #ddd;color:#666;font-size:0.9em;text-align:center}
 </style>
 </head>
 <body>
@@ -14,12 +14,7 @@
 
 <div class="toolbar">
   <input type="text" id="search" placeholder="搜索名称、URL、标签或分类...">
-  <button id="theme-btn" title="切换深色模式">🌙</button>
-  <button id="export-btn" title="导出为 JSON">⬇️</button>
-  <button id="import-btn" title="导入 JSON">⬆️</button>
 </div>
-
-<input type="file" id="file-input" accept=".json" style="display:none">
 
 <div id="content"></div>
 
@@ -30,30 +25,8 @@ const d = document;
 const s = d.getElementById('search');
 const c = d.getElementById('content');
 const u = d.getElementById('update-time');
-const themeBtn = d.getElementById('theme-btn');
-const exportBtn = d.getElementById('export-btn');
-const importBtn = d.getElementById('import-btn');
-const fileInput = d.getElementById('file-input');
 
 let siteGroups = [];
-
-// 主题切换
-function initTheme() {
-  const saved = localStorage.getItem('theme') === 'dark';
-  if (saved) d.body.classList.add('dark');
-  updateThemeBtn();
-}
-
-function toggleTheme() {
-  d.body.classList.toggle('dark');
-  const isDark = d.body.classList.contains('dark');
-  localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  updateThemeBtn();
-}
-
-function updateThemeBtn() {
-  themeBtn.textContent = d.body.classList.contains('dark') ? '☀️' : '🌙';
-}
 
 // 创建链接元素
 function createLink(link) {
@@ -153,43 +126,6 @@ function updateTime() {
     });
 }
 
-// 导出
-function exportData() {
-  const json = JSON.stringify(siteGroups, null, 2);
-  const blob = new Blob([json], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = d.createElement('a');
-  a.href = url;
-  a.download = `bookmarks-${new Date().toISOString().split('T')[0]}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-// 导入
-function importData() {
-  fileInput.click();
-}
-
-fileInput.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (evt) => {
-    try {
-      const parsed = JSON.parse(evt.target.result);
-      const validated = validateSiteGroups(parsed);
-      if (!validated) throw new Error('Invalid JSON schema');
-      siteGroups = validated;
-      render();
-      updateTime();
-      alert('导入成功！');
-    } catch (err) {
-      alert('导入失败，请检查文件格式');
-    }
-  };
-  reader.readAsText(file);
-});
-
 // 初始化
 async function init() {
   try {
@@ -201,14 +137,10 @@ async function init() {
     siteGroups = [];
   }
   
-  initTheme();
   render();
   updateTime();
   
   s.addEventListener('input', filter);
-  themeBtn.addEventListener('click', toggleTheme);
-  exportBtn.addEventListener('click', exportData);
-  importBtn.addEventListener('click', importData);
   s.focus();
   
   setInterval(updateTime, 600000); // 每10分钟更新一次时间
