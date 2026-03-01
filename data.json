@@ -1,5 +1,15 @@
 [
   {
+    "category": "🔎 Search",
+    "links": [
+      {
+        "title": "Yandex",
+        "url": "https://yandex.com/",
+        "tags": "俄罗斯搜索引擎"
+      }
+    ]
+  },
+  {
     "category": "📚 Books",
     "links": [
       {
@@ -271,6 +281,11 @@
         "title": "YouPorn",
         "url": "https://www.youporn.com",
         "tags": "高质量专业片段多"
+      },
+      {
+        "title": "AV-WIKI",
+        "url": "https://av-wiki.net/",
+        "tags": "日本AV百科与资料整理"
       }
     ]
   }
