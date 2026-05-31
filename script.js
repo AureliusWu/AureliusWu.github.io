@@ -2,10 +2,9 @@
 
 // ============ 全局变量 ============
 let siteGroups = [];
-let cacheExpireTime = 0;
 let advancedSearch = null;
-const CACHE_DURATION = 3600000; // 1小时缓存
-const API_URL = 'https://api.github.com/repos/AureliusWu/AureliusWu.github.io/commits?per_page=1';
+let searchHistoryTimer = null;
+const SEARCH_HISTORY_DELAY = 600;
 
 
 /**
@@ -149,6 +148,7 @@ function createLink(link) {
   a.dataset.title = link.title.toLowerCase();
   a.dataset.url = link.url.toLowerCase();
   a.dataset.tags = (link.tags || '').toLowerCase();
+  a.dataset.search = [link.title, link.url, link.tags || ''].join(' ').toLowerCase();
   
   if (link.tags && link.tags.trim()) {
     a.title = link.tags;
@@ -231,7 +231,6 @@ function render() {
     details.setAttribute('data-category', group.category.toLowerCase());
     
     const summary = elements.document.createElement('summary');
-    summary.setAttribute('role', 'button');
     summary.setAttribute('aria-expanded', 'false');
     
     const titleSpan = elements.document.createElement('span');
@@ -293,12 +292,6 @@ function validateSiteGroups(data) {
 function filter() {
   const query = elements.searchInput.value.toLowerCase().trim();
   const details = elements.content.querySelectorAll('details');
-  let totalResults = 0;
-
-  // 添加到搜索历史
-  if (query) {
-    advancedSearch.addToHistory(query);
-  }
 
   // 解析查询
   const parsed = advancedSearch.parseQuery(query);
@@ -310,19 +303,14 @@ function filter() {
     links.forEach(linkContainer => {
       const link = linkContainer.querySelector('a');
       
-      // 检查匹配
-      const titleMatch = advancedSearch.matches(link.dataset.title, parsed);
-      const urlMatch = advancedSearch.matches(link.dataset.url, parsed);
-      const tagsMatch = advancedSearch.matches(link.dataset.tags, parsed);
-      const categoryMatch = advancedSearch.matches(section.dataset.category, parsed);
-      
-      const match = titleMatch || urlMatch || tagsMatch || categoryMatch;
-      
+      // 检查匹配：把标题、URL、标签和分类合并，支持跨字段 AND/OR/NOT 查询
+      const searchableText = `${link.dataset.search} ${section.dataset.category}`;
+      const match = advancedSearch.matches(searchableText, parsed);
+
       linkContainer.classList.toggle('hidden', !match);
-      
+
       if (match) {
         sectionHasResults = true;
-        totalResults++;
       }
     });
 
@@ -330,6 +318,35 @@ function filter() {
   });
 
   updateSearchResultsCount();
+}
+
+
+/**
+ * 延迟保存搜索历史，避免把每个输入中间态都写入 localStorage
+ */
+function scheduleSearchHistorySave() {
+  const query = elements.searchInput.value.trim();
+  window.clearTimeout(searchHistoryTimer);
+
+  if (!query || query.length < 2) {
+    return;
+  }
+
+  searchHistoryTimer = window.setTimeout(() => {
+    advancedSearch.addToHistory(query);
+  }, SEARCH_HISTORY_DELAY);
+}
+
+/**
+ * 立即保存搜索历史，通常用于 Enter 提交搜索时
+ */
+function saveCurrentSearchToHistory() {
+  const query = elements.searchInput.value.trim();
+  window.clearTimeout(searchHistoryTimer);
+
+  if (query) {
+    advancedSearch.addToHistory(query);
+  }
 }
 
 /**
@@ -403,62 +420,61 @@ function toggleDarkMode() {
  * 初始化深色模式
  */
 function initDarkMode() {
-  const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+  const savedDarkMode = localStorage.getItem('darkMode');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
-  if (savedDarkMode || prefersDark) {
-    elements.document.body.classList.add('dark-mode');
-    if (elements.darkModeToggle) {
-      elements.darkModeToggle.textContent = '☀️';
-      elements.darkModeToggle.setAttribute('aria-label', '切换到浅色模式');
-    }
+  const shouldUseDarkMode = savedDarkMode === null
+    ? prefersDark
+    : savedDarkMode === 'true';
+
+  elements.document.body.classList.toggle('dark-mode', shouldUseDarkMode);
+
+  if (elements.darkModeToggle) {
+    elements.darkModeToggle.textContent = shouldUseDarkMode ? '☀️' : '🌙';
+    elements.darkModeToggle.setAttribute('aria-label', shouldUseDarkMode ? '切换到浅色模式' : '切换到深色模式');
   }
 }
 
 /**
- * 获取最后更新时间（带缓存）
+ * 获取最后更新时间
  */
 function updateTime() {
-  const now = Date.now();
-  
-  if (now < cacheExpireTime) {
-    const cached = localStorage.getItem('lastUpdateTime');
-    if (cached) {
-      elements.updateTime.textContent = `本页面最后更新时间：${cached}`;
-      return;
-    }
+  const lastModified = new Date(elements.document.lastModified);
+
+  if (Number.isNaN(lastModified.getTime())) {
+    elements.updateTime.textContent = '本页面最后更新时间：暂不可用';
+    return;
   }
 
-  fetch(API_URL, {
-    headers: {
-      'Accept': 'application/vnd.github.v3+json'
-    }
-  })
-    .then(response => {
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      return response.json();
-    })
-    .then(data => {
-      if (!data || data.length === 0) throw new Error('No commits found');
-      
-      const lastCommitDate = new Date(data[0].commit.author.date);
-      const formattedDate = lastCommitDate.toLocaleString('zh-CN', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-      
-      elements.updateTime.textContent = `本页面最后更新时间：${formattedDate}`;
-      localStorage.setItem('lastUpdateTime', formattedDate);
-      cacheExpireTime = now + CACHE_DURATION;
-      localStorage.setItem('lastUpdateTimeExpire', cacheExpireTime.toString());
-    })
-    .catch(error => {
-      console.error('获取更新时间失败:', error);
-      elements.updateTime.textContent = '本页面最后更新时间：获取失败';
-    });
+  const formattedDate = lastModified.toLocaleString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  elements.updateTime.textContent = `本页面最后更新时间：${formattedDate}`;
+}
+
+/**
+ * 显示数据加载失败提示
+ */
+function renderLoadError() {
+  elements.content.innerHTML = '';
+
+  const message = elements.document.createElement('section');
+  message.className = 'error-message';
+  message.setAttribute('role', 'alert');
+
+  const title = elements.document.createElement('h2');
+  title.textContent = '数据加载失败';
+
+  const description = elements.document.createElement('p');
+  description.textContent = '无法加载 data.json。请刷新页面，或确认通过本地 HTTP 服务访问本站。';
+
+  message.appendChild(title);
+  message.appendChild(description);
+  elements.content.appendChild(message);
 }
 
 /**
@@ -470,6 +486,7 @@ async function init() {
 
   try {
     const res = await fetch('data.json');
+    if (!res.ok) throw new Error(`data.json HTTP ${res.status}`);
     const loaded = validateSiteGroups(await res.json());
     siteGroups = loaded || [];
   } catch (e) {
@@ -477,19 +494,24 @@ async function init() {
     siteGroups = [];
   }
 
-  // 恢复缓存过期时间
-  const savedExpireTime = localStorage.getItem('lastUpdateTimeExpire');
-  if (savedExpireTime) {
-    cacheExpireTime = parseInt(savedExpireTime);
+  if (siteGroups.length) {
+    render();
+  } else {
+    renderLoadError();
   }
-
-  render();
   initDarkMode();
   updateTime();
 
   // 事件监听
-  elements.searchInput.addEventListener('input', filter);
+  elements.searchInput.addEventListener('input', () => {
+    filter();
+    scheduleSearchHistorySave();
+  });
   elements.searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      saveCurrentSearchToHistory();
+    }
+
     if (e.key === 'Escape') {
       elements.searchInput.value = '';
       filter();
@@ -508,10 +530,9 @@ async function init() {
     elements.darkModeToggle.addEventListener('click', toggleDarkMode);
   }
 
-  elements.searchInput.focus();
-
-  // 每小时更新一次时间显示
-  setInterval(updateTime, CACHE_DURATION);
+  if (window.matchMedia('(pointer: fine)').matches) {
+    elements.searchInput.focus();
+  }
 }
 
 // ============ 启动应用 ============
