@@ -7,6 +7,119 @@ let advancedSearch = null;
 const CACHE_DURATION = 3600000; // 1小时缓存
 const API_URL = 'https://api.github.com/repos/AureliusWu/AureliusWu.github.io/commits?per_page=1';
 
+
+/**
+ * 高级搜索工具
+ * 支持以下语法：
+ * - 默认单词匹配：`google`
+ * - AND 逻辑：`book AND pdf` 或 `book pdf`
+ * - OR 逻辑：`book OR movie`
+ * - NOT 排除：`anime NOT bt` 或 `anime -bt`
+ */
+class AdvancedSearch {
+  constructor(storageKey = 'aureliusSearchHistory') {
+    this.storageKey = storageKey;
+    this.maxHistoryItems = 20;
+  }
+
+  parseQuery(query) {
+    const normalized = (query || '').toLowerCase().trim().replace(/\s+/g, ' ');
+
+    if (!normalized) {
+      return { type: 'empty', include: [], exclude: [], operator: 'and' };
+    }
+
+    const tokens = normalized.match(/"[^"]+"|\S+/g) || [];
+    const include = [];
+    const exclude = [];
+    let operator = 'and';
+    let excludeNext = false;
+
+    tokens.forEach(rawToken => {
+      const upperToken = rawToken.toUpperCase();
+
+      if (upperToken === 'OR' || rawToken === '|') {
+        operator = 'or';
+        return;
+      }
+
+      if (upperToken === 'AND' || rawToken === '+') {
+        operator = 'and';
+        return;
+      }
+
+      if (upperToken === 'NOT') {
+        excludeNext = true;
+        return;
+      }
+
+      let token = rawToken.replace(/^"|"$/g, '');
+      if (!token) return;
+
+      if (token.startsWith('-')) {
+        token = token.slice(1);
+        if (token) exclude.push(token);
+        return;
+      }
+
+      if (excludeNext) {
+        exclude.push(token);
+        excludeNext = false;
+        return;
+      }
+
+      include.push(token);
+    });
+
+    const hasExclude = exclude.length > 0;
+    let type = 'single';
+
+    if (operator === 'or') {
+      type = 'or';
+    } else if (hasExclude) {
+      type = 'not';
+    } else if (include.length > 1) {
+      type = 'and';
+    }
+
+    return { type, include, exclude, operator };
+  }
+
+  matches(text, parsedQuery) {
+    const haystack = (text || '').toLowerCase();
+    const query = parsedQuery || this.parseQuery('');
+
+    if (query.type === 'empty') return true;
+
+    const includesMatch = query.include.length === 0
+      ? true
+      : query.operator === 'or'
+        ? query.include.some(term => haystack.includes(term))
+        : query.include.every(term => haystack.includes(term));
+
+    const excludesMatch = query.exclude.every(term => !haystack.includes(term));
+
+    return includesMatch && excludesMatch;
+  }
+
+  addToHistory(query) {
+    const normalized = (query || '').trim();
+    if (!normalized) return;
+
+    try {
+      const currentHistory = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+      const nextHistory = [
+        normalized,
+        ...currentHistory.filter(item => item !== normalized)
+      ].slice(0, this.maxHistoryItems);
+
+      localStorage.setItem(this.storageKey, JSON.stringify(nextHistory));
+    } catch (error) {
+      console.warn('无法保存搜索历史:', error);
+    }
+  }
+}
+
 // ============ DOM 元素缓存 ============
 const elements = {
   document: document,
@@ -353,7 +466,7 @@ function updateTime() {
  */
 async function init() {
   // 初始化高级搜索
-  advancedSearch = new window.AdvancedSearch();
+  advancedSearch = new AdvancedSearch();
 
   try {
     const res = await fetch('data.json');
