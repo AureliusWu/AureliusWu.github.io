@@ -1,1 +1,84 @@
 # AureliusWu.github.io
+
+Aurelius 是一个轻量的静态网站导航收藏库，适合部署在 GitHub Pages 上。页面通过 `data.json` 管理链接数据，并由原生 HTML、CSS、JavaScript 提供搜索、分类展开/收起、深色模式和链接复制功能。
+
+## 功能特性
+
+- 分类展示常用网站链接。
+- 支持按名称、URL、标签和分类搜索。
+- 支持简单高级搜索语法：
+  - `book pdf` 或 `book AND pdf`：同时匹配多个关键词。
+  - `book OR movie`：匹配任一关键词。
+  - `anime NOT bt` 或 `anime -bt`：排除指定关键词。
+- 支持深色模式，并尊重系统偏好。
+- 支持复制链接。
+- 提供 Open Graph、Twitter Card、`robots.txt` 和 `sitemap.xml` 基础 SEO 配置。
+
+## 本地预览
+
+页面使用 `fetch('data.json')` 加载数据。为了避免浏览器在 `file://` 协议下阻止本地文件读取，请使用本地 HTTP 服务预览：
+
+```bash
+python3 -m http.server 8080
+```
+
+然后打开：
+
+```text
+http://localhost:8080/
+```
+
+## 数据格式
+
+导航数据位于 `data.json`，根节点是分类数组。每个分类包含 `category` 和 `links` 字段：
+
+```json
+{
+  "category": "📚 Books",
+  "links": [
+    {
+      "title": "示例网站",
+      "url": "https://example.com",
+      "tags": "示例 标签"
+    }
+  ]
+}
+```
+
+字段说明：
+
+- `category`：分类名称，可包含 emoji。
+- `title`：链接显示名称。
+- `url`：完整链接地址，建议使用 `https://`。
+- `tags`：搜索标签或简短说明。
+
+## 添加或维护链接
+
+1. 编辑 `data.json`。
+2. 确认 JSON 格式有效：
+
+   ```bash
+   python3 -m json.tool data.json >/tmp/data-json-check.json
+   ```
+
+3. 本地启动 HTTP 服务并验证页面展示与搜索结果。
+
+## 文件结构
+
+```text
+index.html      页面结构、SEO 元信息和无 JavaScript 提示
+styles.css      页面样式、响应式布局、深色模式和打印样式
+script.js       数据加载、渲染、搜索、复制和偏好设置逻辑
+data.json       导航链接数据
+og-image.svg    社交分享预览图
+robots.txt      搜索引擎抓取配置
+sitemap.xml     站点地图
+```
+
+## 部署
+
+本仓库可直接通过 GitHub Pages 部署。由于这是用户/组织站点仓库，默认访问地址为：
+
+```text
+https://AureliusWu.github.io/
+```
