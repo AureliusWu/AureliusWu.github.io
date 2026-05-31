@@ -140,7 +140,7 @@ details {
   border: 1px solid var(--color-border);
   border-radius: 8px;
   overflow: hidden;
-  transition: all var(--transition-speed);
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 body.dark-mode details {
@@ -199,21 +199,35 @@ body.dark-mode .count {
 }
 
 /* 链接样式 */
-a {
-  display: block;
-  padding: 12px 15px;
-  color: var(--color-accent);
-  text-decoration: none;
+.link-container {
+  display: flex;
+  align-items: stretch;
   border-bottom: 1px solid var(--color-border);
-  transition: all var(--transition-speed);
 }
 
-body.dark-mode a {
+body.dark-mode .link-container {
   border-bottom-color: var(--color-border-dark);
 }
 
-a:last-child {
+.link-container:last-child {
   border-bottom: none;
+}
+
+.link-container.hidden {
+  display: none;
+}
+
+a {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  padding: 12px 15px;
+  color: var(--color-accent);
+  text-decoration: none;
+  transition:
+    background-color var(--transition-speed),
+    color var(--transition-speed),
+    padding-left var(--transition-speed);
 }
 
 a:hover {
@@ -224,10 +238,6 @@ a:hover {
 
 body.dark-mode a:hover {
   background-color: #252525;
-}
-
-a.hidden {
-  display: none;
 }
 
 /* 搜索结果计数 */
@@ -250,6 +260,30 @@ body.dark-mode .search-results-count {
   display: none;
 }
 
+
+/* 数据加载失败和无脚本提示 */
+.error-message,
+.no-script-message {
+  margin: 20px 0;
+  padding: 16px;
+  background-color: #fff8e1;
+  border-left: 4px solid #f6a800;
+  border-radius: 4px;
+  color: #5f4300;
+}
+
+body.dark-mode .error-message,
+body.dark-mode .no-script-message {
+  background-color: #332800;
+  color: #ffe08a;
+}
+
+.error-message h2,
+.no-script-message h2 {
+  margin-bottom: 8px;
+  font-size: 1.1em;
+}
+
 /* 页脚信息 */
 #update-time {
   margin-top: 40px;
@@ -267,8 +301,9 @@ body.dark-mode #update-time {
 
 /* 复制按钮样式 */
 .btn-copy {
-  display: inline-block;
-  margin-left: 8px;
+  align-self: center;
+  flex: 0 0 auto;
+  margin-right: 12px;
   padding: 4px 8px;
   background-color: transparent;
   color: var(--color-accent);
@@ -276,7 +311,7 @@ body.dark-mode #update-time {
   border-radius: 4px;
   font-size: 0.85em;
   cursor: pointer;
-  transition: all var(--transition-speed);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
   vertical-align: middle;
 }
 
@@ -305,6 +340,10 @@ body.dark-mode #update-time {
     flex: 1;
   }
 
+  .link-container {
+    align-items: center;
+  }
+
   a:hover {
     padding-left: 15px;
   }
@@ -314,6 +353,7 @@ body.dark-mode #update-time {
 @media print {
   header,
   .toolbar,
+  .btn-copy,
   #update-time {
     display: none;
   }
@@ -332,5 +372,17 @@ body.dark-mode #update-time {
   a {
     color: #000;
     text-decoration: underline;
+  }
+}
+
+
+/* 减少动态效果 */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-speed: 0s;
+  }
+
+  * {
+    scroll-behavior: auto !important;
   }
 }

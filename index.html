@@ -8,33 +8,35 @@
   
   <!-- SEO 元标签 -->
   <title>Aurelius - 网站导航收藏库</title>
-  <meta name="description" content="Aurelius 是一个优雅的网站导航收藏库，包含搜索、图书、电影、动漫等多个分类的高质量网站链接。支持快速搜索、深色模式和离线访问。">
+  <meta name="description" content="Aurelius 是一个轻量的网站导航收藏库，包含搜索、图书、电影、动漫等资源链接，支持快速搜索、深色模式和链接复制。">
   <meta name="keywords" content="网站导航,链接收藏,搜索引擎,电子书,电影,动漫">
   <meta name="author" content="AureliusWu">
   <meta name="theme-color" content="#0066cc">
+  <link rel="canonical" href="https://AureliusWu.github.io/">
   
   <!-- Open Graph 社交媒体标签 -->
   <meta property="og:title" content="Aurelius - 网站导航收藏库">
-  <meta property="og:description" content="一个优雅的网站导航收藏库，包含丰富的资源链接">
+  <meta property="og:description" content="一个轻量的网站导航收藏库，包含常用资源链接。">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://aurelius.github.io">
-  <meta property="og:image" content="https://aurelius.github.io/favicon.svg">
+  <meta property="og:url" content="https://AureliusWu.github.io/">
+  <meta property="og:image" content="https://AureliusWu.github.io/og-image.svg">
   <meta property="og:locale" content="zh_CN">
   
   <!-- Twitter Card 标签 -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Aurelius - 网站导航收藏库">
-  <meta name="twitter:description" content="一个优雅的网站导航收藏库，包含丰富的资源链接">
+  <meta name="twitter:description" content="一个轻量的网站导航收藏库，包含常用资源链接。">
+  <meta name="twitter:image" content="https://AureliusWu.github.io/og-image.svg">
   
   <!-- favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' font-weight='bold' fill='%230066cc'>A</text></svg>">
   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%230066cc' width='180' height='180'/><text x='90' y='135' font-size='120' font-weight='bold' fill='white' text-anchor='middle'>A</text></svg>">
   
+  <!-- 预加载关键数据 -->
+  <link rel="preload" href="data.json" as="fetch" crossorigin="anonymous">
+
   <!-- 样式表 -->
   <link rel="stylesheet" href="styles.css">
-  
-  <!-- 预连接 -->
-  <link rel="preconnect" href="https://api.github.com">
 </head>
 <body>
   <header role="banner">
@@ -59,12 +61,16 @@
 
   <main id="content" role="main" aria-label="网站分类列表"></main>
 
+  <noscript>
+    <section class="no-script-message" aria-label="无 JavaScript 提示">
+      <h2>需要启用 JavaScript</h2>
+      <p>本站通过 <code>data.json</code> 加载导航数据。请启用 JavaScript，或直接打开 data.json 查看完整链接列表。</p>
+    </section>
+  </noscript>
+
   <footer id="update-time" role="contentinfo">加载中...</footer>
 
   <!-- 脚本 -->
   <script src="script.js" defer></script>
-  
-  <!-- 预加载关键资源 -->
-  <link rel="preload" href="data.json" as="fetch" crossorigin>
 </body>
 </html>
