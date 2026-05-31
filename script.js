@@ -1,8 +1,9 @@
-/* Aurelius 网站导航 - 主逻辑模块 */
+/* Aurelius 网站导航 - 主逻辑模块（已集成搜索增强） */
 
 // ============ 全局变量 ============
 let siteGroups = [];
 let cacheExpireTime = 0;
+let advancedSearch = null;
 const CACHE_DURATION = 3600000; // 1小时缓存
 const API_URL = 'https://api.github.com/repos/AureliusWu/AureliusWu.github.io/commits?per_page=1';
 
@@ -174,13 +175,20 @@ function validateSiteGroups(data) {
 }
 
 /**
- * 搜索和过滤
+ * 搜索和过滤（支持高级搜索）
  */
 function filter() {
   const query = elements.searchInput.value.toLowerCase().trim();
   const details = elements.content.querySelectorAll('details');
-  let visibleCount = 0;
   let totalResults = 0;
+
+  // 添加到搜索历史
+  if (query) {
+    advancedSearch.addToHistory(query);
+  }
+
+  // 解析查询
+  const parsed = advancedSearch.parseQuery(query);
 
   details.forEach(section => {
     let sectionHasResults = false;
@@ -188,11 +196,14 @@ function filter() {
 
     links.forEach(linkContainer => {
       const link = linkContainer.querySelector('a');
-      const match = !query || 
-                   link.dataset.title.includes(query) || 
-                   link.dataset.url.includes(query) || 
-                   link.dataset.tags.includes(query) || 
-                   section.dataset.category.includes(query);
+      
+      // 检查匹配
+      const titleMatch = advancedSearch.matches(link.dataset.title, parsed);
+      const urlMatch = advancedSearch.matches(link.dataset.url, parsed);
+      const tagsMatch = advancedSearch.matches(link.dataset.tags, parsed);
+      const categoryMatch = advancedSearch.matches(section.dataset.category, parsed);
+      
+      const match = titleMatch || urlMatch || tagsMatch || categoryMatch;
       
       linkContainer.classList.toggle('hidden', !match);
       
@@ -203,7 +214,6 @@ function filter() {
     });
 
     section.classList.toggle('hidden', !sectionHasResults);
-    if (!sectionHasResults) visibleCount++;
   });
 
   updateSearchResultsCount();
@@ -226,11 +236,21 @@ function updateSearchResultsCount() {
   const totalCategories = elements.content.querySelectorAll('details:not(.hidden)').length;
 
   if (elements.searchResultsCount) {
+    let resultText = '';
+    
     if (totalLinks === 0) {
-      elements.searchResultsCount.textContent = '未找到匹配结果';
+      resultText = '未找到匹配结果';
     } else {
-      elements.searchResultsCount.textContent = `找到 ${totalLinks} 个链接，涉及 ${totalCategories} 个分类`;
+      resultText = `找到 ${totalLinks} 个链接，涉及 ${totalCategories} 个分类`;
     }
+
+    // 显示搜索查询类型
+    const parsed = advancedSearch.parseQuery(query);
+    if (parsed.type !== 'single' && parsed.type !== 'empty') {
+      resultText += ` (${parsed.type} 逻辑)`;
+    }
+
+    elements.searchResultsCount.textContent = resultText;
     elements.searchResultsCount.classList.remove('hidden');
   }
 }
@@ -332,6 +352,9 @@ function updateTime() {
  * 初始化应用
  */
 async function init() {
+  // 初始化高级搜索
+  advancedSearch = new window.AdvancedSearch();
+
   try {
     const res = await fetch('data.json');
     const loaded = validateSiteGroups(await res.json());
