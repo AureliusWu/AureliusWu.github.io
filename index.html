@@ -1,153 +1,70 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aurelius</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;background:#fff;color:#111;max-width:700px;margin:40px auto;padding:20px}h1{font-size:2em;margin-bottom:20px}#search{width:100%;padding:10px;margin-bottom:10px;border:1px solid #ddd;border-radius:4px;font-size:1em}.toolbar{display:flex;gap:10px;margin-bottom:20px}#search{flex:1}#content{margin:20px 0}details{margin:15px 0;padding:10px;background:#f9f9f9;border-radius:4px}details[open]{background:#f0f0f0}summary{cursor:pointer;font-weight:bold;user-select:none}summary:hover{color:#0066cc}summary span{margin-right:10px}summary .count{color:#888;font-weight:normal}a{display:block;padding:8px 0;color:#0066cc;text-decoration:none;border-bottom:1px solid #eee}a:hover{color:#0052a3;text-decoration:underline}a.hidden{display:none}#update-time{margin-top:20px;padding-top:20px;border-top:1px solid #ddd;color:#666;font-size:0.9em;text-align:center}
-</style>
+  <!-- 基础元信息 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- SEO 元标签 -->
+  <title>Aurelius - 网站导航收藏库</title>
+  <meta name="description" content="Aurelius 是一个优雅的网站导航收藏库，包含搜索、图书、电影、动漫等多个分类的高质量网站链接。支持快速搜索、深色模式和离线访问。">
+  <meta name="keywords" content="网站导航,链接收藏,搜索引擎,电子书,电影,动漫">
+  <meta name="author" content="AureliusWu">
+  <meta name="theme-color" content="#0066cc">
+  
+  <!-- Open Graph 社交媒体标签 -->
+  <meta property="og:title" content="Aurelius - 网站导航收藏库">
+  <meta property="og:description" content="一个优雅的网站导航收藏库，包含丰富的资源链接">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aurelius.github.io">
+  <meta property="og:image" content="https://aurelius.github.io/favicon.svg">
+  <meta property="og:locale" content="zh_CN">
+  
+  <!-- Twitter Card 标签 -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aurelius - 网站导航收藏库">
+  <meta name="twitter:description" content="一个优雅的网站导航收藏库，包含丰富的资源链接">
+  
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' font-weight='bold' fill='%230066cc'>A</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%230066cc' width='180' height='180'/><text x='90' y='135' font-size='120' font-weight='bold' fill='white' text-anchor='middle'>A</text></svg>">
+  
+  <!-- 样式表 -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- 预连接 -->
+  <link rel="preconnect" href="https://api.github.com">
 </head>
 <body>
+  <header role="banner">
+    <h1>Aurelius</h1>
+    <div class="header-controls">
+      <button class="btn-icon btn-dark-mode" title="切换深色模式" aria-label="切换到深色模式">🌙</button>
+    </div>
+  </header>
 
-<h1>Aurelius</h1>
+  <nav class="toolbar" role="search">
+    <input 
+      type="search" 
+      id="search" 
+      placeholder="搜索名称、URL、标签或分类..." 
+      aria-label="搜索网站"
+      autocomplete="off">
+    <button class="btn-expand-all" title="展开所有分类" aria-label="展开所有分类">展开全部</button>
+    <button class="btn-collapse-all" title="收起所有分类" aria-label="收起所有分类">收起全部</button>
+  </nav>
 
-<div class="toolbar">
-  <input type="text" id="search" placeholder="搜索名称、URL、标签或分类...">
-</div>
+  <div id="search-results-count" class="search-results-count hidden" role="status" aria-live="polite"></div>
 
-<div id="content"></div>
+  <main id="content" role="main" aria-label="网站分类列表"></main>
 
-<div id="update-time">加载中...</div>
+  <footer id="update-time" role="contentinfo">加载中...</footer>
 
-<script>
-const d = document;
-const s = d.getElementById('search');
-const c = d.getElementById('content');
-const u = d.getElementById('update-time');
-
-let siteGroups = [];
-
-// 创建链接元素
-function createLink(link) {
-  const a = d.createElement('a');
-  a.href = link.url;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
-  a.textContent = link.title;
-  a.dataset.title = link.title.toLowerCase();
-  a.dataset.url = link.url.toLowerCase();
-  a.dataset.tags = (link.tags || '').toLowerCase();
-  if (link.tags && link.tags.trim()) a.title = link.tags;
-  return a;
-}
-
-// 渲染网站
-function render() {
-  c.innerHTML = '';
-  siteGroups.forEach(g => {
-    const sec = d.createElement('details');
-    sec.dataset.category = g.category.toLowerCase();
-    const sum = d.createElement('summary');
-    const titleSpan = d.createElement('span');
-    titleSpan.textContent = g.category;
-    const countSpan = d.createElement('span');
-    countSpan.className = 'count';
-    countSpan.textContent = `(${g.links.length})`;
-    sum.appendChild(titleSpan);
-    sum.appendChild(countSpan);
-    sec.appendChild(sum);
-    g.links.forEach(l => sec.appendChild(createLink(l)));
-    c.appendChild(sec);
-  });
-}
-
-function validateSiteGroups(data) {
-  if (!Array.isArray(data)) return null;
-
-  const cleaned = data
-    .filter(group => group && typeof group === 'object')
-    .map(group => {
-      const category = typeof group.category === 'string' ? group.category.trim() : '';
-      const links = Array.isArray(group.links) ? group.links : [];
-
-      const cleanedLinks = links
-        .filter(link => link && typeof link === 'object')
-        .map(link => ({
-          title: typeof link.title === 'string' ? link.title.trim() : '',
-          url: typeof link.url === 'string' ? link.url.trim() : '',
-          tags: typeof link.tags === 'string' ? link.tags.trim() : ''
-        }))
-        .filter(link => link.title && link.url);
-
-      return { category, links: cleanedLinks };
-    })
-    .filter(group => group.category && group.links.length);
-
-  return cleaned;
-}
-
-// 搜索过滤
-function filter() {
-  const q = s.value.toLowerCase().trim();
-  d.querySelectorAll('#content details').forEach(sec => {
-    let show = false;
-    sec.querySelectorAll('a').forEach(a => {
-      const match = !q || a.dataset.title.includes(q) || a.dataset.url.includes(q) || a.dataset.tags.includes(q) || sec.dataset.category.includes(q);
-      a.classList.toggle('hidden', !match);
-      if (match) show = true;
-    });
-    sec.classList.toggle('hidden', !show);
-  });
-}
-
-// 获取最后更新时间
-function updateTime() {
-  fetch('https://api.github.com/repos/AureliusWu/AureliusWu.github.io/commits?per_page=1')
-    .then(response => {
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      return response.json();
-    })
-    .then(data => {
-      if (!data || data.length === 0) throw new Error('No commits found');
-      const lastCommitDate = new Date(data[0].commit.author.date);
-      const formattedDate = lastCommitDate.toLocaleString('zh-CN', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-      u.textContent = `本页面最后更新时间：${formattedDate}`;
-    })
-    .catch(error => {
-      console.error('获取更新时间失败:', error);
-      u.textContent = '本页面最后更新时间：获取失败';
-    });
-}
-
-// 初始化
-async function init() {
-  try {
-    const res = await fetch('data.json');
-    const loaded = validateSiteGroups(await res.json());
-    siteGroups = loaded || [];
-  } catch (e) {
-    console.warn('无法加载 data.json，使用默认数据');
-    siteGroups = [];
-  }
+  <!-- 脚本 -->
+  <script src="script.js" defer></script>
   
-  render();
-  updateTime();
-  
-  s.addEventListener('input', filter);
-  s.focus();
-  
-  setInterval(updateTime, 600000); // 每10分钟更新一次时间
-}
-
-d.addEventListener('DOMContentLoaded', init);
-</script>
-
+  <!-- 预加载关键资源 -->
+  <link rel="preload" href="data.json" as="fetch" crossorigin>
 </body>
 </html>
