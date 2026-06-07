@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://AureliusWu.github.io/sitemap.xml
