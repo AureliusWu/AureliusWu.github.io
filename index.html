@@ -7,7 +7,7 @@
   <title>Aurelius</title>
   <meta name="description" content="Aurelius 的个人项目索引">
   <meta name="author" content="AureliusWu">
-  <meta name="theme-color" content="#0d0d0d">
+  <meta name="theme-color" content="#080808">
   <link rel="canonical" href="https://aureliuswu.github.io/">
 
   <meta property="og:title" content="Aurelius">
@@ -15,24 +15,31 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://aureliuswu.github.io/">
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' font-weight='bold' fill='%230066cc'>A</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='78' font-size='82' font-weight='700' fill='%23c8a96e'>A</text></svg>">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0d0d0d;
-      --bg2: #141414;
-      --line: #2a2a2a;
-      --text: #e8e8e8;
-      --muted: #666;
-      --accent: #c8a96e;
-      --sans: 'Noto Sans SC', sans-serif;
+      --bg:      #080808;
+      --bg2:     #101010;
+      --bg3:     #181818;
+      --line:    #222;
+      --line2:   #2e2e2e;
+      --text:    #ddd;
+      --muted:   #555;
+      --muted2:  #3a3a3a;
+      --accent:  #c8a96e;
+      --accent2: #9a7a48;
+      --serif:   'Noto Serif SC', serif;
+      --sans:    'Noto Sans SC', sans-serif;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
@@ -42,157 +49,301 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px;
+      padding: 60px 24px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
     }
 
-    .container {
-      width: 100%;
-      max-width: 560px;
-    }
+    .wrap { width: 100%; max-width: 600px; }
 
+    /* hero */
     .hero {
-      margin-bottom: 40px;
+      margin-bottom: 56px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp .7s ease forwards;
+    }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--accent2);
+      text-transform: uppercase;
+      margin-bottom: 14px;
     }
 
     .hero-name {
-      font-size: 28px;
-      font-weight: 500;
+      font-family: var(--serif);
+      font-size: clamp(36px, 8vw, 52px);
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .hero-name em {
+      font-style: normal;
       color: var(--accent);
-      letter-spacing: 1px;
-      margin-bottom: 6px;
+    }
+
+    .hero-divider {
+      width: 32px;
+      height: 1px;
+      background: var(--accent2);
+      margin-bottom: 16px;
     }
 
     .hero-sub {
       font-size: 13px;
       color: var(--muted);
-      letter-spacing: 1px;
+      line-height: 1.8;
+      letter-spacing: 0.5px;
+      max-width: 340px;
     }
 
+    /* section label */
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--muted2);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      padding-left: 1px;
+      opacity: 0;
+      animation: fadeUp .7s ease .2s forwards;
+    }
+
+    /* cards */
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px;
-      margin-bottom: 40px;
+      gap: 0;
+      opacity: 0;
+      animation: fadeUp .7s ease .3s forwards;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 48px;
     }
 
     .card {
       background: var(--bg2);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 20px 16px;
+      padding: 24px 24px 22px;
       text-decoration: none;
-      display: block;
-      transition: border-color 0.2s, background 0.2s;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto auto;
+      align-items: start;
+      transition: background .2s;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
     }
 
-    .card:hover {
-      border-color: #444;
-      background: #1a1a1a;
+    .card:last-child { border-bottom: none; }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform .25s ease;
+    }
+
+    .card:hover { background: var(--bg3); }
+    .card:hover::after { transform: scaleY(1); }
+
+    .card-header {
+      grid-column: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
     }
 
     .card-icon {
-      font-size: 20px;
-      color: var(--muted);
-      margin-bottom: 14px;
+      font-size: 13px;
+      color: var(--accent2);
+      width: 18px;
+      text-align: center;
+      flex-shrink: 0;
     }
 
     .card-title {
       font-size: 14px;
       font-weight: 500;
       color: var(--text);
-      margin-bottom: 6px;
+      letter-spacing: 0.3px;
+    }
+
+    .card-arrow {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      align-self: center;
+      font-size: 14px;
+      color: var(--muted2);
+      margin-left: 20px;
+      margin-top: 4px;
+      transition: color .2s, transform .2s;
+    }
+
+    .card:hover .card-arrow {
+      color: var(--accent);
+      transform: translateX(3px);
     }
 
     .card-desc {
+      grid-column: 1;
       font-size: 12px;
       color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 14px;
+      line-height: 1.7;
+      padding-left: 28px;
+      margin-bottom: 10px;
+    }
+
+    .card-footer {
+      grid-column: 1;
+      padding-left: 28px;
     }
 
     .card-tag {
       display: inline-block;
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 3px;
-      letter-spacing: 0.5px;
+      font-size: 9px;
+      padding: 2px 7px;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
-    .tag-pwa  { background: #1a2a3a; color: #6fb3ff; border: 1px solid #1e3a5a; }
-    .tag-pages { background: #1a2e1a; color: #6fcf97; border: 1px solid #1e4a1e; }
-    .tag-tool  { background: #2e2414; color: #f6c26b; border: 1px solid #4a3810; }
+    .tag-pwa   { background: #0f1e2e; color: #5a9fd4; border: 1px solid #1a3550; }
+    .tag-pages { background: #0f1e12; color: #5abf7a; border: 1px solid #1a3e22; }
+    .tag-tool  { background: #221a0a; color: #c8a96e; border: 1px solid #3e2e10; }
 
+    .card.disabled {
+      pointer-events: none;
+      opacity: .45;
+    }
+    .card.disabled::after { display: none; }
+
+    /* footer */
     .footer {
-      border-top: 1px solid var(--line);
-      padding-top: 20px;
+      opacity: 0;
+      animation: fadeUp .7s ease .5s forwards;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
     }
 
-    .footer-txt {
-      font-size: 12px;
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .footer-name {
+      font-family: var(--serif);
+      font-size: 13px;
       color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    .footer-url {
+      font-size: 10px;
+      color: var(--muted2);
+      letter-spacing: 0.5px;
     }
 
     .gh-link {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
       text-decoration: none;
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: color 0.2s;
+      transition: color .2s;
+      letter-spacing: 0.5px;
     }
 
-    .gh-link:hover { color: var(--text); }
+    .gh-link:hover { color: var(--accent); }
 
-    .gh-icon {
-      width: 14px;
-      height: 14px;
-      fill: currentColor;
+    .gh-icon { width: 13px; height: 13px; fill: currentColor; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 48px 20px; }
+      .hero { margin-bottom: 40px; }
+      .card { padding: 20px 18px 18px; }
+      .card-desc { padding-left: 24px; }
+      .card-footer { padding-left: 24px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="wrap">
+
     <div class="hero">
-      <div class="hero-name">Aurelius</div>
-      <div class="hero-sub">个人项目索引</div>
+      <div class="hero-eyebrow">Personal Projects</div>
+      <div class="hero-name"><em>Aurelius</em></div>
+      <div class="hero-divider"></div>
+      <div class="hero-sub">工具与实验的集合，在这里记录正在构建的东西。</div>
     </div>
 
+    <div class="section-label">Projects</div>
+
     <div class="cards">
-      <a class="card" href="https://aureliuswu.github.io/bookmarks/" target="_blank">
-        <div class="card-icon">⌖</div>
-        <div class="card-title">Bookmarks</div>
-        <div class="card-desc">网站导航收藏库，支持搜索、深色模式与链接复制</div>
-        <span class="card-tag tag-pages">GitHub Pages</span>
+
+      <a class="card" href="https://aureliuswu.github.io/FundVal/" target="_blank" rel="noopener">
+        <div class="card-header">
+          <span class="card-icon">◈</span>
+          <span class="card-title">蜉蝣基金</span>
+        </div>
+        <div class="card-arrow">→</div>
+        <div class="card-desc">个人基金盘中估值监控。交易时段自动刷新，双数据源容错，GitHub Gist 云同步持仓。</div>
+        <div class="card-footer"><span class="card-tag tag-pwa">PWA</span></div>
       </a>
 
-      <a class="card" href="https://aureliuswu.github.io/FundVal/" target="_blank">
-        <div class="card-icon">◈</div>
-        <div class="card-title">蜉蝣基金</div>
-        <div class="card-desc">个人基金盘中估值监控，交易时间自动刷新</div>
-        <span class="card-tag tag-pwa">PWA</span>
+      <a class="card" href="https://aureliuswu.github.io/bookmarks/" target="_blank" rel="noopener">
+        <div class="card-header">
+          <span class="card-icon">⌖</span>
+          <span class="card-title">Bookmarks</span>
+        </div>
+        <div class="card-arrow">→</div>
+        <div class="card-desc">网站导航收藏库，支持关键词搜索、深色模式与一键复制链接。</div>
+        <div class="card-footer"><span class="card-tag tag-pages">GitHub Pages</span></div>
       </a>
 
-      <a class="card" href="#" target="_blank">
-        <div class="card-icon">◎</div>
-        <div class="card-title">时之书</div>
-        <div class="card-desc">日记阅读器，支持 .docx 与 .md，树形侧边栏</div>
-        <span class="card-tag tag-tool">桌面工具</span>
-      </a>
+      <div class="card disabled">
+        <div class="card-header">
+          <span class="card-icon">◎</span>
+          <span class="card-title">时之书</span>
+        </div>
+        <div class="card-arrow">·</div>
+        <div class="card-desc">日记阅读器，支持 .docx 与 .md，年月日树形侧边栏，异步全文搜索。</div>
+        <div class="card-footer"><span class="card-tag tag-tool">桌面工具</span></div>
+      </div>
+
     </div>
 
     <div class="footer">
-      <span class="footer-txt">aureliuswu.github.io</span>
-      <a class="gh-link" href="https://github.com/AureliusWu" target="_blank">
+      <div class="footer-left">
+        <span class="footer-name">Aurelius Wu</span>
+        <span class="footer-url">aureliuswu.github.io</span>
+      </div>
+      <a class="gh-link" href="https://github.com/AureliusWu" target="_blank" rel="noopener">
         <svg class="gh-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/>
         </svg>
         GitHub
       </a>
     </div>
+
   </div>
 </body>
 </html>
