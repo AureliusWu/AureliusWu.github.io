@@ -1,17 +1,26 @@
-# Aurelius
+# AureliusWu.github.io
 
 个人项目索引页，托管于 [aureliuswu.github.io](https://aureliuswu.github.io/)。
 
-## 项目列表
+## 定位
 
-目前主页只展示两个核心项目：
+这是 AureliusWu 的 GitHub Pages 主页，用于集中展示项目入口。它只负责索引、跳转和品牌展示，不包含各应用的业务逻辑。
 
-- 🦋 **蜉蝣基金 / FundVal** — 个人基金盘中估值监控 PWA
-- 🧭 **司南基金 / fund-compass** — 基金投资辅助与择时分析工具
+## 当前项目
+
+- **蜉蝣基金 / FundVal**：个人基金盘中估值监控 PWA。
+- **司南基金 / fund-compass**：基金选基、择时、资产分析工具。
+- **盘中宝 / pan**：移动端基金盘中观察工具。
 
 ## 技术
 
-单页 HTML，Apple 风格浅色主题，所有 CSS 内联，零外部依赖。
+- 单页 `index.html`。
+- CSS 内联。
+- 零构建、零运行时依赖。
+
+## 开发
+
+直接编辑 `index.html`。修改项目卡片时，核对链接和描述。
 
 ## 部署
 
