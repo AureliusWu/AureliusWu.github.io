@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aurelius · Personal Projects</title>
-  <meta name="description" content="Aurelius 的个人项目主页：把想法做成真正能每天使用的工具。">
+  <meta name="description" content="Aurelius 的个人项目主页：基金工具、通用 Agent，以及持续从真实需求中生长的软件作品。">
   <meta name="author" content="AureliusWu">
-  <meta name="theme-color" content="#f5f7fb" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0b0d12" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f3f5f8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#090b10" media="(prefers-color-scheme: dark)">
   <link rel="canonical" href="https://aureliuswu.github.io/">
   <meta property="og:title" content="Aurelius · Personal Projects">
-  <meta property="og:description" content="把想法做成真正能每天使用的工具。">
+  <meta property="og:description" content="把真实需求，做成能够长期使用的软件。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://aureliuswu.github.io/">
   <meta name="twitter:card" content="summary">
@@ -20,35 +20,44 @@
 
     :root {
       color-scheme: light dark;
-      --bg: #f5f7fb;
-      --surface: rgba(255, 255, 255, .76);
-      --surface-solid: #ffffff;
-      --surface-hover: rgba(255, 255, 255, .96);
-      --text: #171a21;
-      --muted: #697080;
-      --subtle: #9298a6;
-      --line: rgba(23, 26, 33, .10);
-      --accent: #5b5ce2;
-      --accent-soft: rgba(91, 92, 226, .12);
-      --shadow: 0 20px 50px rgba(36, 44, 71, .08);
-      --radius-lg: 28px;
-      --radius-md: 20px;
+      --bg: #f3f5f8;
+      --bg-elevated: rgba(255, 255, 255, .78);
+      --surface: rgba(255, 255, 255, .68);
+      --surface-strong: rgba(255, 255, 255, .92);
+      --text: #17191f;
+      --muted: #626a78;
+      --subtle: #8d94a1;
+      --line: rgba(23, 25, 31, .10);
+      --line-strong: rgba(23, 25, 31, .16);
+      --accent: #5f61e8;
+      --accent-soft: rgba(95, 97, 232, .12);
+      --green: #168979;
+      --orange: #d8732f;
+      --shadow-sm: 0 12px 36px rgba(31, 38, 60, .07);
+      --shadow-lg: 0 30px 90px rgba(31, 38, 60, .12);
+      --radius-xl: 34px;
+      --radius-lg: 26px;
+      --radius-md: 18px;
       --font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #0b0d12;
-        --surface: rgba(19, 22, 30, .74);
-        --surface-solid: #13161e;
-        --surface-hover: rgba(24, 28, 38, .96);
+        --bg: #090b10;
+        --bg-elevated: rgba(18, 21, 29, .84);
+        --surface: rgba(17, 20, 28, .70);
+        --surface-strong: rgba(24, 28, 38, .92);
         --text: #f3f5f8;
-        --muted: #a6adba;
-        --subtle: #747c8c;
+        --muted: #aab1bd;
+        --subtle: #737b8b;
         --line: rgba(255, 255, 255, .10);
-        --accent: #8f90ff;
-        --accent-soft: rgba(143, 144, 255, .14);
-        --shadow: 0 24px 70px rgba(0, 0, 0, .28);
+        --line-strong: rgba(255, 255, 255, .17);
+        --accent: #9698ff;
+        --accent-soft: rgba(150, 152, 255, .14);
+        --green: #54c9b6;
+        --orange: #f3a168;
+        --shadow-sm: 0 14px 42px rgba(0, 0, 0, .23);
+        --shadow-lg: 0 34px 100px rgba(0, 0, 0, .34);
       }
     }
 
@@ -57,10 +66,12 @@
     body {
       margin: 0;
       min-height: 100vh;
+      overflow-x: hidden;
       color: var(--text);
       background:
-        radial-gradient(circle at 10% 0%, rgba(91, 92, 226, .14), transparent 32rem),
-        radial-gradient(circle at 92% 18%, rgba(25, 175, 170, .11), transparent 28rem),
+        radial-gradient(circle at 7% 1%, rgba(95, 97, 232, .17), transparent 29rem),
+        radial-gradient(circle at 92% 23%, rgba(22, 137, 121, .12), transparent 26rem),
+        radial-gradient(circle at 58% 100%, rgba(216, 115, 47, .08), transparent 30rem),
         var(--bg);
       font-family: var(--font);
       -webkit-font-smoothing: antialiased;
@@ -71,35 +82,49 @@
       content: "";
       position: fixed;
       inset: 0;
+      z-index: -2;
       pointer-events: none;
-      opacity: .38;
+      opacity: .40;
       background-image:
         linear-gradient(var(--line) 1px, transparent 1px),
         linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: linear-gradient(to bottom, black, transparent 72%);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to bottom, black 0%, transparent 72%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--bg) 82%, transparent) 78%, var(--bg));
     }
 
     a { color: inherit; }
 
     .shell {
-      position: relative;
-      width: min(1080px, calc(100% - 40px));
+      width: min(1160px, calc(100% - 48px));
       margin: 0 auto;
-      padding: 28px 0 44px;
+      padding: 24px 0 48px;
     }
 
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
+      gap: 24px;
       min-height: 52px;
     }
 
-    .brand {
+    .brand,
+    .topnav,
+    .topnav a {
       display: inline-flex;
       align-items: center;
+    }
+
+    .brand {
       gap: 12px;
       text-decoration: none;
     }
@@ -107,62 +132,70 @@
     .brand-mark {
       display: grid;
       place-items: center;
-      width: 38px;
-      height: 38px;
-      border-radius: 13px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
       color: #fff;
-      background: linear-gradient(145deg, #181b25, #363b4c);
-      box-shadow: inset 0 1px rgba(255,255,255,.22), 0 8px 22px rgba(20, 24, 35, .18);
+      background: linear-gradient(145deg, #181b25, #373d50);
+      box-shadow: inset 0 1px rgba(255,255,255,.23), 0 10px 24px rgba(20, 24, 35, .17);
       font-size: 17px;
-      font-weight: 760;
+      font-weight: 780;
       letter-spacing: -.04em;
     }
 
     .brand-copy { display: grid; gap: 1px; }
-    .brand-name { font-size: 14px; font-weight: 700; letter-spacing: -.02em; }
+    .brand-name { font-size: 14px; font-weight: 730; letter-spacing: -.02em; }
     .brand-note { color: var(--subtle); font-size: 11px; }
 
-    .github-link {
-      display: inline-flex;
-      align-items: center;
+    .topnav {
       gap: 8px;
-      min-height: 40px;
-      padding: 0 14px;
+      padding: 5px;
       border: 1px solid var(--line);
-      border-radius: 13px;
-      color: var(--muted);
+      border-radius: 15px;
       background: var(--surface);
+      box-shadow: var(--shadow-sm);
       backdrop-filter: blur(18px);
+    }
+
+    .topnav a {
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 10px;
+      color: var(--muted);
       text-decoration: none;
-      font-size: 13px;
-      font-weight: 650;
-      transition: transform .2s ease, border-color .2s ease, color .2s ease, background .2s ease;
+      font-size: 12px;
+      font-weight: 680;
+      transition: color .2s ease, background .2s ease, transform .2s ease;
     }
 
-    .github-link:hover {
+    .topnav a:hover {
       color: var(--text);
-      border-color: rgba(91, 92, 226, .34);
-      background: var(--surface-hover);
-      transform: translateY(-2px);
+      background: var(--surface-strong);
+      transform: translateY(-1px);
     }
 
-    .github-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .topnav svg { width: 15px; height: 15px; margin-right: 7px; fill: currentColor; }
 
     .hero {
-      max-width: 780px;
-      padding: 112px 0 74px;
-      animation: rise .65s cubic-bezier(.22,.75,.25,1) both;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(270px, .75fr);
+      align-items: end;
+      gap: 54px;
+      padding: 108px 0 86px;
     }
+
+    .hero-copy { animation: rise .7s cubic-bezier(.22,.75,.25,1) both; }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 22px;
+      gap: 10px;
+      margin-bottom: 24px;
       color: var(--accent);
       font-size: 12px;
-      font-weight: 750;
-      letter-spacing: .08em;
+      font-weight: 780;
+      letter-spacing: .10em;
       text-transform: uppercase;
     }
 
@@ -172,116 +205,190 @@
       height: 8px;
       border-radius: 50%;
       background: #28c76f;
-      box-shadow: 0 0 0 5px rgba(40, 199, 111, .12);
+      box-shadow: 0 0 0 6px rgba(40, 199, 111, .12);
     }
 
     h1 {
       max-width: 760px;
       margin: 0;
-      font-size: clamp(42px, 7vw, 76px);
-      line-height: 1.04;
-      letter-spacing: -.055em;
-      font-weight: 760;
+      font-size: clamp(48px, 7.2vw, 82px);
+      line-height: 1.01;
+      letter-spacing: -.064em;
+      font-weight: 770;
     }
 
-    .hero p {
-      max-width: 610px;
-      margin: 26px 0 0;
+    .hero-copy > p {
+      max-width: 640px;
+      margin: 28px 0 0;
       color: var(--muted);
-      font-size: clamp(16px, 2vw, 19px);
-      line-height: 1.75;
+      font-size: clamp(16px, 1.8vw, 19px);
+      line-height: 1.78;
       letter-spacing: -.015em;
     }
 
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px;
-      margin-top: 30px;
+    .hero-panel {
+      position: relative;
+      padding: 24px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(24px);
+      animation: rise .7s .10s cubic-bezier(.22,.75,.25,1) both;
     }
 
-    .meta-pill {
-      display: inline-flex;
-      align-items: center;
-      min-height: 32px;
-      padding: 0 11px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--muted);
-      background: var(--surface);
-      backdrop-filter: blur(16px);
-      font-size: 12px;
-      font-weight: 620;
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      top: -130px;
+      right: -90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(95, 97, 232, .34), transparent 68%);
     }
+
+    .panel-kicker {
+      position: relative;
+      color: var(--subtle);
+      font-size: 10px;
+      font-weight: 760;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .panel-value {
+      position: relative;
+      margin-top: 30px;
+      font-size: clamp(36px, 5vw, 54px);
+      line-height: 1;
+      letter-spacing: -.055em;
+      font-weight: 780;
+    }
+
+    .panel-caption {
+      position: relative;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .hero-stats {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 34px;
+    }
+
+    .stat {
+      padding: 12px 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
+    }
+
+    .stat strong,
+    .stat span { display: block; }
+    .stat strong { font-size: 15px; letter-spacing: -.025em; }
+    .stat span { margin-top: 4px; color: var(--subtle); font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 
     .section-head {
       display: flex;
       align-items: end;
       justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 18px;
+      gap: 28px;
+      margin-bottom: 22px;
+    }
+
+    .section-label {
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 780;
+      letter-spacing: .15em;
+      text-transform: uppercase;
     }
 
     .section-head h2 {
       margin: 0;
-      font-size: clamp(22px, 3vw, 30px);
-      letter-spacing: -.035em;
+      font-size: clamp(26px, 3.5vw, 38px);
+      letter-spacing: -.045em;
     }
 
     .section-head p {
-      margin: 0 0 2px;
+      max-width: 400px;
+      margin: 0 0 3px;
       color: var(--subtle);
       font-size: 12px;
+      line-height: 1.6;
+      text-align: right;
     }
 
     .project-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(12, minmax(0, 1fr));
       gap: 18px;
     }
 
     .project-card {
+      --card-accent: var(--accent);
+      --glow: rgba(95, 97, 232, .28);
       position: relative;
+      grid-column: span 6;
       display: flex;
-      min-height: 330px;
-      padding: 26px;
+      min-height: 350px;
+      padding: 28px;
       overflow: hidden;
       border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
       background: var(--surface);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(22px);
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(24px);
       text-decoration: none;
       isolation: isolate;
-      transition: transform .28s cubic-bezier(.2,.75,.25,1), border-color .28s ease, background .28s ease, box-shadow .28s ease;
-      animation: rise .65s cubic-bezier(.22,.75,.25,1) both;
+      transition: transform .3s cubic-bezier(.2,.75,.25,1), border-color .3s ease, background .3s ease, box-shadow .3s ease;
+      animation: rise .7s cubic-bezier(.22,.75,.25,1) both;
     }
 
     .project-card:nth-child(2) { animation-delay: .08s; }
+    .project-card:nth-child(3) { animation-delay: .16s; }
 
     .project-card::before {
       content: "";
       position: absolute;
-      width: 260px;
-      height: 260px;
-      top: -155px;
-      right: -115px;
+      width: 300px;
+      height: 300px;
+      top: -180px;
+      right: -130px;
       border-radius: 50%;
-      background: var(--glow);
-      filter: blur(2px);
-      opacity: .72;
+      background: radial-gradient(circle, var(--glow), transparent 68%);
       z-index: -1;
-      transition: transform .35s ease, opacity .35s ease;
+      opacity: .82;
+      transition: transform .38s ease, opacity .38s ease;
+    }
+
+    .project-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 28px 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--card-accent) 34%, transparent), transparent);
+      opacity: 0;
+      transition: opacity .3s ease;
     }
 
     .project-card:hover {
       transform: translateY(-7px);
-      border-color: color-mix(in srgb, var(--card-accent) 45%, var(--line));
-      background: var(--surface-hover);
-      box-shadow: 0 28px 70px rgba(36, 44, 71, .13);
+      border-color: color-mix(in srgb, var(--card-accent) 42%, var(--line));
+      background: var(--surface-strong);
+      box-shadow: var(--shadow-lg);
     }
 
-    .project-card:hover::before { transform: scale(1.12); opacity: .95; }
+    .project-card:hover::before { transform: scale(1.14); opacity: 1; }
+    .project-card:hover::after { opacity: 1; }
 
     .project-content {
       display: flex;
@@ -289,80 +396,85 @@
       width: 100%;
     }
 
-    .project-top {
+    .project-top,
+    .project-action,
+    .agent-badges,
+    .flow-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
     }
+
+    .project-top,
+    .project-action { justify-content: space-between; }
+    .project-top { gap: 18px; }
 
     .project-icon {
       display: grid;
       place-items: center;
-      width: 50px;
-      height: 50px;
-      border: 1px solid color-mix(in srgb, var(--card-accent) 28%, transparent);
-      border-radius: 17px;
+      width: 52px;
+      height: 52px;
+      border: 1px solid color-mix(in srgb, var(--card-accent) 30%, transparent);
+      border-radius: 18px;
       color: var(--card-accent);
-      background: color-mix(in srgb, var(--card-accent) 11%, var(--surface-solid));
-      font-size: 22px;
-      font-weight: 720;
+      background: color-mix(in srgb, var(--card-accent) 11%, var(--surface-strong));
+      font-size: 21px;
+      font-weight: 760;
+      box-shadow: inset 0 1px rgba(255,255,255,.12);
     }
 
     .project-no {
       color: var(--subtle);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .12em;
+      font-size: 10px;
+      font-weight: 760;
+      letter-spacing: .15em;
     }
 
     .project-card h3 {
-      margin: 44px 0 13px;
-      font-size: clamp(25px, 4vw, 34px);
-      line-height: 1.08;
-      letter-spacing: -.04em;
+      margin: 46px 0 13px;
+      font-size: clamp(28px, 4vw, 38px);
+      line-height: 1.06;
+      letter-spacing: -.048em;
     }
 
     .project-card .description {
+      max-width: 570px;
       margin: 0;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.75;
+      line-height: 1.78;
     }
 
-    .tags {
-      display: flex;
+    .tags,
+    .agent-badges {
       flex-wrap: wrap;
       gap: 7px;
-      margin-top: 22px;
+      margin-top: 23px;
     }
 
-    .tag {
+    .tag,
+    .agent-badge {
       padding: 6px 9px;
       border-radius: 9px;
       color: var(--muted);
       background: color-mix(in srgb, var(--text) 5%, transparent);
       font-size: 11px;
-      font-weight: 650;
+      font-weight: 660;
     }
 
     .project-action {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       gap: 16px;
       margin-top: auto;
       padding-top: 30px;
       color: var(--card-accent);
       font-size: 13px;
-      font-weight: 740;
+      font-weight: 750;
     }
 
     .project-action .arrow {
       display: grid;
       place-items: center;
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: color-mix(in srgb, var(--card-accent) 12%, transparent);
       transition: transform .25s ease, background .25s ease;
@@ -374,14 +486,129 @@
     }
 
     .fundval {
-      --card-accent: #157f75;
-      --glow: radial-gradient(circle, rgba(24, 183, 165, .30), rgba(24, 183, 165, 0) 70%);
+      --card-accent: var(--green);
+      --glow: rgba(24, 183, 165, .30);
     }
 
     .compass {
-      --card-accent: #6567e8;
-      --glow: radial-gradient(circle, rgba(108, 109, 239, .33), rgba(108, 109, 239, 0) 70%);
+      --card-accent: var(--accent);
+      --glow: rgba(108, 109, 239, .32);
     }
+
+    .agent {
+      --card-accent: var(--orange);
+      --glow: rgba(216, 115, 47, .30);
+      grid-column: 1 / -1;
+      min-height: 390px;
+      padding: 30px;
+    }
+
+    .agent .project-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
+      gap: 56px;
+      align-items: stretch;
+    }
+
+    .agent-copy {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .agent .project-top { align-items: flex-start; }
+    .agent h3 { margin-top: 52px; }
+
+    .agent-badge {
+      border: 1px solid color-mix(in srgb, var(--card-accent) 20%, transparent);
+      color: color-mix(in srgb, var(--card-accent) 76%, var(--text));
+      background: color-mix(in srgb, var(--card-accent) 8%, transparent);
+    }
+
+    .agent-visual {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 326px;
+      padding: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 82%, transparent), color-mix(in srgb, var(--surface) 70%, transparent)),
+        var(--surface);
+    }
+
+    .agent-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(color-mix(in srgb, var(--card-accent) 22%, transparent) 1px, transparent 1px);
+      background-size: 18px 18px;
+      mask-image: linear-gradient(135deg, black, transparent 78%);
+      opacity: .55;
+    }
+
+    .window-bar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 1px 2px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .window-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--line-strong); }
+    .window-title { margin-left: auto; color: var(--subtle); font-size: 9px; font-weight: 720; letter-spacing: .12em; text-transform: uppercase; }
+
+    .flow {
+      position: relative;
+      display: grid;
+      gap: 9px;
+      margin: 20px 0;
+    }
+
+    .flow-row {
+      gap: 12px;
+      min-height: 48px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
+    }
+
+    .flow-index {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      color: var(--card-accent);
+      background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .flow-copy { display: grid; gap: 2px; }
+    .flow-copy strong { font-size: 11px; letter-spacing: -.01em; }
+    .flow-copy span { color: var(--subtle); font-size: 9px; }
+    .flow-state { margin-left: auto; color: var(--green); font-size: 9px; font-weight: 730; letter-spacing: .06em; text-transform: uppercase; }
+
+    .visual-footer {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--subtle);
+      font-size: 9px;
+      font-weight: 680;
+    }
+
+    .visual-footer strong { color: var(--text); font-size: 10px; }
 
     .note {
       display: flex;
@@ -400,6 +627,7 @@
     }
 
     .note strong { color: var(--text); }
+    .note span:last-child { color: var(--subtle); white-space: nowrap; }
 
     footer {
       display: flex;
@@ -411,11 +639,7 @@
       font-size: 12px;
     }
 
-    footer a {
-      color: var(--muted);
-      text-decoration: none;
-    }
-
+    footer a { color: var(--muted); text-decoration: none; }
     footer a:hover { color: var(--accent); }
 
     :focus-visible {
@@ -424,28 +648,49 @@
     }
 
     @keyframes rise {
-      from { opacity: 0; transform: translateY(18px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 760px) {
-      .shell { width: min(100% - 28px, 680px); padding-top: 18px; }
-      .brand-note { display: none; }
-      .hero { padding: 82px 0 56px; }
-      .project-grid { grid-template-columns: 1fr; }
-      .project-card { min-height: 310px; }
-      .section-head { align-items: flex-start; flex-direction: column; gap: 6px; }
-      .note { align-items: flex-start; flex-direction: column; gap: 8px; }
-      footer { padding-top: 48px; }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; align-items: start; gap: 34px; padding: 90px 0 72px; }
+      .hero-panel { max-width: 520px; }
+      .agent .project-content { grid-template-columns: 1fr; gap: 34px; }
+      .agent-visual { min-height: 300px; }
     }
 
-    @media (max-width: 430px) {
-      .github-link span { display: none; }
-      .github-link { width: 40px; padding: 0; justify-content: center; }
-      .hero { padding-top: 68px; }
-      h1 { font-size: 43px; }
-      .project-card { padding: 22px; border-radius: 24px; }
-      .project-card h3 { margin-top: 36px; }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 28px, 680px); padding-top: 17px; }
+      .brand-note { display: none; }
+      .topnav a:first-child { display: none; }
+      .hero { padding: 76px 0 58px; }
+      .hero-panel { width: 100%; }
+      .section-head { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .section-head p { text-align: left; }
+      .project-card { grid-column: 1 / -1; min-height: 320px; }
+      .agent { min-height: 0; }
+      .note { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .note span:last-child { white-space: normal; }
+      footer { padding-top: 50px; }
+    }
+
+    @media (max-width: 480px) {
+      .shell { width: min(100% - 22px, 680px); }
+      .topnav { padding: 4px; }
+      .topnav a { width: 38px; padding: 0; justify-content: center; }
+      .topnav a span { display: none; }
+      .topnav svg { margin: 0; }
+      .hero { padding-top: 64px; }
+      h1 { font-size: 46px; }
+      .hero-panel { padding: 20px; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .stat { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+      .stat span { margin-top: 0; }
+      .project-card, .agent { padding: 22px; border-radius: 26px; }
+      .project-card h3, .agent h3 { margin-top: 38px; }
+      .agent .project-content { gap: 28px; }
+      .agent-visual { min-height: 0; padding: 14px; border-radius: 19px; }
+      .flow-state { display: none; }
       footer { align-items: flex-start; flex-direction: column; gap: 8px; }
     }
 
@@ -466,32 +711,46 @@
         <span class="brand-mark" aria-hidden="true">A</span>
         <span class="brand-copy">
           <span class="brand-name">Aurelius</span>
-          <span class="brand-note">Personal Projects</span>
+          <span class="brand-note">Independent software lab</span>
         </span>
       </a>
 
-      <a class="github-link" href="https://github.com/AureliusWu" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        <span>View GitHub</span>
-      </a>
+      <nav class="topnav" aria-label="主导航">
+        <a href="#projects"><span>Projects</span></a>
+        <a href="https://github.com/AureliusWu" target="_blank" rel="noopener noreferrer" aria-label="打开 GitHub 主页">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </nav>
     </header>
 
     <main>
       <section class="hero" aria-labelledby="hero-title">
-        <div class="eyebrow">Building in public</div>
-        <h1 id="hero-title">把想法，做成能每天使用的工具。</h1>
-        <p>这里收录我的个人软件项目。它们从真实需求出发，持续迭代，追求清晰、可靠和真正有用。</p>
-        <div class="hero-meta" aria-label="项目概况">
-          <span class="meta-pill">2 个在线项目</span>
-          <span class="meta-pill">PWA 优先</span>
-          <span class="meta-pill">持续维护</span>
+        <div class="hero-copy">
+          <div class="eyebrow">Building from real needs</div>
+          <h1 id="hero-title">把真实需求，做成长期可用的软件。</h1>
+          <p>这里收录我独立设计和持续迭代的项目：从个人投资工具，到拥有安全边界、验证闭环与桌面体验的通用 Agent。</p>
         </div>
+
+        <aside class="hero-panel" aria-label="项目概况">
+          <div class="panel-kicker">Aurelius / Project Index</div>
+          <div class="panel-value">03</div>
+          <div class="panel-caption">三个从日常问题出发、正在持续生长的软件项目。</div>
+          <div class="hero-stats">
+            <div class="stat"><strong>2</strong><span>Web Apps</span></div>
+            <div class="stat"><strong>1</strong><span>Desktop Agent</span></div>
+            <div class="stat"><strong>∞</strong><span>Iterations</span></div>
+          </div>
+        </aside>
       </section>
 
-      <section aria-labelledby="projects-title">
+      <section id="projects" aria-labelledby="projects-title">
         <div class="section-head">
-          <h2 id="projects-title">Selected projects</h2>
-          <p>点击卡片打开项目</p>
+          <div>
+            <div class="section-label">Selected work</div>
+            <h2 id="projects-title">Projects</h2>
+          </div>
+          <p>两个已经上线的基金工具，以及一个面向个人工作流的通用 Agent。</p>
         </div>
 
         <div class="project-grid">
@@ -534,17 +793,75 @@
               </div>
             </div>
           </a>
+
+          <a class="project-card agent" href="https://github.com/AureliusWu/Agent" target="_blank" rel="noopener noreferrer">
+            <div class="project-content">
+              <div class="agent-copy">
+                <div class="project-top">
+                  <div class="project-icon" aria-hidden="true">A</div>
+                  <span class="project-no">PROJECT 03 · FEATURED</span>
+                </div>
+                <h3>Agent</h3>
+                <p class="description">面向个人使用的通用 Agent 工作台。以安全沙箱、三档权限、工具与 Skill/MCP 扩展、分层记忆和独立验证闭环，完成从规划到执行、验证与返工的完整任务流程。</p>
+                <div class="agent-badges" aria-label="技术标签">
+                  <span class="agent-badge">React + TypeScript</span>
+                  <span class="agent-badge">FastAPI + SQLite</span>
+                  <span class="agent-badge">Tauri 2</span>
+                  <span class="agent-badge">Multi-Agent</span>
+                </div>
+                <div class="project-action">
+                  <span>查看源码与说明</span>
+                  <span class="arrow" aria-hidden="true">↗</span>
+                </div>
+              </div>
+
+              <div class="agent-visual" aria-hidden="true">
+                <div class="window-bar">
+                  <span class="window-dot"></span>
+                  <span class="window-dot"></span>
+                  <span class="window-dot"></span>
+                  <span class="window-title">Agent runtime · v0.13.0</span>
+                </div>
+                <div class="flow">
+                  <div class="flow-row">
+                    <span class="flow-index">01</span>
+                    <span class="flow-copy"><strong>Planner</strong><span>任务拆解与验收条件</span></span>
+                    <span class="flow-state">ready</span>
+                  </div>
+                  <div class="flow-row">
+                    <span class="flow-index">02</span>
+                    <span class="flow-copy"><strong>Executor</strong><span>受控工具与工作区执行</span></span>
+                    <span class="flow-state">running</span>
+                  </div>
+                  <div class="flow-row">
+                    <span class="flow-index">03</span>
+                    <span class="flow-copy"><strong>Verifier</strong><span>证据驱动的独立验证</span></span>
+                    <span class="flow-state">guarded</span>
+                  </div>
+                  <div class="flow-row">
+                    <span class="flow-index">04</span>
+                    <span class="flow-copy"><strong>Repair</strong><span>失败条件限定返工</span></span>
+                    <span class="flow-state">standby</span>
+                  </div>
+                </div>
+                <div class="visual-footer">
+                  <span>Workspace sandbox · Permission control</span>
+                  <strong>18 / 18 EVAL</strong>
+                </div>
+              </div>
+            </div>
+          </a>
         </div>
 
         <div class="note">
-          <span><strong>持续构建中。</strong> 项目会根据实际使用反馈继续更新。</span>
+          <span><strong>持续构建中。</strong> 所有项目都会依据真实使用反馈继续更新，而不是停留在一次性 Demo。</span>
           <span>Static site · GitHub Pages</span>
         </div>
       </section>
     </main>
 
     <footer>
-      <span>Designed & built by Aurelius Wu</span>
+      <span>Designed &amp; built by Aurelius Wu</span>
       <a href="https://github.com/AureliusWu" target="_blank" rel="noopener noreferrer">github.com/AureliusWu</a>
     </footer>
   </div>
