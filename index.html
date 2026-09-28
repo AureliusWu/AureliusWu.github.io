@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aurelius · Personal Projects</title>
-  <meta name="description" content="Aurelius 的个人项目主页：基金工具、全球新闻、通用 Agent，以及持续从真实需求中生长的软件作品。">
+  <meta name="description" content="Aurelius 的个人项目主页：基金工具、全球新闻、通用 Agent、AI 视觉生成记忆库，以及持续从真实需求中生长的软件作品。">
   <meta name="author" content="AureliusWu">
   <meta name="theme-color" content="#f3f5f8" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#090b10" media="(prefers-color-scheme: dark)">
@@ -356,6 +356,7 @@
     .project-card:nth-child(2) { animation-delay: .08s; }
     .project-card:nth-child(3) { animation-delay: .16s; }
     .project-card:nth-child(4) { animation-delay: .24s; }
+    .project-card:nth-child(5) { animation-delay: .32s; }
 
     .project-card::before {
       content: "";
@@ -499,6 +500,13 @@
     .news {
       --card-accent: var(--green);
       --glow: rgba(24, 183, 165, .22);
+      grid-column: 1 / -1;
+      min-height: 0;
+    }
+
+    .imagelore {
+      --card-accent: #2b7b8f;
+      --glow: rgba(66, 166, 188, .28);
       grid-column: 1 / -1;
       min-height: 0;
     }
@@ -737,16 +745,16 @@
         <div class="hero-copy">
           <div class="eyebrow">Building from real needs</div>
           <h1 id="hero-title">把真实需求，做成长期可用的软件。</h1>
-          <p>这里收录我独立设计和持续迭代的项目：从个人投资与全球新闻工具，到拥有安全边界、验证闭环与桌面体验的通用 Agent。</p>
+          <p>这里收录我独立设计和持续迭代的项目：从个人投资与全球新闻工具，到通用 Agent 与本地优先的 AI 视觉生成记忆库。</p>
         </div>
 
         <aside class="hero-panel" aria-label="项目概况">
           <div class="panel-kicker">Aurelius / Project Index</div>
-          <div class="panel-value">04</div>
-          <div class="panel-caption">四个从日常问题出发、正在持续生长的软件项目。</div>
+          <div class="panel-value">05</div>
+          <div class="panel-caption">五个从日常问题出发、正在持续生长的软件项目。</div>
           <div class="hero-stats">
             <div class="stat"><strong>3</strong><span>Web Apps</span></div>
-            <div class="stat"><strong>1</strong><span>Desktop Agent</span></div>
+            <div class="stat"><strong>2</strong><span>Desktop Apps</span></div>
             <div class="stat"><strong>∞</strong><span>Iterations</span></div>
           </div>
         </aside>
@@ -758,7 +766,7 @@
             <div class="section-label">Selected work</div>
             <h2 id="projects-title">Projects</h2>
           </div>
-          <p>基金工具、全球新闻聚合，以及面向个人工作流的通用 Agent。</p>
+          <p>基金工具、全球新闻、通用 Agent，以及本地优先的 AI 视觉生成记忆库。</p>
         </div>
 
         <div class="project-grid">
@@ -875,6 +883,27 @@
               <div class="project-action">
                 <span>浏览新闻</span>
                 <span class="arrow" aria-hidden="true">&#8599;</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="project-card imagelore" href="https://github.com/AureliusWu/ImageLore" target="_blank" rel="noopener noreferrer">
+            <div class="project-content">
+              <div class="project-top">
+                <div class="project-icon" aria-hidden="true">I</div>
+                <span class="project-no">PROJECT 05 · v0.18.0</span>
+              </div>
+              <h3>ImageLore</h3>
+              <p class="description">Local-first 的 AI 视觉生成记忆库。保存图片背后的 Prompt、模型、参数、版本与生成谱系，并通过 Semantic Recall、以图找图和 Generation Explorer，让几个月前的生成结果仍然能够被检索、理解与继续复用。</p>
+              <div class="tags" aria-label="技术标签">
+                <span class="tag">Local-first</span>
+                <span class="tag">Semantic Recall</span>
+                <span class="tag">Tauri 2</span>
+                <span class="tag">SQLite</span>
+              </div>
+              <div class="project-action">
+                <span>查看项目</span>
+                <span class="arrow" aria-hidden="true">↗</span>
               </div>
             </div>
           </a>

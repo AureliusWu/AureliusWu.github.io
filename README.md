@@ -12,6 +12,7 @@
 - **司南基金 / fund-compass**：基金选基、择时、资产分析工具。
 - **盘中宝 / pan**：移动端基金盘中观察工具。
 - **[Global News / News](https://aureliuswu.github.io/News/)**：全球新闻聚合，按地区、语言和来源浏览，支持关键词搜索与原文跳转，使用定时更新的新闻快照。
+- **[ImageLore](https://github.com/AureliusWu/ImageLore)**：local-first 的 AI 视觉生成记忆库，保存 Prompt、模型、参数、历史版本与生成谱系，并支持本地语义召回和以图找图。
 
 ## 技术
 
