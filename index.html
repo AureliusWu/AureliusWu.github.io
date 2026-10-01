@@ -2,924 +2,292 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aurelius · Personal Projects</title>
-  <meta name="description" content="Aurelius 的个人项目主页：基金工具、全球新闻、通用 Agent、AI 视觉生成记忆库，以及持续从真实需求中生长的软件作品。">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="application-version" content="1.0.0">
+  <meta name="description" content="Aurelius 的项目入口：蜉蝣基金、司南基金、全球新闻、司忆与 ImageLore。点击标题或功能预览即可进入项目。">
   <meta name="author" content="AureliusWu">
-  <meta name="theme-color" content="#f3f5f8" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#090b10" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f3f5f8">
+  <title>Aurelius · 项目主页</title>
   <link rel="canonical" href="https://aureliuswu.github.io/">
-  <meta property="og:title" content="Aurelius · Personal Projects">
-  <meta property="og:description" content="把真实需求，做成能够长期使用的软件。">
+  <meta property="og:title" content="Aurelius · 项目主页">
+  <meta property="og:description" content="五个项目，一屏直达。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://aureliuswu.github.io/">
-  <meta name="twitter:card" content="summary">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%2311141b'/><text x='50' y='70' text-anchor='middle' font-size='58' font-family='Arial' font-weight='700' fill='white'>A</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2317191f'/%3E%3Cpath d='M17 46 29 17h6l12 29h-7l-3-8H27l-3 8zm13-14h5l-2.5-7z' fill='white'/%3E%3C/svg%3E">
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
-
     :root {
-      color-scheme: light dark;
+      color-scheme: light;
       --bg: #f3f5f8;
-      --bg-elevated: rgba(255, 255, 255, .78);
-      --surface: rgba(255, 255, 255, .68);
-      --surface-strong: rgba(255, 255, 255, .92);
+      --surface: #fff;
       --text: #17191f;
       --muted: #626a78;
-      --subtle: #8d94a1;
-      --line: rgba(23, 25, 31, .10);
-      --line-strong: rgba(23, 25, 31, .16);
+      --line: #dde2eb;
       --accent: #5f61e8;
-      --accent-soft: rgba(95, 97, 232, .12);
       --green: #168979;
       --orange: #d8732f;
-      --shadow-sm: 0 12px 36px rgba(31, 38, 60, .07);
-      --shadow-lg: 0 30px 90px rgba(31, 38, 60, .12);
-      --radius-xl: 34px;
-      --radius-lg: 26px;
-      --radius-md: 18px;
-      --font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --utility: "SFMono-Regular", Consolas, monospace;
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #090b10;
-        --bg-elevated: rgba(18, 21, 29, .84);
-        --surface: rgba(17, 20, 28, .70);
-        --surface-strong: rgba(24, 28, 38, .92);
-        --text: #f3f5f8;
-        --muted: #aab1bd;
-        --subtle: #737b8b;
-        --line: rgba(255, 255, 255, .10);
-        --line-strong: rgba(255, 255, 255, .17);
-        --accent: #9698ff;
-        --accent-soft: rgba(150, 152, 255, .14);
-        --green: #54c9b6;
-        --orange: #f3a168;
-        --shadow-sm: 0 14px 42px rgba(0, 0, 0, .23);
-        --shadow-lg: 0 34px 100px rgba(0, 0, 0, .34);
-      }
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      overflow-x: hidden;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 7% 1%, rgba(95, 97, 232, .17), transparent 29rem),
-        radial-gradient(circle at 92% 23%, rgba(22, 137, 121, .12), transparent 26rem),
-        radial-gradient(circle at 58% 100%, rgba(216, 115, 47, .08), transparent 30rem),
-        var(--bg);
-      font-family: var(--font);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      pointer-events: none;
-      opacity: .40;
-      background-image:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: linear-gradient(to bottom, black 0%, transparent 72%);
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--bg) 82%, transparent) 78%, var(--bg));
-    }
-
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--text); background: var(--bg); font-family: var(--font); -webkit-font-smoothing: antialiased; }
     a { color: inherit; }
-
-    .shell {
-      width: min(1160px, calc(100% - 48px));
-      margin: 0 auto;
-      padding: 24px 0 48px;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      min-height: 52px;
-    }
-
-    .brand,
-    .topnav,
-    .topnav a {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .brand {
-      gap: 12px;
-      text-decoration: none;
-    }
-
-    .brand-mark {
-      display: grid;
-      place-items: center;
-      width: 40px;
-      height: 40px;
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 14px;
-      color: #fff;
-      background: linear-gradient(145deg, #181b25, #373d50);
-      box-shadow: inset 0 1px rgba(255,255,255,.23), 0 10px 24px rgba(20, 24, 35, .17);
-      font-size: 17px;
-      font-weight: 780;
-      letter-spacing: -.04em;
-    }
-
-    .brand-copy { display: grid; gap: 1px; }
-    .brand-name { font-size: 14px; font-weight: 730; letter-spacing: -.02em; }
-    .brand-note { color: var(--subtle); font-size: 11px; }
-
-    .topnav {
-      gap: 8px;
-      padding: 5px;
-      border: 1px solid var(--line);
-      border-radius: 15px;
-      background: var(--surface);
-      box-shadow: var(--shadow-sm);
-      backdrop-filter: blur(18px);
-    }
-
-    .topnav a {
-      min-height: 34px;
-      padding: 0 12px;
-      border-radius: 10px;
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 680;
-      transition: color .2s ease, background .2s ease, transform .2s ease;
-    }
-
-    .topnav a:hover {
-      color: var(--text);
-      background: var(--surface-strong);
-      transform: translateY(-1px);
-    }
-
-    .topnav svg { width: 15px; height: 15px; margin-right: 7px; fill: currentColor; }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(270px, .75fr);
-      align-items: end;
-      gap: 54px;
-      padding: 108px 0 86px;
-    }
-
-    .hero-copy { animation: rise .7s cubic-bezier(.22,.75,.25,1) both; }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 24px;
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 780;
-      letter-spacing: .10em;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #28c76f;
-      box-shadow: 0 0 0 6px rgba(40, 199, 111, .12);
-    }
-
-    h1 {
-      max-width: 760px;
-      margin: 0;
-      font-size: clamp(48px, 7.2vw, 82px);
-      line-height: 1.01;
-      letter-spacing: -.064em;
-      font-weight: 770;
-    }
-
-    .hero-copy > p {
-      max-width: 640px;
-      margin: 28px 0 0;
-      color: var(--muted);
-      font-size: clamp(16px, 1.8vw, 19px);
-      line-height: 1.78;
-      letter-spacing: -.015em;
-    }
-
-    .hero-panel {
-      position: relative;
-      padding: 24px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      background: var(--surface);
-      box-shadow: var(--shadow-lg);
-      backdrop-filter: blur(24px);
-      animation: rise .7s .10s cubic-bezier(.22,.75,.25,1) both;
-    }
-
-    .hero-panel::before {
-      content: "";
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      top: -130px;
-      right: -90px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(95, 97, 232, .34), transparent 68%);
-    }
-
-    .panel-kicker {
-      position: relative;
-      color: var(--subtle);
-      font-size: 10px;
-      font-weight: 760;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-
-    .panel-value {
-      position: relative;
-      margin-top: 30px;
-      font-size: clamp(36px, 5vw, 54px);
-      line-height: 1;
-      letter-spacing: -.055em;
-      font-weight: 780;
-    }
-
-    .panel-caption {
-      position: relative;
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .hero-stats {
-      position: relative;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 34px;
-    }
-
-    .stat {
-      padding: 12px 10px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
-    }
-
-    .stat strong,
-    .stat span { display: block; }
-    .stat strong { font-size: 15px; letter-spacing: -.025em; }
-    .stat span { margin-top: 4px; color: var(--subtle); font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 28px;
-      margin-bottom: 22px;
-    }
-
-    .section-label {
-      margin-bottom: 8px;
-      color: var(--accent);
-      font-size: 10px;
-      font-weight: 780;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: clamp(26px, 3.5vw, 38px);
-      letter-spacing: -.045em;
-    }
-
-    .section-head p {
-      max-width: 400px;
-      margin: 0 0 3px;
-      color: var(--subtle);
-      font-size: 12px;
-      line-height: 1.6;
-      text-align: right;
-    }
-
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .project-card {
-      --card-accent: var(--accent);
-      --glow: rgba(95, 97, 232, .28);
-      position: relative;
-      grid-column: span 6;
-      display: flex;
-      min-height: 350px;
-      padding: 28px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      background: var(--surface);
-      box-shadow: var(--shadow-sm);
-      backdrop-filter: blur(24px);
-      text-decoration: none;
-      isolation: isolate;
-      transition: transform .3s cubic-bezier(.2,.75,.25,1), border-color .3s ease, background .3s ease, box-shadow .3s ease;
-      animation: rise .7s cubic-bezier(.22,.75,.25,1) both;
-    }
-
-    .project-card:nth-child(2) { animation-delay: .08s; }
-    .project-card:nth-child(3) { animation-delay: .16s; }
-    .project-card:nth-child(4) { animation-delay: .24s; }
-    .project-card:nth-child(5) { animation-delay: .32s; }
-
-    .project-card::before {
-      content: "";
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      top: -180px;
-      right: -130px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--glow), transparent 68%);
-      z-index: -1;
-      opacity: .82;
-      transition: transform .38s ease, opacity .38s ease;
-    }
-
-    .project-card::after {
-      content: "";
-      position: absolute;
-      inset: auto 28px 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--card-accent) 34%, transparent), transparent);
-      opacity: 0;
-      transition: opacity .3s ease;
-    }
-
-    .project-card:hover {
-      transform: translateY(-7px);
-      border-color: color-mix(in srgb, var(--card-accent) 42%, var(--line));
-      background: var(--surface-strong);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .project-card:hover::before { transform: scale(1.14); opacity: 1; }
-    .project-card:hover::after { opacity: 1; }
-
-    .project-content {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
-
-    .project-top,
-    .project-action,
-    .agent-badges,
-    .flow-row {
-      display: flex;
-      align-items: center;
-    }
-
-    .project-top,
-    .project-action { justify-content: space-between; }
-    .project-top { gap: 18px; }
-
-    .project-icon {
-      display: grid;
-      place-items: center;
-      width: 52px;
-      height: 52px;
-      border: 1px solid color-mix(in srgb, var(--card-accent) 30%, transparent);
-      border-radius: 18px;
-      color: var(--card-accent);
-      background: color-mix(in srgb, var(--card-accent) 11%, var(--surface-strong));
-      font-size: 21px;
-      font-weight: 760;
-      box-shadow: inset 0 1px rgba(255,255,255,.12);
-    }
-
-    .project-no {
-      color: var(--subtle);
-      font-size: 10px;
-      font-weight: 760;
-      letter-spacing: .15em;
-    }
-
-    .project-card h3 {
-      margin: 46px 0 13px;
-      font-size: clamp(28px, 4vw, 38px);
-      line-height: 1.06;
-      letter-spacing: -.048em;
-    }
-
-    .project-card .description {
-      max-width: 570px;
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.78;
-    }
-
-    .tags,
-    .agent-badges {
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-top: 23px;
-    }
-
-    .tag,
-    .agent-badge {
-      padding: 6px 9px;
-      border-radius: 9px;
-      color: var(--muted);
-      background: color-mix(in srgb, var(--text) 5%, transparent);
-      font-size: 11px;
-      font-weight: 660;
-    }
-
-    .project-action {
-      gap: 16px;
-      margin-top: auto;
-      padding-top: 30px;
-      color: var(--card-accent);
-      font-size: 13px;
-      font-weight: 750;
-    }
-
-    .project-action .arrow {
-      display: grid;
-      place-items: center;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: color-mix(in srgb, var(--card-accent) 12%, transparent);
-      transition: transform .25s ease, background .25s ease;
-    }
-
-    .project-card:hover .arrow {
-      transform: translate(3px, -3px);
-      background: color-mix(in srgb, var(--card-accent) 20%, transparent);
-    }
-
-    .fundval {
-      --card-accent: var(--green);
-      --glow: rgba(24, 183, 165, .30);
-    }
-
-    .compass {
-      --card-accent: var(--accent);
-      --glow: rgba(108, 109, 239, .32);
-    }
-
-    .news {
-      --card-accent: var(--green);
-      --glow: rgba(24, 183, 165, .22);
-      grid-column: 1 / -1;
-      min-height: 0;
-    }
-
-    .imagelore {
-      --card-accent: #2b7b8f;
-      --glow: rgba(66, 166, 188, .28);
-      grid-column: 1 / -1;
-      min-height: 0;
-    }
-
-    .agent {
-      --card-accent: var(--orange);
-      --glow: rgba(216, 115, 47, .30);
-      grid-column: 1 / -1;
-      min-height: 390px;
-      padding: 30px;
-    }
-
-    .agent .project-content {
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
-      gap: 56px;
-      align-items: stretch;
-    }
-
-    .agent-copy {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .agent .project-top { align-items: flex-start; }
-    .agent h3 { margin-top: 52px; }
-
-    .agent-badge {
-      border: 1px solid color-mix(in srgb, var(--card-accent) 20%, transparent);
-      color: color-mix(in srgb, var(--card-accent) 76%, var(--text));
-      background: color-mix(in srgb, var(--card-accent) 8%, transparent);
-    }
-
-    .agent-visual {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 326px;
-      padding: 18px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background:
-        linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 82%, transparent), color-mix(in srgb, var(--surface) 70%, transparent)),
-        var(--surface);
-    }
-
-    .agent-visual::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image: radial-gradient(color-mix(in srgb, var(--card-accent) 22%, transparent) 1px, transparent 1px);
-      background-size: 18px 18px;
-      mask-image: linear-gradient(135deg, black, transparent 78%);
-      opacity: .55;
-    }
-
-    .window-bar {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 1px 2px 14px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .window-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--line-strong); }
-    .window-title { margin-left: auto; color: var(--subtle); font-size: 9px; font-weight: 720; letter-spacing: .12em; text-transform: uppercase; }
-
-    .flow {
-      position: relative;
-      display: grid;
-      gap: 9px;
-      margin: 20px 0;
-    }
-
-    .flow-row {
-      gap: 12px;
-      min-height: 48px;
-      padding: 0 13px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
-    }
-
-    .flow-index {
-      display: grid;
-      place-items: center;
-      width: 24px;
-      height: 24px;
-      border-radius: 8px;
-      color: var(--card-accent);
-      background: color-mix(in srgb, var(--card-accent) 12%, transparent);
-      font-size: 9px;
-      font-weight: 800;
-    }
-
-    .flow-copy { display: grid; gap: 2px; }
-    .flow-copy strong { font-size: 11px; letter-spacing: -.01em; }
-    .flow-copy span { color: var(--subtle); font-size: 9px; }
-    .flow-state { margin-left: auto; color: var(--green); font-size: 9px; font-weight: 730; letter-spacing: .06em; text-transform: uppercase; }
-
-    .visual-footer {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding-top: 14px;
-      border-top: 1px solid var(--line);
-      color: var(--subtle);
-      font-size: 9px;
-      font-weight: 680;
-    }
-
-    .visual-footer strong { color: var(--text); font-size: 10px; }
-
-    .note {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 22px;
-      margin-top: 18px;
-      padding: 18px 20px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      color: var(--muted);
-      background: var(--surface);
-      backdrop-filter: blur(18px);
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    .note strong { color: var(--text); }
-    .note span:last-child { color: var(--subtle); white-space: nowrap; }
-
-    footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding-top: 72px;
-      color: var(--subtle);
-      font-size: 12px;
-    }
-
-    footer a { color: var(--muted); text-decoration: none; }
-    footer a:hover { color: var(--accent); }
-
-    :focus-visible {
-      outline: 3px solid color-mix(in srgb, var(--accent) 48%, transparent);
-      outline-offset: 4px;
-    }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; align-items: start; gap: 34px; padding: 90px 0 72px; }
-      .hero-panel { max-width: 520px; }
-      .agent .project-content { grid-template-columns: 1fr; gap: 34px; }
-      .agent-visual { min-height: 300px; }
-    }
-
+    .page { width: min(1248px, 100%); height: 100svh; min-height: 520px; margin: auto; padding: 24px 32px 16px; display: flex; flex-direction: column; gap: 20px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 40px; flex-shrink: 0; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 12px; background: var(--text); color: white; font-weight: 750; font-size: 21px; }
+    .brand-name { font-size: 18px; font-weight: 750; letter-spacing: -.04em; }
+    .brand-note { border-left: 1px solid var(--line); padding-left: 12px; color: var(--muted); font-size: 12px; }
+    .header-links { display: flex; align-items: center; gap: 20px; }
+    .version { padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); font: 12px var(--utility); color: var(--muted); white-space: nowrap; }
+    .github { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; text-decoration: none; }
+    .github:hover { color: var(--accent); }
+    .github svg { width: 16px; height: 16px; fill: currentColor; }
+    main { min-height: 0; flex: 1; display: flex; flex-direction: column; gap: 20px; }
+    .intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-shrink: 0; }
+    h1 { margin: 0; font-size: clamp(26px, 3.2vw, 36px); font-weight: 730; letter-spacing: -.06em; line-height: 1.2; }
+    .intro p { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
+    .project-count { color: var(--muted); font-size: 12px; white-space: nowrap; padding-bottom: 2px; }
+    .project-count strong { font-family: var(--utility); color: var(--text); font-weight: 500; }
+    .project-grid { min-height: 0; flex: 1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .project-card { --project-color: var(--accent); grid-column: span 2; min-height: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); text-decoration: none; transition: border-color .16s, box-shadow .16s; }
+    .project-card.desktop { grid-column: span 3; }
+    .project-card:hover { border-color: var(--project-color); box-shadow: 0 5px 18px #17191f0b; }
+    .project-card:focus-visible, .brand:focus-visible, .github:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .fundval { --project-color: var(--green); }
+    .compass { --project-color: var(--accent); }
+    .news { --project-color: var(--orange); }
+    .agent { --project-color: var(--accent); }
+    .imagelore { --project-color: var(--green); }
+    .preview { position: relative; min-height: 0; flex: 1; padding: 14px 14px 0; background: #f8f9fc; overflow: hidden; }
+    .preview-image { display: block; width: 100%; height: 100%; }
+    .preview-label { position: absolute; top: 10px; right: 12px; padding: 3px 6px; border-radius: 4px; background: #ffffffee; color: var(--muted); font-size: 10px; line-height: 1.3; }
+    .card-info { padding: 14px 18px 15px; flex-shrink: 0; }
+    .card-heading { display: flex; align-items: center; gap: 10px; }
+    h2 { margin: 0; font-size: 20px; line-height: 1.3; font-weight: 720; letter-spacing: -.035em; }
+    .type { padding: 3px 6px; border-radius: 5px; background: #f3f5f8; color: var(--muted); font-size: 10px; line-height: 1.3; white-space: nowrap; }
+    .arrow { margin-left: auto; color: var(--project-color); font-size: 20px; line-height: 1; transition: transform .16s; }
+    .project-card:hover .arrow { transform: translate(2px, -2px); }
+    .description { margin: 7px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
+    footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-shrink: 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
+    footer p { margin: 0; }
+    @media (min-width: 1440px) { .page { max-height: 900px; } }
     @media (max-width: 760px) {
-      .shell { width: min(100% - 28px, 680px); padding-top: 17px; }
+      .page { padding: 16px; gap: 14px; min-height: 520px; }
+      .topbar { min-height: 32px; }
+      .brand-mark { width: 32px; height: 32px; border-radius: 10px; font-size: 19px; }
+      .brand { gap: 8px; }
+      .brand-name { font-size: 16px; }
       .brand-note { display: none; }
-      .topnav a:first-child { display: none; }
-      .hero { padding: 76px 0 58px; }
-      .hero-panel { width: 100%; }
-      .section-head { align-items: flex-start; flex-direction: column; gap: 8px; }
-      .section-head p { text-align: left; }
-      .project-card { grid-column: 1 / -1; min-height: 320px; }
-      .agent { min-height: 0; }
-      .note { align-items: flex-start; flex-direction: column; gap: 8px; }
-      .note span:last-child { white-space: normal; }
-      footer { padding-top: 50px; }
+      .header-links { gap: 12px; }
+      .version { padding: 5px 7px; font-size: 11px; }
+      .github { font-size: 12px; }
+      main { gap: 14px; }
+      h1 { font-size: 26px; }
+      .intro p { font-size: 12px; margin-top: 6px; }
+      .project-count { display: none; }
+      .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 10px; }
+      .project-card, .project-card.desktop { grid-column: span 1; border-radius: 12px; }
+      .project-card:last-child { grid-column: span 2; flex-direction: row; }
+      .project-card:last-child .preview { flex: 1; padding: 10px 6px 0; }
+      .project-card:last-child .card-info { width: 50%; align-self: center; padding: 12px; }
+      .preview { padding: 8px 8px 0; }
+      .preview-label { top: 6px; right: 6px; font-size: 9px; padding: 2px 4px; }
+      .card-info { padding: 9px 10px 10px; }
+      .card-heading { gap: 6px; }
+      h2 { font-size: 16px; }
+      .type { font-size: 9px; padding: 2px 4px; }
+      .arrow { font-size: 17px; }
+      .description { font-size: 11px; margin-top: 5px; line-height: 1.4; }
+      footer { gap: 8px; font-size: 10px; }
     }
-
-    @media (max-width: 480px) {
-      .shell { width: min(100% - 22px, 680px); }
-      .topnav { padding: 4px; }
-      .topnav a { width: 38px; padding: 0; justify-content: center; }
-      .topnav a span { display: none; }
-      .topnav svg { margin: 0; }
-      .hero { padding-top: 64px; }
-      h1 { font-size: 46px; }
-      .hero-panel { padding: 20px; }
-      .hero-stats { grid-template-columns: 1fr; }
-      .stat { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-      .stat span { margin-top: 0; }
-      .project-card, .agent { padding: 22px; border-radius: 26px; }
-      .project-card h3, .agent h3 { margin-top: 38px; }
-      .agent .project-content { gap: 28px; }
-      .agent-visual { min-height: 0; padding: 14px; border-radius: 19px; }
-      .flow-state { display: none; }
-      footer { align-items: flex-start; flex-direction: column; gap: 8px; }
+    @media (max-width: 380px) {
+      .page { padding: 12px; gap: 10px; }
+      main { gap: 10px; }
+      h1 { font-size: 23px; }
+      .intro p { font-size: 11px; }
+      .card-heading { flex-wrap: wrap; gap: 4px; }
+      h2 { font-size: 15px; }
+      .type { margin-left: auto; }
+      .arrow { display: none; }
+      .card-info { padding: 8px; }
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-      }
+    @media (min-width: 761px) and (max-height: 620px) {
+      .page { padding: 12px 24px; gap: 10px; min-height: 360px; }
+      main { gap: 10px; }
+      .intro p { margin-top: 4px; }
+      h1 { font-size: 26px; }
+      .project-grid { gap: 10px; }
+      .card-info { padding: 8px 12px; }
+      h2 { font-size: 17px; }
+      .description { font-size: 12px; margin-top: 4px; }
+      .preview { padding: 8px 8px 0; }
     }
+    @media (orientation: landscape) and (max-height: 460px) and (min-width: 600px) {
+      .page { min-height: 300px; padding: 10px 16px; gap: 8px; }
+      main { gap: 8px; }
+      .intro { align-items: center; }
+      .intro p { margin: 0; font-size: 11px; }
+      .intro-copy { display: flex; align-items: center; gap: 16px; }
+      h1 { font-size: 22px; }
+      .project-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); gap: 8px; }
+      .project-card, .project-card.desktop, .project-card:last-child { grid-column: span 1; flex-direction: column; }
+      .project-card:last-child .card-info { width: 100%; padding: 8px; }
+      .card-info { padding: 8px; }
+      .card-heading { gap: 4px; flex-wrap: wrap; }
+      h2 { font-size: 15px; }
+      .type { font-size: 9px; }
+      .arrow { display: none; }
+      .description { font-size: 11px; }
+      footer { font-size: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
   </style>
 </head>
 <body>
-  <div class="shell">
+  <div class="page">
     <header class="topbar">
-      <a class="brand" href="/" aria-label="返回 Aurelius 主页">
+      <a class="brand" href="/" aria-label="Aurelius 主页">
         <span class="brand-mark" aria-hidden="true">A</span>
-        <span class="brand-copy">
-          <span class="brand-name">Aurelius</span>
-          <span class="brand-note">Independent software lab</span>
-        </span>
+        <span class="brand-name">Aurelius</span>
+        <span class="brand-note">个人项目工作室</span>
       </a>
-
-      <nav class="topnav" aria-label="主导航">
-        <a href="#projects"><span>Projects</span></a>
-        <a href="https://github.com/AureliusWu" target="_blank" rel="noopener noreferrer" aria-label="打开 GitHub 主页">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      <div class="header-links">
+        <span class="version" id="site-version" aria-label="主页版本">v1.0.0</span>
+        <a class="github" href="https://github.com/AureliusWu" aria-label="GitHub 主页">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A12 12 0 0 0 12 0Z"/></svg>
           <span>GitHub</span>
         </a>
-      </nav>
+      </div>
     </header>
-
     <main>
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <div class="eyebrow">Building from real needs</div>
-          <h1 id="hero-title">把真实需求，做成长期可用的软件。</h1>
-          <p>这里收录我独立设计和持续迭代的项目：从个人投资与全球新闻工具，到通用 Agent 与本地优先的 AI 视觉生成记忆库。</p>
+      <div class="intro">
+        <div class="intro-copy">
+          <h1>常用项目，一屏直达。</h1>
+          <p>点击标题或功能预览，即可进入项目。</p>
         </div>
-
-        <aside class="hero-panel" aria-label="项目概况">
-          <div class="panel-kicker">Aurelius / Project Index</div>
-          <div class="panel-value">05</div>
-          <div class="panel-caption">五个从日常问题出发、正在持续生长的软件项目。</div>
-          <div class="hero-stats">
-            <div class="stat"><strong>3</strong><span>Web Apps</span></div>
-            <div class="stat"><strong>2</strong><span>Desktop Apps</span></div>
-            <div class="stat"><strong>∞</strong><span>Iterations</span></div>
+        <span class="project-count"><strong>3</strong> 个网页工具 · <strong>2</strong> 个桌面工具</span>
+      </div>
+      <section class="project-grid" aria-label="项目入口">
+        <a class="project-card fundval" data-project="FundVal" href="https://aureliuswu.github.io/FundVal/" aria-labelledby="title-fundval" aria-describedby="desc-fundval">
+          <div class="preview">
+            <span class="preview-label" aria-hidden="true">功能示意</span>
+            <svg class="preview-image" viewBox="0 0 440 200" role="img" aria-labelledby="preview-fundval">
+              <title id="preview-fundval">蜉蝣基金：自选基金与盘中估值趋势的功能预览</title>
+              <rect x="20" y="14" width="400" height="200" rx="12" fill="white" stroke="#dde2eb"/>
+              <path d="M20 49H420" stroke="#dde2eb"/>
+              <circle cx="39" cy="32" r="5" fill="#168979"/>
+              <text x="52" y="36" font-size="13" font-family="sans-serif" fill="#17191f">蜉蝣基金</text>
+              <rect x="278" y="23" width="59" height="18" rx="5" fill="#e8f5f1"/><text x="290" y="36" font-size="10" font-family="sans-serif" fill="#168979">自选</text>
+              <text x="354" y="36" font-size="10" font-family="sans-serif" fill="#626a78">估值</text>
+              <rect x="34" y="64" width="116" height="119" rx="7" fill="#f3f5f8"/>
+              <text x="46" y="84" font-size="11" font-family="sans-serif" fill="#626a78">我的自选</text>
+              <rect x="46" y="97" width="76" height="6" rx="3" fill="#c9d7d3"/><rect x="46" y="112" width="57" height="5" rx="2" fill="#dde2eb"/>
+              <rect x="46" y="134" width="81" height="6" rx="3" fill="#c9d7d3"/><rect x="46" y="149" width="48" height="5" rx="2" fill="#dde2eb"/>
+              <text x="168" y="82" font-size="11" font-family="sans-serif" fill="#626a78">盘中估值趋势</text>
+              <path d="M166 110H401M166 139H401M166 169H401" stroke="#edf0f5"/>
+              <path d="m169 154 27-8 20 11 26-34 24 8 25-26 21 10 27-27 25 11 30-20v90H169Z" fill="#e8f5f1"/>
+              <path d="m169 154 27-8 20 11 26-34 24 8 25-26 21 10 27-27 25 11 30-20" fill="none" stroke="#168979" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
-        </aside>
-      </section>
-
-      <section id="projects" aria-labelledby="projects-title">
-        <div class="section-head">
-          <div>
-            <div class="section-label">Selected work</div>
-            <h2 id="projects-title">Projects</h2>
+          <div class="card-info">
+            <div class="card-heading"><h2 id="title-fundval">蜉蝣基金</h2><span class="type">网页</span><span class="arrow" aria-hidden="true">↗</span></div>
+            <p class="description" id="desc-fundval">自选基金 · 盘中估值</p>
           </div>
-          <p>基金工具、全球新闻、通用 Agent，以及本地优先的 AI 视觉生成记忆库。</p>
-        </div>
-
-        <div class="project-grid">
-          <a class="project-card fundval" href="https://aureliuswu.github.io/FundVal/" target="_blank" rel="noopener noreferrer">
-            <div class="project-content">
-              <div class="project-top">
-                <div class="project-icon" aria-hidden="true">蜉</div>
-                <span class="project-no">PROJECT 01</span>
-              </div>
-              <h3>蜉蝣基金</h3>
-              <p class="description">个人基金盘中估值监控。交易时段自动刷新，双数据源容错，并支持 GitHub Gist 云同步持仓。</p>
-              <div class="tags" aria-label="技术标签">
-                <span class="tag">实时估值</span>
-                <span class="tag">PWA</span>
-                <span class="tag">Gist Sync</span>
-              </div>
-              <div class="project-action">
-                <span>打开项目</span>
-                <span class="arrow" aria-hidden="true">↗</span>
-              </div>
-            </div>
-          </a>
-
-          <a class="project-card compass" href="https://aureliuswu.github.io/fund-compass/" target="_blank" rel="noopener noreferrer">
-            <div class="project-content">
-              <div class="project-top">
-                <div class="project-icon" aria-hidden="true">司</div>
-                <span class="project-no">PROJECT 02</span>
-              </div>
-              <h3>司南基金</h3>
-              <p class="description">个人基金选基与择时辅助工具。提供综合评分、三层择时信号、回测实验室和组合诊断。</p>
-              <div class="tags" aria-label="技术标签">
-                <span class="tag">多因子选基</span>
-                <span class="tag">择时信号</span>
-                <span class="tag">回测</span>
-              </div>
-              <div class="project-action">
-                <span>打开项目</span>
-                <span class="arrow" aria-hidden="true">↗</span>
-              </div>
-            </div>
-          </a>
-
-          <a class="project-card agent" href="https://github.com/AureliusWu/Agent" target="_blank" rel="noopener noreferrer">
-            <div class="project-content">
-              <div class="agent-copy">
-                <div class="project-top">
-                  <div class="project-icon" aria-hidden="true">A</div>
-                  <span class="project-no">PROJECT 03 · FEATURED</span>
-                </div>
-                <h3>Agent</h3>
-                <p class="description">面向个人使用的通用 Agent 工作台。以安全沙箱、三档权限、工具与 Skill/MCP 扩展、分层记忆和独立验证闭环，完成从规划到执行、验证与返工的完整任务流程。</p>
-                <div class="agent-badges" aria-label="技术标签">
-                  <span class="agent-badge">React + TypeScript</span>
-                  <span class="agent-badge">FastAPI + SQLite</span>
-                  <span class="agent-badge">Tauri 2</span>
-                  <span class="agent-badge">Multi-Agent</span>
-                </div>
-                <div class="project-action">
-                  <span>查看源码与说明</span>
-                  <span class="arrow" aria-hidden="true">↗</span>
-                </div>
-              </div>
-
-              <div class="agent-visual" aria-hidden="true">
-                <div class="window-bar">
-                  <span class="window-dot"></span>
-                  <span class="window-dot"></span>
-                  <span class="window-dot"></span>
-                  <span class="window-title">Agent runtime · v0.13.0</span>
-                </div>
-                <div class="flow">
-                  <div class="flow-row">
-                    <span class="flow-index">01</span>
-                    <span class="flow-copy"><strong>Planner</strong><span>任务拆解与验收条件</span></span>
-                    <span class="flow-state">ready</span>
-                  </div>
-                  <div class="flow-row">
-                    <span class="flow-index">02</span>
-                    <span class="flow-copy"><strong>Executor</strong><span>受控工具与工作区执行</span></span>
-                    <span class="flow-state">running</span>
-                  </div>
-                  <div class="flow-row">
-                    <span class="flow-index">03</span>
-                    <span class="flow-copy"><strong>Verifier</strong><span>证据驱动的独立验证</span></span>
-                    <span class="flow-state">guarded</span>
-                  </div>
-                  <div class="flow-row">
-                    <span class="flow-index">04</span>
-                    <span class="flow-copy"><strong>Repair</strong><span>失败条件限定返工</span></span>
-                    <span class="flow-state">standby</span>
-                  </div>
-                </div>
-                <div class="visual-footer">
-                  <span>Workspace sandbox · Permission control</span>
-                  <strong>18 / 18 EVAL</strong>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a class="project-card news" href="https://aureliuswu.github.io/News/" target="_blank" rel="noopener noreferrer">
-            <div class="project-content">
-              <div class="project-top">
-                <div class="project-icon" aria-hidden="true">N</div>
-                <span class="project-no">PROJECT 04</span>
-              </div>
-              <h3>Global News</h3>
-              <p class="description">全球新闻聚合，支持地区、语言和来源筛选、关键词搜索与原文跳转。通过定时快照更新，非实时资讯。</p>
-              <div class="tags" aria-label="技术标签">
-                <span class="tag">全球新闻</span>
-                <span class="tag">多语言来源</span>
-                <span class="tag">定时快照</span>
-              </div>
-              <div class="project-action">
-                <span>浏览新闻</span>
-                <span class="arrow" aria-hidden="true">&#8599;</span>
-              </div>
-            </div>
-          </a>
-
-          <a class="project-card imagelore" href="https://github.com/AureliusWu/ImageLore" target="_blank" rel="noopener noreferrer">
-            <div class="project-content">
-              <div class="project-top">
-                <div class="project-icon" aria-hidden="true">I</div>
-                <span class="project-no">PROJECT 05 · v0.18.0</span>
-              </div>
-              <h3>ImageLore</h3>
-              <p class="description">Local-first 的 AI 视觉生成记忆库。保存图片背后的 Prompt、模型、参数、版本与生成谱系，并通过 Semantic Recall、以图找图和 Generation Explorer，让几个月前的生成结果仍然能够被检索、理解与继续复用。</p>
-              <div class="tags" aria-label="技术标签">
-                <span class="tag">Local-first</span>
-                <span class="tag">Semantic Recall</span>
-                <span class="tag">Tauri 2</span>
-                <span class="tag">SQLite</span>
-              </div>
-              <div class="project-action">
-                <span>查看项目</span>
-                <span class="arrow" aria-hidden="true">↗</span>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="note">
-          <span><strong>持续构建中。</strong> 所有项目都会依据真实使用反馈继续更新，而不是停留在一次性 Demo。</span>
-          <span>Static site · GitHub Pages</span>
-        </div>
+        </a>
+        <a class="project-card compass" data-project="fund-compass" href="https://aureliuswu.github.io/fund-compass/" aria-labelledby="title-compass" aria-describedby="desc-compass">
+          <div class="preview">
+            <span class="preview-label" aria-hidden="true">功能示意</span>
+            <svg class="preview-image" viewBox="0 0 440 200" role="img" aria-labelledby="preview-compass">
+              <title id="preview-compass">司南基金：选基分析、择时信号与回测的功能预览</title>
+              <rect x="20" y="14" width="400" height="200" rx="12" fill="white" stroke="#dde2eb"/>
+              <path d="M20 49H420" stroke="#dde2eb"/>
+              <circle cx="39" cy="32" r="5" fill="#5f61e8"/><text x="52" y="36" font-size="13" font-family="sans-serif" fill="#17191f">司南基金</text>
+              <text x="266" y="36" font-size="10" font-family="sans-serif" fill="#5f61e8">分析</text><text x="321" y="36" font-size="10" font-family="sans-serif" fill="#626a78">择时</text><text x="374" y="36" font-size="10" font-family="sans-serif" fill="#626a78">回测</text>
+              <polygon points="117,72 173,113 152,174 82,174 61,113" fill="#f4f3ff" stroke="#dde2eb"/>
+              <polygon points="117,88 155,116 141,158 93,158 79,116" fill="none" stroke="#dde2eb"/>
+              <path d="m117 72v75m56-34-56 34m35 27-35-27m-35 27 35-27m-56-34 56 34" stroke="#dde2eb"/>
+              <polygon points="117,86 161,116 137,163 89,163 76,118" fill="#5f61e822" stroke="#5f61e8" stroke-width="2"/>
+              <text x="206" y="84" font-size="11" font-family="sans-serif" fill="#626a78">多维选基分析</text>
+              <rect x="206" y="100" width="189" height="17" rx="5" fill="#f3f5f8"/><rect x="206" y="100" width="147" height="17" rx="5" fill="#dcdcf9"/>
+              <rect x="206" y="129" width="189" height="17" rx="5" fill="#f3f5f8"/><rect x="206" y="129" width="119" height="17" rx="5" fill="#dcdcf9"/>
+              <rect x="206" y="158" width="189" height="17" rx="5" fill="#f3f5f8"/><rect x="206" y="158" width="162" height="17" rx="5" fill="#dcdcf9"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-heading"><h2 id="title-compass">司南基金</h2><span class="type">网页</span><span class="arrow" aria-hidden="true">↗</span></div>
+            <p class="description" id="desc-compass">基金分析 · 选基择时</p>
+          </div>
+        </a>
+        <a class="project-card news" data-project="News" href="https://aureliuswu.github.io/News/" aria-labelledby="title-news" aria-describedby="desc-news">
+          <div class="preview">
+            <span class="preview-label" aria-hidden="true">功能示意</span>
+            <svg class="preview-image" viewBox="0 0 440 200" role="img" aria-labelledby="preview-news">
+              <title id="preview-news">全球新闻：地区筛选与新闻卡片的功能预览</title>
+              <rect x="20" y="14" width="400" height="200" rx="12" fill="white" stroke="#dde2eb"/>
+              <path d="M20 49H420" stroke="#dde2eb"/>
+              <circle cx="39" cy="32" r="5" fill="#d8732f"/><text x="52" y="36" font-size="13" font-family="sans-serif" fill="#17191f">全球新闻</text>
+              <rect x="286" y="24" width="115" height="17" rx="6" fill="#f3f5f8"/><circle cx="300" cy="32" r="4" fill="none" stroke="#626a78"/><path d="m303 35 3 3" stroke="#626a78"/><text x="315" y="36" font-size="10" font-family="sans-serif" fill="#626a78">搜索新闻</text>
+              <rect x="36" y="63" width="51" height="22" rx="6" fill="#fbeee4"/><text x="49" y="78" font-size="10" font-family="sans-serif" fill="#9a4e1b">全球</text>
+              <text x="106" y="78" font-size="10" font-family="sans-serif" fill="#626a78">中国</text><text x="164" y="78" font-size="10" font-family="sans-serif" fill="#626a78">科技</text>
+              <rect x="36" y="97" width="110" height="67" rx="7" fill="#e7ecf4"/><circle cx="92" cy="126" r="23" fill="none" stroke="#aebfd7"/><ellipse cx="92" cy="126" rx="11" ry="23" fill="none" stroke="#aebfd7"/><path d="M69 126h46m-41-11h36m-36 22h36" stroke="#aebfd7"/>
+              <rect x="157" y="100" width="111" height="5" rx="2" fill="#d8732f"/><rect x="157" y="115" width="235" height="8" rx="3" fill="#cbd2df"/><rect x="157" y="131" width="213" height="6" rx="3" fill="#dde2eb"/><rect x="157" y="147" width="126" height="6" rx="3" fill="#dde2eb"/>
+              <path d="M36 177H402" stroke="#dde2eb"/><rect x="36" y="189" width="177" height="6" rx="3" fill="#dde2eb"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-heading"><h2 id="title-news">全球新闻</h2><span class="type">网页</span><span class="arrow" aria-hidden="true">↗</span></div>
+            <p class="description" id="desc-news">地区筛选 · 新闻聚合</p>
+          </div>
+        </a>
+        <a class="project-card desktop agent" data-project="Agent" href="https://github.com/AureliusWu/Agent" aria-labelledby="title-agent" aria-describedby="access-agent desc-agent">
+          <div class="preview">
+            <span class="preview-label" aria-hidden="true">功能示意</span>
+            <svg class="preview-image" viewBox="0 0 580 200" role="img" aria-labelledby="preview-agent">
+              <title id="preview-agent">司忆：任务规划、工具执行与验证的功能预览</title>
+              <rect x="28" y="14" width="524" height="200" rx="12" fill="white" stroke="#dde2eb"/>
+              <path d="M28 49H552" stroke="#dde2eb"/>
+              <circle cx="46" cy="32" r="4" fill="#cbd2df"/><circle cx="59" cy="32" r="4" fill="#cbd2df"/><circle cx="72" cy="32" r="4" fill="#cbd2df"/>
+              <text x="111" y="36" font-size="13" font-family="sans-serif" fill="#17191f">司忆 · Agent 工作台</text>
+              <path d="M135 49v165" stroke="#dde2eb"/><rect x="40" y="65" width="82" height="25" rx="6" fill="#eeedff"/>
+              <text x="54" y="82" font-size="11" font-family="sans-serif" fill="#5f61e8">任务</text><text x="54" y="117" font-size="11" font-family="sans-serif" fill="#626a78">记忆</text><text x="54" y="151" font-size="11" font-family="sans-serif" fill="#626a78">工具</text>
+              <text x="158" y="81" font-size="12" font-family="sans-serif" fill="#17191f">从想法到完成</text>
+              <rect x="158" y="99" width="104" height="49" rx="8" fill="#eeedff"/><text x="190" y="129" font-size="13" font-family="sans-serif" fill="#5f61e8">规划</text>
+              <path d="M271 123h23m-5-5 5 5-5 5" stroke="#aab1bd" fill="none"/>
+              <rect x="302" y="99" width="104" height="49" rx="8" fill="#eeedff"/><text x="334" y="129" font-size="13" font-family="sans-serif" fill="#5f61e8">执行</text>
+              <path d="M415 123h23m-5-5 5 5-5 5" stroke="#aab1bd" fill="none"/>
+              <rect x="446" y="99" width="83" height="49" rx="8" fill="#e8f5f1"/><text x="467" y="129" font-size="13" font-family="sans-serif" fill="#168979">验证</text>
+              <rect x="158" y="166" width="371" height="25" rx="6" fill="#f3f5f8"/><text x="173" y="183" font-size="10" font-family="sans-serif" fill="#626a78">描述任务，开始协作…</text>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-heading"><h2 id="title-agent">司忆</h2><span class="type" id="access-agent" title="私有 GitHub 项目页，需要登录有访问权限的账号">桌面 · 需权限</span><span class="arrow" aria-hidden="true">↗</span></div>
+            <p class="description" id="desc-agent">个人 Agent · 任务与工具协作</p>
+          </div>
+        </a>
+        <a class="project-card desktop imagelore" data-project="ImageLore" href="https://github.com/AureliusWu/ImageLore" aria-labelledby="title-imagelore" aria-describedby="access-imagelore desc-imagelore">
+          <div class="preview">
+            <span class="preview-label" aria-hidden="true">功能示意</span>
+            <svg class="preview-image" viewBox="0 0 580 200" role="img" aria-labelledby="preview-imagelore">
+              <title id="preview-imagelore">ImageLore：图片收藏、生成记录与检索的功能预览</title>
+              <rect x="28" y="14" width="524" height="200" rx="12" fill="white" stroke="#dde2eb"/>
+              <path d="M28 49H552" stroke="#dde2eb"/><text x="45" y="36" font-size="13" font-family="sans-serif" fill="#17191f">ImageLore</text>
+              <rect x="346" y="24" width="188" height="17" rx="6" fill="#f3f5f8"/><text x="361" y="36" font-size="10" font-family="sans-serif" fill="#626a78">检索图片与生成记录</text>
+              <rect x="43" y="65" width="141" height="104" rx="8" fill="#e2eee9"/><circle cx="148" cy="90" r="12" fill="#f3d4b8"/><path d="m43 154 40-49 31 29 21-16 49 43v8H43Z" fill="#91b7a9"/><path d="m43 156 54-30 45 31 42-20v32H43Z" fill="#477f6c"/>
+              <rect x="195" y="65" width="141" height="104" rx="8" fill="#e4e7f7"/><path d="m195 154 45-54 29 25 34-41 33 37v48H195Z" fill="#aaaedd"/><path d="m195 162 50-26 58 22 33-11v22H195Z" fill="#7176b4"/>
+              <rect x="349" y="65" width="185" height="126" rx="8" fill="#f3f5f8"/><text x="363" y="84" font-size="11" font-family="sans-serif" fill="#17191f">生成记忆</text>
+              <text x="363" y="105" font-size="10" font-family="sans-serif" fill="#626a78">Prompt</text><rect x="363" y="114" width="146" height="5" rx="2" fill="#cbd2df"/><rect x="363" y="126" width="112" height="5" rx="2" fill="#dde2eb"/>
+              <text x="363" y="151" font-size="10" font-family="sans-serif" fill="#626a78">版本与谱系</text><path d="M374 172h126" stroke="#91b7a9" stroke-width="2"/><circle cx="374" cy="172" r="5" fill="#168979"/><circle cx="436" cy="172" r="5" fill="#168979"/><circle cx="500" cy="172" r="5" fill="#168979"/>
+              <rect x="44" y="180" width="95" height="5" rx="2" fill="#cbd2df"/><rect x="195" y="180" width="106" height="5" rx="2" fill="#cbd2df"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <div class="card-heading"><h2 id="title-imagelore">ImageLore</h2><span class="type" id="access-imagelore" title="私有 GitHub 项目页，需要登录有访问权限的账号">桌面 · 需权限</span><span class="arrow" aria-hidden="true">↗</span></div>
+            <p class="description" id="desc-imagelore">图片记忆 · 生成记录与检索</p>
+          </div>
+        </a>
       </section>
     </main>
-
-    <footer>
-      <span>Designed &amp; built by Aurelius Wu</span>
-      <a href="https://github.com/AureliusWu" target="_blank" rel="noopener noreferrer">github.com/AureliusWu</a>
-    </footer>
+    <footer><p>由 Aurelius Wu 设计与构建</p><p>持续更新，服务真实需求。</p></footer>
   </div>
 </body>
 </html>

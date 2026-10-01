@@ -15,6 +15,9 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+
+    - name: Verify homepage and version
+      run: node scripts/check-homepage.mjs
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4
