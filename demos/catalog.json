@@ -1,0 +1,62 @@
+[
+  {
+    "project": "FundVal",
+    "slug": "fundval",
+    "title": "蜉蝣基金",
+    "href": "https://aureliuswu.github.io/FundVal/",
+    "color": "#168979",
+    "steps": [
+      { "title": "查看自选", "description": "将关注的基金放在同一个自选列表中。", "focus": [34, 64, 116, 119] },
+      { "title": "观察估值", "description": "查看盘中估值趋势，了解日内变化。", "focus": [164, 68, 238, 107] },
+      { "title": "集中浏览", "description": "自选列表与趋势预览，让关注内容一目了然。", "focus": [20, 14, 400, 200] }
+    ]
+  },
+  {
+    "project": "fund-compass",
+    "slug": "fund-compass",
+    "title": "司南基金",
+    "href": "https://aureliuswu.github.io/fund-compass/",
+    "color": "#5f61e8",
+    "steps": [
+      { "title": "多维分析", "description": "通过多维分析，了解基金的不同特征。", "focus": [59, 70, 116, 109] },
+      { "title": "辅助选基", "description": "结合筛选与分析信息，缩小关注范围。", "focus": [202, 68, 198, 113] },
+      { "title": "切换工具", "description": "进入分析、择时与回测，继续查看相关信息。", "focus": [253, 22, 143, 20] }
+    ]
+  },
+  {
+    "project": "News",
+    "slug": "news",
+    "title": "全球新闻",
+    "href": "https://aureliuswu.github.io/News/",
+    "color": "#d8732f",
+    "steps": [
+      { "title": "筛选地区", "description": "按地区筛选，聚合自己关注的新闻内容。", "focus": [34, 61, 172, 26] },
+      { "title": "搜索关键词", "description": "通过关键词，快速找到关注的话题。", "focus": [283, 21, 121, 24] },
+      { "title": "阅读原文", "description": "浏览新闻卡片，再打开来源原文。", "focus": [33, 94, 371, 73] }
+    ]
+  },
+  {
+    "project": "Agent",
+    "slug": "agent",
+    "title": "司忆",
+    "href": "https://github.com/AureliusWu/Agent",
+    "color": "#5f61e8",
+    "steps": [
+      { "title": "规划任务", "description": "描述任务，把目标拆解为可执行的步骤。", "focus": [156, 97, 108, 53] },
+      { "title": "工具执行", "description": "通过个人 Agent 的工具能力推进任务。", "focus": [300, 97, 108, 53] },
+      { "title": "验证结果", "description": "查看任务执行结果，完成本轮协作。", "focus": [444, 97, 87, 53] }
+    ]
+  },
+  {
+    "project": "ImageLore",
+    "slug": "imagelore",
+    "title": "ImageLore",
+    "href": "https://github.com/AureliusWu/ImageLore",
+    "color": "#168979",
+    "steps": [
+      { "title": "整理图片", "description": "将图片与生成记录一起整理，建立创作收藏。", "focus": [41, 63, 297, 108] },
+      { "title": "查看生成记忆", "description": "查看对应提示词，回顾图片的创作信息。", "focus": [347, 63, 189, 77] },
+      { "title": "回看版本与谱系", "description": "沿版本与谱系，查看创作过程中的不同记录。", "focus": [347, 142, 189, 45] }
+    ]
+  }
+]

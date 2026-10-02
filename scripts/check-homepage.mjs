@@ -29,12 +29,12 @@ function textContent(source) {
   ).replace(/\s+/g, ' ').trim();
 }
 
-function tags(name) {
-  return [...html.matchAll(new RegExp(`<(?:${name})\\b([^>]*)>`, 'gi'))]
+function tags(name, source = html) {
+  return [...source.matchAll(new RegExp(`<(?:${name})\\b([^>]*)>`, 'gi'))]
     .map((match) => attributes(match[1]));
 }
 
-function checkLocalAsset(reference, label) {
+function checkLocalAsset(reference, label, base = root) {
   if (!reference) {
     check(false, `${label} 资源路径不得为空。`);
     return;
@@ -56,7 +56,7 @@ function checkLocalAsset(reference, label) {
     check(false, `${label} 路径无法解码：${reference}`);
     return;
   }
-  const absolutePath = resolve(root, localPath.replace(/^\/+/, ''));
+  const absolutePath = resolve(base, localPath.replace(/^\/+/, ''));
   const relativePath = relative(root, absolutePath);
   const insideRoot = !relativePath.startsWith('..') && !isAbsolute(relativePath);
   check(insideRoot && existsSync(absolutePath) && statSync(absolutePath).isFile(),
@@ -119,6 +119,64 @@ for (const { attrs, body } of cards) {
 for (const project of expectedProjects.keys()) {
   check(seenProjects.has(project), `缺少项目卡片：${project}`);
 }
+
+const demos = JSON.parse(read('demos/catalog.json'));
+const demoLinks = anchors.filter(({ attrs }) => (attrs.class ?? '').split(/\s+/).includes('demo-link'));
+const projectItems = [...html.matchAll(/<article\b([^>]*)>([\s\S]*?)<\/article\s*>/gi)]
+  .filter((match) => (attributes(match[1]).class ?? '').split(/\s+/).includes('project-item'));
+check(demos.length === expectedProjects.size && demoLinks.length === expectedProjects.size,
+  '五个项目必须各有一个 Demo 视频入口。');
+check(projectItems.length === expectedProjects.size, '每个项目必须有独立的 project-item 容器。');
+const seenDemos = new Set();
+for (const demo of demos) {
+  const expected = expectedProjects.get(demo.project);
+  check(expected && demo.title === expected.title && demo.href === expected.href,
+    `Demo 清单名称与项目入口不一致：${demo.project}`);
+  check(/^[a-z0-9-]+$/.test(demo.slug) && !seenDemos.has(demo.slug), `Demo 标识无效或重复：${demo.slug}`);
+  seenDemos.add(demo.slug);
+  check(demo.steps.length === 3 && demo.steps.every((step) => step.title && step.description),
+    `${demo.project} 必须有三段可读的功能说明。`);
+  const link = demoLinks.filter(({ attrs }) => attrs.href === `demos/${demo.slug}.html`);
+  check(link.length === 1 && (link[0]?.attrs['aria-label'] ?? '').includes(demo.title),
+    `${demo.project} Demo 按钮必须唯一且有项目名称。`);
+  const item = projectItems.filter((match) => attributes(match[1]).class &&
+    match[2].includes(`data-project="${demo.project}"`));
+  check(item.length === 1 && item[0][2].includes(`href="demos/${demo.slug}.html"`),
+    `${demo.project} 项目与 Demo 按钮必须位于同一个容器。`);
+  checkLocalAsset(`demos/${demo.slug}.html`, `${demo.project} Demo 页面`);
+  const page = read(`demos/${demo.slug}.html`);
+  const videos = tags('video', page);
+  check(videos.length === 1 && 'controls' in videos[0] && 'playsinline' in videos[0] &&
+    videos[0].preload === 'none' && !('autoplay' in videos[0]),
+    `${demo.project} 视频必须可控、支持内联播放、按需加载且不自动播放。`);
+  check(page.includes('功能示意') && page.includes('非实际操作录屏') && page.includes(demo.title),
+    `${demo.project} 播放页必须明确说明视频类型和项目名称。`);
+  const sources = tags('source', page);
+  check(sources.length === 1 && sources[0].src === `media/${demo.slug}.mp4` && sources[0].type === 'video/mp4',
+    `${demo.project} 必须使用对应的 MP4 视频。`);
+  const tracks = tags('track', page);
+  check(tracks.length === 1 && tracks[0].src === `media/${demo.slug}.vtt` && tracks[0].kind === 'captions' &&
+    tracks[0].srclang === 'zh-CN' && 'default' in tracks[0], `${demo.project} 必须提供默认中文字幕。`);
+  check(tags('script', page).length === 0 && tags('link', page).every((tag) => tag.rel !== 'stylesheet'),
+    `${demo.project} 播放页不得依赖脚本或外部样式。`);
+  check(tags('a', page).some((tag) => tag.href === demo.href), `${demo.project} 播放页必须能进入对应项目。`);
+  for (const tag of tags('video|source|track', page)) {
+    for (const attr of ['src', 'poster']) {
+      if (attr in tag) checkLocalAsset(tag[attr], `${demo.project} 视频 ${attr}`, resolve(root, 'demos'));
+    }
+  }
+  const media = readFileSync(resolve(root, `demos/media/${demo.slug}.mp4`));
+  check(media.length > 10000 && media.length <= 1024 * 1024, `${demo.project} 视频应有效且不超过 1 MiB。`);
+  const ftyp = media.indexOf(Buffer.from('ftyp'));
+  const moov = media.indexOf(Buffer.from('moov'));
+  const mdat = media.indexOf(Buffer.from('mdat'));
+  check(ftyp === 4 && moov > 4 && moov < mdat, `${demo.project} 视频必须为适合网页快速起播的 MP4。`);
+  const captions = read(`demos/media/${demo.slug}.vtt`);
+  check(captions.startsWith('WEBVTT') && (captions.match(/-->/g) ?? []).length === 3,
+    `${demo.project} 字幕必须覆盖三段功能示意。`);
+}
+check(new Set(demos.map((demo) => demo.project)).size === expectedProjects.size,
+  'Demo 清单必须覆盖五个不同的项目。');
 
 for (const { attrs } of anchors) {
   const href = (attrs.href ?? '').trim();

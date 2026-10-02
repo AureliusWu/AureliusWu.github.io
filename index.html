@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="application-version" content="1.0.0">
-  <meta name="description" content="Aurelius 的项目入口：蜉蝣基金、司南基金、全球新闻、司忆与 ImageLore。点击标题或功能预览即可进入项目。">
+  <meta name="application-version" content="1.1.0">
+  <meta name="description" content="Aurelius 的项目入口：蜉蝣基金、司南基金、全球新闻、司忆与 ImageLore。点击标题进入项目，点击 Demo 观看功能示意视频。">
   <meta name="author" content="AureliusWu">
   <meta name="theme-color" content="#f3f5f8">
   <title>Aurelius · 项目主页</title>
@@ -49,10 +49,14 @@
     .project-count { color: var(--muted); font-size: 12px; white-space: nowrap; padding-bottom: 2px; }
     .project-count strong { font-family: var(--utility); color: var(--text); font-weight: 500; }
     .project-grid { min-height: 0; flex: 1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    .project-card { --project-color: var(--accent); grid-column: span 2; min-height: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); text-decoration: none; transition: border-color .16s, box-shadow .16s; }
-    .project-card.desktop { grid-column: span 3; }
+    .project-item { --project-color: var(--accent); position: relative; grid-column: span 2; min-height: 0; display: flex; }
+    .project-item.desktop { grid-column: span 3; }
+    .project-card { width: 100%; min-height: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); text-decoration: none; transition: border-color .16s, box-shadow .16s; }
     .project-card:hover { border-color: var(--project-color); box-shadow: 0 5px 18px #17191f0b; }
-    .project-card:focus-visible, .brand:focus-visible, .github:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .project-card:focus-visible, .demo-link:focus-visible, .brand:focus-visible, .github:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .demo-link { position: absolute; top: 8px; right: 8px; z-index: 1; display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-height: 36px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 9px; background: #ffffffee; color: var(--project-color); font-size: 12px; font-weight: 650; line-height: 1; text-decoration: none; transition: border-color .16s, background .16s; }
+    .demo-link:hover { border-color: var(--project-color); background: var(--surface); }
+    .demo-link svg { width: 12px; height: 12px; fill: currentColor; }
     .fundval { --project-color: var(--green); }
     .compass { --project-color: var(--accent); }
     .news { --project-color: var(--orange); }
@@ -60,7 +64,6 @@
     .imagelore { --project-color: var(--green); }
     .preview { position: relative; min-height: 0; flex: 1; padding: 14px 14px 0; background: #f8f9fc; overflow: hidden; }
     .preview-image { display: block; width: 100%; height: 100%; }
-    .preview-label { position: absolute; top: 10px; right: 12px; padding: 3px 6px; border-radius: 4px; background: #ffffffee; color: var(--muted); font-size: 10px; line-height: 1.3; }
     .card-info { padding: 14px 18px 15px; flex-shrink: 0; }
     .card-heading { display: flex; align-items: center; gap: 10px; }
     h2 { margin: 0; font-size: 20px; line-height: 1.3; font-weight: 720; letter-spacing: -.035em; }
@@ -86,12 +89,15 @@
       .intro p { font-size: 12px; margin-top: 6px; }
       .project-count { display: none; }
       .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 10px; }
-      .project-card, .project-card.desktop { grid-column: span 1; border-radius: 12px; }
-      .project-card:last-child { grid-column: span 2; flex-direction: row; }
-      .project-card:last-child .preview { flex: 1; padding: 10px 6px 0; }
-      .project-card:last-child .card-info { width: 50%; align-self: center; padding: 12px; }
+      .project-item, .project-item.desktop { grid-column: span 1; }
+      .project-card { border-radius: 12px; }
+      .project-item:last-child { grid-column: span 2; }
+      .project-item:last-child .project-card { flex-direction: row; }
+      .project-item:last-child .preview { flex: 1; padding: 10px 6px 0; }
+      .project-item:last-child .card-info { width: 50%; align-self: center; padding: 12px; }
+      .project-item:last-child .demo-link { left: calc(50% - 76px); right: auto; }
       .preview { padding: 8px 8px 0; }
-      .preview-label { top: 6px; right: 6px; font-size: 9px; padding: 2px 4px; }
+      .demo-link { top: 6px; right: 6px; min-height: 34px; padding: 7px 9px; font-size: 11px; }
       .card-info { padding: 9px 10px 10px; }
       .card-heading { gap: 6px; }
       h2 { font-size: 16px; }
@@ -130,8 +136,10 @@
       .intro-copy { display: flex; align-items: center; gap: 16px; }
       h1 { font-size: 22px; }
       .project-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); gap: 8px; }
-      .project-card, .project-card.desktop, .project-card:last-child { grid-column: span 1; flex-direction: column; }
-      .project-card:last-child .card-info { width: 100%; padding: 8px; }
+      .project-item, .project-item.desktop, .project-item:last-child { grid-column: span 1; }
+      .project-item:last-child .project-card { flex-direction: column; }
+      .project-item:last-child .card-info { width: 100%; padding: 8px; }
+      .project-item:last-child .demo-link { left: auto; right: 6px; }
       .card-info { padding: 8px; }
       .card-heading { gap: 4px; flex-wrap: wrap; }
       h2 { font-size: 15px; }
@@ -152,7 +160,7 @@
         <span class="brand-note">个人项目工作室</span>
       </a>
       <div class="header-links">
-        <span class="version" id="site-version" aria-label="主页版本">v1.0.0</span>
+        <span class="version" id="site-version" aria-label="主页版本">v1.1.0</span>
         <a class="github" href="https://github.com/AureliusWu" aria-label="GitHub 主页">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A12 12 0 0 0 12 0Z"/></svg>
           <span>GitHub</span>
@@ -163,128 +171,148 @@
       <div class="intro">
         <div class="intro-copy">
           <h1>常用项目，一屏直达。</h1>
-          <p>点击标题或功能预览，即可进入项目。</p>
+          <p>点击标题进入项目，点击 Demo 观看演示。</p>
         </div>
         <span class="project-count"><strong>3</strong> 个网页工具 · <strong>2</strong> 个桌面工具</span>
       </div>
       <section class="project-grid" aria-label="项目入口">
-        <a class="project-card fundval" data-project="FundVal" href="https://aureliuswu.github.io/FundVal/" aria-labelledby="title-fundval" aria-describedby="desc-fundval">
-          <div class="preview">
-            <span class="preview-label" aria-hidden="true">功能示意</span>
-            <svg class="preview-image" viewBox="0 0 440 200" role="img" aria-labelledby="preview-fundval">
-              <title id="preview-fundval">蜉蝣基金：自选基金与盘中估值趋势的功能预览</title>
-              <rect x="20" y="14" width="400" height="200" rx="12" fill="white" stroke="#dde2eb"/>
-              <path d="M20 49H420" stroke="#dde2eb"/>
-              <circle cx="39" cy="32" r="5" fill="#168979"/>
-              <text x="52" y="36" font-size="13" font-family="sans-serif" fill="#17191f">蜉蝣基金</text>
-              <rect x="278" y="23" width="59" height="18" rx="5" fill="#e8f5f1"/><text x="290" y="36" font-size="10" font-family="sans-serif" fill="#168979">自选</text>
-              <text x="354" y="36" font-size="10" font-family="sans-serif" fill="#626a78">估值</text>
-              <rect x="34" y="64" width="116" height="119" rx="7" fill="#f3f5f8"/>
-              <text x="46" y="84" font-size="11" font-family="sans-serif" fill="#626a78">我的自选</text>
-              <rect x="46" y="97" width="76" height="6" rx="3" fill="#c9d7d3"/><rect x="46" y="112" width="57" height="5" rx="2" fill="#dde2eb"/>
-              <rect x="46" y="134" width="81" height="6" rx="3" fill="#c9d7d3"/><rect x="46" y="149" width="48" height="5" rx="2" fill="#dde2eb"/>
-              <text x="168" y="82" font-size="11" font-family="sans-serif" fill="#626a78">盘中估值趋势</text>
-              <path d="M166 110H401M166 139H401M166 169H401" stroke="#edf0f5"/>
-              <path d="m169 154 27-8 20 11 26-34 24 8 25-26 21 10 27-27 25 11 30-20v90H169Z" fill="#e8f5f1"/>
-              <path d="m169 154 27-8 20 11 26-34 24 8 25-26 21 10 27-27 25 11 30-20" fill="none" stroke="#168979" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="card-info">
-            <div class="card-heading"><h2 id="title-fundval">蜉蝣基金</h2><span class="type">网页</span><span class="arrow" aria-hidden="true">↗</span></div>
-            <p class="description" id="desc-fundval">自选基金 · 盘中估值</p>
-          </div>
-        </a>
-        <a class="project-card compass" data-project="fund-compass" href="https://aureliuswu.github.io/fund-compass/" aria-labelledby="title-compass" aria-describedby="desc-compass">
-          <div class="preview">
-            <span class="preview-label" aria-hidden="true">功能示意</span>
-            <svg class="preview-image" viewBox="0 0 440 200" role="img" aria-labelledby="preview-compass">
-              <title id="preview-compass">司南基金：选基分析、择时信号与回测的功能预览</title>
-              <rect x="20" y="14" width="400" height="200" rx="12" fill="white" stroke="#dde2eb"/>
-              <path d="M20 49H420" stroke="#dde2eb"/>
-              <circle cx="39" cy="32" r="5" fill="#5f61e8"/><text x="52" y="36" font-size="13" font-family="sans-serif" fill="#17191f">司南基金</text>
-              <text x="266" y="36" font-size="10" font-family="sans-serif" fill="#5f61e8">分析</text><text x="321" y="36" font-size="10" font-family="sans-serif" fill="#626a78">择时</text><text x="374" y="36" font-size="10" font-family="sans-serif" fill="#626a78">回测</text>
-              <polygon points="117,72 173,113 152,174 82,174 61,113" fill="#f4f3ff" stroke="#dde2eb"/>
-              <polygon points="117,88 155,116 141,158 93,158 79,116" fill="none" stroke="#dde2eb"/>
-              <path d="m117 72v75m56-34-56 34m35 27-35-27m-35 27 35-27m-56-34 56 34" stroke="#dde2eb"/>
-              <polygon points="117,86 161,116 137,163 89,163 76,118" fill="#5f61e822" stroke="#5f61e8" stroke-width="2"/>
-              <text x="206" y="84" font-size="11" font-family="sans-serif" fill="#626a78">多维选基分析</text>
-              <rect x="206" y="100" width="189" height="17" rx="5" fill="#f3f5f8"/><rect x="206" y="100" width="147" height="17" rx="5" fill="#dcdcf9"/>
-              <rect x="206" y="129" width="189" height="17" rx="5" fill="#f3f5f8"/><rect x="206" y="129" width="119" height="17" rx="5" fill="#dcdcf9"/>
-              <rect x="206" y="158" width="189" height="17" rx="5" fill="#f3f5f8"/><rect x="206" y="158" width="162" height="17" rx="5" fill="#dcdcf9"/>
-            </svg>
-          </div>
-          <div class="card-info">
-            <div class="card-heading"><h2 id="title-compass">司南基金</h2><span class="type">网页</span><span class="arrow" aria-hidden="true">↗</span></div>
-            <p class="description" id="desc-compass">基金分析 · 选基择时</p>
-          </div>
-        </a>
-        <a class="project-card news" data-project="News" href="https://aureliuswu.github.io/News/" aria-labelledby="title-news" aria-describedby="desc-news">
-          <div class="preview">
-            <span class="preview-label" aria-hidden="true">功能示意</span>
-            <svg class="preview-image" viewBox="0 0 440 200" role="img" aria-labelledby="preview-news">
-              <title id="preview-news">全球新闻：地区筛选与新闻卡片的功能预览</title>
-              <rect x="20" y="14" width="400" height="200" rx="12" fill="white" stroke="#dde2eb"/>
-              <path d="M20 49H420" stroke="#dde2eb"/>
-              <circle cx="39" cy="32" r="5" fill="#d8732f"/><text x="52" y="36" font-size="13" font-family="sans-serif" fill="#17191f">全球新闻</text>
-              <rect x="286" y="24" width="115" height="17" rx="6" fill="#f3f5f8"/><circle cx="300" cy="32" r="4" fill="none" stroke="#626a78"/><path d="m303 35 3 3" stroke="#626a78"/><text x="315" y="36" font-size="10" font-family="sans-serif" fill="#626a78">搜索新闻</text>
-              <rect x="36" y="63" width="51" height="22" rx="6" fill="#fbeee4"/><text x="49" y="78" font-size="10" font-family="sans-serif" fill="#9a4e1b">全球</text>
-              <text x="106" y="78" font-size="10" font-family="sans-serif" fill="#626a78">中国</text><text x="164" y="78" font-size="10" font-family="sans-serif" fill="#626a78">科技</text>
-              <rect x="36" y="97" width="110" height="67" rx="7" fill="#e7ecf4"/><circle cx="92" cy="126" r="23" fill="none" stroke="#aebfd7"/><ellipse cx="92" cy="126" rx="11" ry="23" fill="none" stroke="#aebfd7"/><path d="M69 126h46m-41-11h36m-36 22h36" stroke="#aebfd7"/>
-              <rect x="157" y="100" width="111" height="5" rx="2" fill="#d8732f"/><rect x="157" y="115" width="235" height="8" rx="3" fill="#cbd2df"/><rect x="157" y="131" width="213" height="6" rx="3" fill="#dde2eb"/><rect x="157" y="147" width="126" height="6" rx="3" fill="#dde2eb"/>
-              <path d="M36 177H402" stroke="#dde2eb"/><rect x="36" y="189" width="177" height="6" rx="3" fill="#dde2eb"/>
-            </svg>
-          </div>
-          <div class="card-info">
-            <div class="card-heading"><h2 id="title-news">全球新闻</h2><span class="type">网页</span><span class="arrow" aria-hidden="true">↗</span></div>
-            <p class="description" id="desc-news">地区筛选 · 新闻聚合</p>
-          </div>
-        </a>
-        <a class="project-card desktop agent" data-project="Agent" href="https://github.com/AureliusWu/Agent" aria-labelledby="title-agent" aria-describedby="access-agent desc-agent">
-          <div class="preview">
-            <span class="preview-label" aria-hidden="true">功能示意</span>
-            <svg class="preview-image" viewBox="0 0 580 200" role="img" aria-labelledby="preview-agent">
-              <title id="preview-agent">司忆：任务规划、工具执行与验证的功能预览</title>
-              <rect x="28" y="14" width="524" height="200" rx="12" fill="white" stroke="#dde2eb"/>
-              <path d="M28 49H552" stroke="#dde2eb"/>
-              <circle cx="46" cy="32" r="4" fill="#cbd2df"/><circle cx="59" cy="32" r="4" fill="#cbd2df"/><circle cx="72" cy="32" r="4" fill="#cbd2df"/>
-              <text x="111" y="36" font-size="13" font-family="sans-serif" fill="#17191f">司忆 · Agent 工作台</text>
-              <path d="M135 49v165" stroke="#dde2eb"/><rect x="40" y="65" width="82" height="25" rx="6" fill="#eeedff"/>
-              <text x="54" y="82" font-size="11" font-family="sans-serif" fill="#5f61e8">任务</text><text x="54" y="117" font-size="11" font-family="sans-serif" fill="#626a78">记忆</text><text x="54" y="151" font-size="11" font-family="sans-serif" fill="#626a78">工具</text>
-              <text x="158" y="81" font-size="12" font-family="sans-serif" fill="#17191f">从想法到完成</text>
-              <rect x="158" y="99" width="104" height="49" rx="8" fill="#eeedff"/><text x="190" y="129" font-size="13" font-family="sans-serif" fill="#5f61e8">规划</text>
-              <path d="M271 123h23m-5-5 5 5-5 5" stroke="#aab1bd" fill="none"/>
-              <rect x="302" y="99" width="104" height="49" rx="8" fill="#eeedff"/><text x="334" y="129" font-size="13" font-family="sans-serif" fill="#5f61e8">执行</text>
-              <path d="M415 123h23m-5-5 5 5-5 5" stroke="#aab1bd" fill="none"/>
-              <rect x="446" y="99" width="83" height="49" rx="8" fill="#e8f5f1"/><text x="467" y="129" font-size="13" font-family="sans-serif" fill="#168979">验证</text>
-              <rect x="158" y="166" width="371" height="25" rx="6" fill="#f3f5f8"/><text x="173" y="183" font-size="10" font-family="sans-serif" fill="#626a78">描述任务，开始协作…</text>
-            </svg>
-          </div>
-          <div class="card-info">
-            <div class="card-heading"><h2 id="title-agent">司忆</h2><span class="type" id="access-agent" title="私有 GitHub 项目页，需要登录有访问权限的账号">桌面 · 需权限</span><span class="arrow" aria-hidden="true">↗</span></div>
-            <p class="description" id="desc-agent">个人 Agent · 任务与工具协作</p>
-          </div>
-        </a>
-        <a class="project-card desktop imagelore" data-project="ImageLore" href="https://github.com/AureliusWu/ImageLore" aria-labelledby="title-imagelore" aria-describedby="access-imagelore desc-imagelore">
-          <div class="preview">
-            <span class="preview-label" aria-hidden="true">功能示意</span>
-            <svg class="preview-image" viewBox="0 0 580 200" role="img" aria-labelledby="preview-imagelore">
-              <title id="preview-imagelore">ImageLore：图片收藏、生成记录与检索的功能预览</title>
-              <rect x="28" y="14" width="524" height="200" rx="12" fill="white" stroke="#dde2eb"/>
-              <path d="M28 49H552" stroke="#dde2eb"/><text x="45" y="36" font-size="13" font-family="sans-serif" fill="#17191f">ImageLore</text>
-              <rect x="346" y="24" width="188" height="17" rx="6" fill="#f3f5f8"/><text x="361" y="36" font-size="10" font-family="sans-serif" fill="#626a78">检索图片与生成记录</text>
-              <rect x="43" y="65" width="141" height="104" rx="8" fill="#e2eee9"/><circle cx="148" cy="90" r="12" fill="#f3d4b8"/><path d="m43 154 40-49 31 29 21-16 49 43v8H43Z" fill="#91b7a9"/><path d="m43 156 54-30 45 31 42-20v32H43Z" fill="#477f6c"/>
-              <rect x="195" y="65" width="141" height="104" rx="8" fill="#e4e7f7"/><path d="m195 154 45-54 29 25 34-41 33 37v48H195Z" fill="#aaaedd"/><path d="m195 162 50-26 58 22 33-11v22H195Z" fill="#7176b4"/>
-              <rect x="349" y="65" width="185" height="126" rx="8" fill="#f3f5f8"/><text x="363" y="84" font-size="11" font-family="sans-serif" fill="#17191f">生成记忆</text>
-              <text x="363" y="105" font-size="10" font-family="sans-serif" fill="#626a78">Prompt</text><rect x="363" y="114" width="146" height="5" rx="2" fill="#cbd2df"/><rect x="363" y="126" width="112" height="5" rx="2" fill="#dde2eb"/>
-              <text x="363" y="151" font-size="10" font-family="sans-serif" fill="#626a78">版本与谱系</text><path d="M374 172h126" stroke="#91b7a9" stroke-width="2"/><circle cx="374" cy="172" r="5" fill="#168979"/><circle cx="436" cy="172" r="5" fill="#168979"/><circle cx="500" cy="172" r="5" fill="#168979"/>
-              <rect x="44" y="180" width="95" height="5" rx="2" fill="#cbd2df"/><rect x="195" y="180" width="106" height="5" rx="2" fill="#cbd2df"/>
-            </svg>
-          </div>
-          <div class="card-info">
-            <div class="card-heading"><h2 id="title-imagelore">ImageLore</h2><span class="type" id="access-imagelore" title="私有 GitHub 项目页，需要登录有访问权限的账号">桌面 · 需权限</span><span class="arrow" aria-hidden="true">↗</span></div>
-            <p class="description" id="desc-imagelore">图片记忆 · 生成记录与检索</p>
-          </div>
-        </a>
+        <article class="project-item fundval">
+          <a class="project-card" data-project="FundVal" href="https://aureliuswu.github.io/FundVal/" aria-labelledby="title-fundval" aria-describedby="desc-fundval">
+            <div class="preview">
+              <svg class="preview-image" viewBox="0 0 440 200" role="img" aria-labelledby="preview-fundval">
+                <title id="preview-fundval">蜉蝣基金：自选基金与盘中估值趋势的功能预览</title>
+                <rect x="20" y="14" width="400" height="200" rx="12" fill="white" stroke="#dde2eb"/>
+                <path d="M20 49H420" stroke="#dde2eb"/>
+                <circle cx="39" cy="32" r="5" fill="#168979"/>
+                <text x="52" y="36" font-size="13" font-family="sans-serif" fill="#17191f">蜉蝣基金</text>
+                <rect x="278" y="23" width="59" height="18" rx="5" fill="#e8f5f1"/><text x="290" y="36" font-size="10" font-family="sans-serif" fill="#168979">自选</text>
+                <text x="354" y="36" font-size="10" font-family="sans-serif" fill="#626a78">估值</text>
+                <rect x="34" y="64" width="116" height="119" rx="7" fill="#f3f5f8"/>
+                <text x="46" y="84" font-size="11" font-family="sans-serif" fill="#626a78">我的自选</text>
+                <rect x="46" y="97" width="76" height="6" rx="3" fill="#c9d7d3"/><rect x="46" y="112" width="57" height="5" rx="2" fill="#dde2eb"/>
+                <rect x="46" y="134" width="81" height="6" rx="3" fill="#c9d7d3"/><rect x="46" y="149" width="48" height="5" rx="2" fill="#dde2eb"/>
+                <text x="168" y="82" font-size="11" font-family="sans-serif" fill="#626a78">盘中估值趋势</text>
+                <path d="M166 110H401M166 139H401M166 169H401" stroke="#edf0f5"/>
+                <path d="m169 154 27-8 20 11 26-34 24 8 25-26 21 10 27-27 25 11 30-20v90H169Z" fill="#e8f5f1"/>
+                <path d="m169 154 27-8 20 11 26-34 24 8 25-26 21 10 27-27 25 11 30-20" fill="none" stroke="#168979" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <div class="card-heading"><h2 id="title-fundval">蜉蝣基金</h2><span class="type">网页</span><span class="arrow" aria-hidden="true">↗</span></div>
+              <p class="description" id="desc-fundval">自选基金 · 盘中估值</p>
+            </div>
+          </a>
+          <a class="demo-link" href="demos/fundval.html" aria-label="观看蜉蝣基金 Demo 功能示意视频">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 2 9 6-9 6z"/></svg><span>Demo</span>
+          </a>
+        </article>
+        <article class="project-item compass">
+          <a class="project-card" data-project="fund-compass" href="https://aureliuswu.github.io/fund-compass/" aria-labelledby="title-compass" aria-describedby="desc-compass">
+            <div class="preview">
+              <svg class="preview-image" viewBox="0 0 440 200" role="img" aria-labelledby="preview-compass">
+                <title id="preview-compass">司南基金：选基分析、择时信号与回测的功能预览</title>
+                <rect x="20" y="14" width="400" height="200" rx="12" fill="white" stroke="#dde2eb"/>
+                <path d="M20 49H420" stroke="#dde2eb"/>
+                <circle cx="39" cy="32" r="5" fill="#5f61e8"/><text x="52" y="36" font-size="13" font-family="sans-serif" fill="#17191f">司南基金</text>
+                <text x="266" y="36" font-size="10" font-family="sans-serif" fill="#5f61e8">分析</text><text x="321" y="36" font-size="10" font-family="sans-serif" fill="#626a78">择时</text><text x="374" y="36" font-size="10" font-family="sans-serif" fill="#626a78">回测</text>
+                <polygon points="117,72 173,113 152,174 82,174 61,113" fill="#f4f3ff" stroke="#dde2eb"/>
+                <polygon points="117,88 155,116 141,158 93,158 79,116" fill="none" stroke="#dde2eb"/>
+                <path d="m117 72v75m56-34-56 34m35 27-35-27m-35 27 35-27m-56-34 56 34" stroke="#dde2eb"/>
+                <polygon points="117,86 161,116 137,163 89,163 76,118" fill="#5f61e822" stroke="#5f61e8" stroke-width="2"/>
+                <text x="206" y="84" font-size="11" font-family="sans-serif" fill="#626a78">多维选基分析</text>
+                <rect x="206" y="100" width="189" height="17" rx="5" fill="#f3f5f8"/><rect x="206" y="100" width="147" height="17" rx="5" fill="#dcdcf9"/>
+                <rect x="206" y="129" width="189" height="17" rx="5" fill="#f3f5f8"/><rect x="206" y="129" width="119" height="17" rx="5" fill="#dcdcf9"/>
+                <rect x="206" y="158" width="189" height="17" rx="5" fill="#f3f5f8"/><rect x="206" y="158" width="162" height="17" rx="5" fill="#dcdcf9"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <div class="card-heading"><h2 id="title-compass">司南基金</h2><span class="type">网页</span><span class="arrow" aria-hidden="true">↗</span></div>
+              <p class="description" id="desc-compass">基金分析 · 选基择时</p>
+            </div>
+          </a>
+          <a class="demo-link" href="demos/fund-compass.html" aria-label="观看司南基金 Demo 功能示意视频">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 2 9 6-9 6z"/></svg><span>Demo</span>
+          </a>
+        </article>
+        <article class="project-item news">
+          <a class="project-card" data-project="News" href="https://aureliuswu.github.io/News/" aria-labelledby="title-news" aria-describedby="desc-news">
+            <div class="preview">
+              <svg class="preview-image" viewBox="0 0 440 200" role="img" aria-labelledby="preview-news">
+                <title id="preview-news">全球新闻：地区筛选与新闻卡片的功能预览</title>
+                <rect x="20" y="14" width="400" height="200" rx="12" fill="white" stroke="#dde2eb"/>
+                <path d="M20 49H420" stroke="#dde2eb"/>
+                <circle cx="39" cy="32" r="5" fill="#d8732f"/><text x="52" y="36" font-size="13" font-family="sans-serif" fill="#17191f">全球新闻</text>
+                <rect x="286" y="24" width="115" height="17" rx="6" fill="#f3f5f8"/><circle cx="300" cy="32" r="4" fill="none" stroke="#626a78"/><path d="m303 35 3 3" stroke="#626a78"/><text x="315" y="36" font-size="10" font-family="sans-serif" fill="#626a78">搜索新闻</text>
+                <rect x="36" y="63" width="51" height="22" rx="6" fill="#fbeee4"/><text x="49" y="78" font-size="10" font-family="sans-serif" fill="#9a4e1b">全球</text>
+                <text x="106" y="78" font-size="10" font-family="sans-serif" fill="#626a78">中国</text><text x="164" y="78" font-size="10" font-family="sans-serif" fill="#626a78">科技</text>
+                <rect x="36" y="97" width="110" height="67" rx="7" fill="#e7ecf4"/><circle cx="92" cy="126" r="23" fill="none" stroke="#aebfd7"/><ellipse cx="92" cy="126" rx="11" ry="23" fill="none" stroke="#aebfd7"/><path d="M69 126h46m-41-11h36m-36 22h36" stroke="#aebfd7"/>
+                <rect x="157" y="100" width="111" height="5" rx="2" fill="#d8732f"/><rect x="157" y="115" width="235" height="8" rx="3" fill="#cbd2df"/><rect x="157" y="131" width="213" height="6" rx="3" fill="#dde2eb"/><rect x="157" y="147" width="126" height="6" rx="3" fill="#dde2eb"/>
+                <path d="M36 177H402" stroke="#dde2eb"/><rect x="36" y="189" width="177" height="6" rx="3" fill="#dde2eb"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <div class="card-heading"><h2 id="title-news">全球新闻</h2><span class="type">网页</span><span class="arrow" aria-hidden="true">↗</span></div>
+              <p class="description" id="desc-news">地区筛选 · 新闻聚合</p>
+            </div>
+          </a>
+          <a class="demo-link" href="demos/news.html" aria-label="观看全球新闻 Demo 功能示意视频">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 2 9 6-9 6z"/></svg><span>Demo</span>
+          </a>
+        </article>
+        <article class="project-item desktop agent">
+          <a class="project-card" data-project="Agent" href="https://github.com/AureliusWu/Agent" aria-labelledby="title-agent" aria-describedby="access-agent desc-agent">
+            <div class="preview">
+              <svg class="preview-image" viewBox="0 0 580 200" role="img" aria-labelledby="preview-agent">
+                <title id="preview-agent">司忆：任务规划、工具执行与验证的功能预览</title>
+                <rect x="28" y="14" width="524" height="200" rx="12" fill="white" stroke="#dde2eb"/>
+                <path d="M28 49H552" stroke="#dde2eb"/>
+                <circle cx="46" cy="32" r="4" fill="#cbd2df"/><circle cx="59" cy="32" r="4" fill="#cbd2df"/><circle cx="72" cy="32" r="4" fill="#cbd2df"/>
+                <text x="111" y="36" font-size="13" font-family="sans-serif" fill="#17191f">司忆 · Agent 工作台</text>
+                <path d="M135 49v165" stroke="#dde2eb"/><rect x="40" y="65" width="82" height="25" rx="6" fill="#eeedff"/>
+                <text x="54" y="82" font-size="11" font-family="sans-serif" fill="#5f61e8">任务</text><text x="54" y="117" font-size="11" font-family="sans-serif" fill="#626a78">记忆</text><text x="54" y="151" font-size="11" font-family="sans-serif" fill="#626a78">工具</text>
+                <text x="158" y="81" font-size="12" font-family="sans-serif" fill="#17191f">从想法到完成</text>
+                <rect x="158" y="99" width="104" height="49" rx="8" fill="#eeedff"/><text x="190" y="129" font-size="13" font-family="sans-serif" fill="#5f61e8">规划</text>
+                <path d="M271 123h23m-5-5 5 5-5 5" stroke="#aab1bd" fill="none"/>
+                <rect x="302" y="99" width="104" height="49" rx="8" fill="#eeedff"/><text x="334" y="129" font-size="13" font-family="sans-serif" fill="#5f61e8">执行</text>
+                <path d="M415 123h23m-5-5 5 5-5 5" stroke="#aab1bd" fill="none"/>
+                <rect x="446" y="99" width="83" height="49" rx="8" fill="#e8f5f1"/><text x="467" y="129" font-size="13" font-family="sans-serif" fill="#168979">验证</text>
+                <rect x="158" y="166" width="371" height="25" rx="6" fill="#f3f5f8"/><text x="173" y="183" font-size="10" font-family="sans-serif" fill="#626a78">描述任务，开始协作…</text>
+              </svg>
+            </div>
+            <div class="card-info">
+              <div class="card-heading"><h2 id="title-agent">司忆</h2><span class="type" id="access-agent" title="私有 GitHub 项目页，需要登录有访问权限的账号">桌面 · 需权限</span><span class="arrow" aria-hidden="true">↗</span></div>
+              <p class="description" id="desc-agent">个人 Agent · 任务与工具协作</p>
+            </div>
+          </a>
+          <a class="demo-link" href="demos/agent.html" aria-label="观看司忆 Demo 功能示意视频">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 2 9 6-9 6z"/></svg><span>Demo</span>
+          </a>
+        </article>
+        <article class="project-item desktop imagelore">
+          <a class="project-card" data-project="ImageLore" href="https://github.com/AureliusWu/ImageLore" aria-labelledby="title-imagelore" aria-describedby="access-imagelore desc-imagelore">
+            <div class="preview">
+              <svg class="preview-image" viewBox="0 0 580 200" role="img" aria-labelledby="preview-imagelore">
+                <title id="preview-imagelore">ImageLore：图片收藏、生成记录与检索的功能预览</title>
+                <rect x="28" y="14" width="524" height="200" rx="12" fill="white" stroke="#dde2eb"/>
+                <path d="M28 49H552" stroke="#dde2eb"/><text x="45" y="36" font-size="13" font-family="sans-serif" fill="#17191f">ImageLore</text>
+                <rect x="346" y="24" width="188" height="17" rx="6" fill="#f3f5f8"/><text x="361" y="36" font-size="10" font-family="sans-serif" fill="#626a78">检索图片与生成记录</text>
+                <rect x="43" y="65" width="141" height="104" rx="8" fill="#e2eee9"/><circle cx="148" cy="90" r="12" fill="#f3d4b8"/><path d="m43 154 40-49 31 29 21-16 49 43v8H43Z" fill="#91b7a9"/><path d="m43 156 54-30 45 31 42-20v32H43Z" fill="#477f6c"/>
+                <rect x="195" y="65" width="141" height="104" rx="8" fill="#e4e7f7"/><path d="m195 154 45-54 29 25 34-41 33 37v48H195Z" fill="#aaaedd"/><path d="m195 162 50-26 58 22 33-11v22H195Z" fill="#7176b4"/>
+                <rect x="349" y="65" width="185" height="126" rx="8" fill="#f3f5f8"/><text x="363" y="84" font-size="11" font-family="sans-serif" fill="#17191f">生成记忆</text>
+                <text x="363" y="105" font-size="10" font-family="sans-serif" fill="#626a78">Prompt</text><rect x="363" y="114" width="146" height="5" rx="2" fill="#cbd2df"/><rect x="363" y="126" width="112" height="5" rx="2" fill="#dde2eb"/>
+                <text x="363" y="151" font-size="10" font-family="sans-serif" fill="#626a78">版本与谱系</text><path d="M374 172h126" stroke="#91b7a9" stroke-width="2"/><circle cx="374" cy="172" r="5" fill="#168979"/><circle cx="436" cy="172" r="5" fill="#168979"/><circle cx="500" cy="172" r="5" fill="#168979"/>
+                <rect x="44" y="180" width="95" height="5" rx="2" fill="#cbd2df"/><rect x="195" y="180" width="106" height="5" rx="2" fill="#cbd2df"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <div class="card-heading"><h2 id="title-imagelore">ImageLore</h2><span class="type" id="access-imagelore" title="私有 GitHub 项目页，需要登录有访问权限的账号">桌面 · 需权限</span><span class="arrow" aria-hidden="true">↗</span></div>
+              <p class="description" id="desc-imagelore">图片记忆 · 生成记录与检索</p>
+            </div>
+          </a>
+          <a class="demo-link" href="demos/imagelore.html" aria-label="观看ImageLore Demo 功能示意视频">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 2 9 6-9 6z"/></svg><span>Demo</span>
+          </a>
+        </article>
       </section>
     </main>
     <footer><p>由 Aurelius Wu 设计与构建</p><p>持续更新，服务真实需求。</p></footer>

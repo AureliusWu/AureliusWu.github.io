@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="poster-title">
+  <title id="poster-title">司忆 Demo：规划任务功能示意</title>
+  <rect width="1280" height="720" fill="#f3f5f8"/>
+  <text x="72" y="46" font-family="sans-serif" font-size="16" font-weight="600" letter-spacing="2" fill="#626a78">AURELIUS / FEATURE DEMO</text>
+  <text x="72" y="104" font-family="sans-serif" font-size="42" font-weight="700" fill="#17191f">司忆</text>
+  <rect x="1084" y="37" width="124" height="38" rx="19" fill="white" stroke="#dde2eb"/>
+  <circle cx="1107" cy="56" r="4" fill="#5f61e8"/>
+  <text x="1122" y="62" font-family="sans-serif" font-size="17" fill="#626a78">功能示意</text>
+  <text x="1208" y="106" text-anchor="end" font-family="sans-serif" font-size="15" fill="#626a78">15 秒 · 非实际操作录屏</text>
+  <rect x="72" y="134" width="1136" height="389" rx="20" fill="#f8f9fc" stroke="#dde2eb"/>
+  <svg x="82" y="144" width="1116" height="369" viewBox="0 0 580 228">
+    
+                
+                <rect x="28" y="14" width="524" height="200" rx="12" fill="white" stroke="#dde2eb"/>
+                <path d="M28 49H552" stroke="#dde2eb"/>
+                <circle cx="46" cy="32" r="4" fill="#cbd2df"/><circle cx="59" cy="32" r="4" fill="#cbd2df"/><circle cx="72" cy="32" r="4" fill="#cbd2df"/>
+                <text x="111" y="36" font-size="13" font-family="sans-serif" fill="#17191f">司忆 · Agent 工作台</text>
+                <path d="M135 49v165" stroke="#dde2eb"/><rect x="40" y="65" width="82" height="25" rx="6" fill="#eeedff"/>
+                <text x="54" y="82" font-size="11" font-family="sans-serif" fill="#5f61e8">任务</text><text x="54" y="117" font-size="11" font-family="sans-serif" fill="#626a78">记忆</text><text x="54" y="151" font-size="11" font-family="sans-serif" fill="#626a78">工具</text>
+                <text x="158" y="81" font-size="12" font-family="sans-serif" fill="#17191f">从想法到完成</text>
+                <rect x="158" y="99" width="104" height="49" rx="8" fill="#eeedff"/><text x="190" y="129" font-size="13" font-family="sans-serif" fill="#5f61e8">规划</text>
+                <path d="M271 123h23m-5-5 5 5-5 5" stroke="#aab1bd" fill="none"/>
+                <rect x="302" y="99" width="104" height="49" rx="8" fill="#eeedff"/><text x="334" y="129" font-size="13" font-family="sans-serif" fill="#5f61e8">执行</text>
+                <path d="M415 123h23m-5-5 5 5-5 5" stroke="#aab1bd" fill="none"/>
+                <rect x="446" y="99" width="83" height="49" rx="8" fill="#e8f5f1"/><text x="467" y="129" font-size="13" font-family="sans-serif" fill="#168979">验证</text>
+                <rect x="158" y="166" width="371" height="25" rx="6" fill="#f3f5f8"/><text x="173" y="183" font-size="10" font-family="sans-serif" fill="#626a78">描述任务，开始协作…</text>
+              
+    <rect x="153" y="94" width="114" height="59" rx="8" fill="#5f61e8" fill-opacity=".055" stroke="#5f61e8" stroke-width="2" stroke-opacity="0.75"/>
+    <circle cx="196.6" cy="151.15" r="8" fill="#5f61e8" fill-opacity=".12"/>
+    <path transform="translate(196.6,151.15)" d="m0 0 0 18 5-4 4 9 4-2-4-9 6-1z" fill="white" stroke="#5f61e8" stroke-width="1.3" stroke-linejoin="round"/>
+  </svg>
+  <text x="72" y="565" font-family="sans-serif" font-size="17" font-weight="600" fill="#5f61e8">01 / 03</text>
+  <text x="72" y="610" font-family="sans-serif" font-size="33" font-weight="650" fill="#17191f">规划任务</text>
+  <text x="72" y="648" font-family="sans-serif" font-size="22" fill="#626a78">描述任务，把目标拆解为可执行的步骤。</text>
+  <text x="1208" y="645" text-anchor="end" font-family="sans-serif" font-size="16" fill="#626a78">00 / 15 s</text>
+  <rect x="72" y="684" width="368" height="5" rx="2.5" fill="#5f61e8" opacity="1"/><rect x="456" y="684" width="368" height="5" rx="2.5" fill="#dde2eb" opacity="0.65"/><rect x="840" y="684" width="368" height="5" rx="2.5" fill="#dde2eb" opacity="0.65"/>
+  <rect x="72" y="684" width="3.786666666666667" height="5" rx="2.5" fill="#5f61e8" opacity=".2"/>
+  </svg>

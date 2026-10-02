@@ -13,11 +13,12 @@
 
 ## 技术结构
 
-- 单页 HTML。
+- 静态 HTML 主页及五个独立 Demo 播放页。
 - CSS 内联。
 - 零外部依赖、零构建流程。
 - 入口文件：`index.html`。
 - 界面示意预览：内联 SVG，不展示实时业务数据。
+- Demo 清单：`demos/catalog.json`；播放页：`demos/*.html`；视频、封面和字幕：`demos/media/`。
 - 文档：`README.md`、`CHANGELOG.md`。
 - 版本来源：`VERSION`。
 - 静态门禁：`node scripts/check-homepage.mjs`。
@@ -30,8 +31,11 @@
 - 视觉保持克制、清爽、浅色主题。
 - 项目入口应一目了然；在常用桌面和移动视窗中优先保持一屏总览，并核对较矮视窗、放大字体时的可访问性。
 - 每个项目使用单个 `a.project-card` 包裹标题和预览，标题为 `h2`；禁止嵌套链接。`data-project` 使用下方仓库名。
+- `article.project-item` 包裹项目卡片与并列的 `a.demo-link`，Demo 按钮不可放进项目链接内。
+- Demo 为明确标注的功能示意视频，非实际操作录屏；不使用真实持仓、私有任务或用户图片数据。
+- 视频使用单段不超过 1 MiB 的 H.264 MP4、fast-start 和中文字幕；播放页使用 `controls playsinline preload="none"`，不自动播放。主页不加载视频资源。
 - SVG 预览使用 `preview-image` 类、`role="img"` 及非空 `title`，保证键盘与辅助技术可使用。
-- 发布前通过静态门禁并在浏览器验证布局、标题/预览跳转和键盘焦点。
+- 发布前通过静态门禁并在浏览器验证布局、标题/预览/Demo 跳转、键盘焦点和视频播放。
 
 ## 版本管理
 
