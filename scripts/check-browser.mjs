@@ -80,9 +80,16 @@ async function interactions(context, name, playback = false) {
     await page.locator(`.demo-link[href="demos/${demo.slug}.html"]`).click();
     await page.waitForLoadState('load');
     assert.equal(page.url(), `${base}/demos/${demo.slug}.html`);
-    assert.equal(mediaRequests.length, 0, `${name}: video loaded before play`);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     const video = page.locator('video');
+    const beforePlay = await video.evaluate(v => ({ paused: v.paused, currentTime: v.currentTime, autoplay: v.autoplay }));
+    assert.deepEqual(beforePlay, { paused: true, currentTime: 0, autoplay: false }, `${name}: video must wait for user playback`);
+    // The HTML standard defines preload as a hint. WebKit may fetch video data to
+    // initialise captions even with preload=none; still enforce no automatic playback.
+    const beforePlayRequests = mediaRequests.length;
+    if (context.browser().browserType().name() !== 'webkit') {
+      assert.equal(beforePlayRequests, 0, `${name}: video loaded before play`);
+    }
     assert.equal(await video.getAttribute('preload'), 'none');
     assert.equal(await video.getAttribute('playsinline'), '');
     assert.equal(await video.locator('track[kind="captions"][default]').count(), 1);
@@ -99,7 +106,7 @@ async function interactions(context, name, playback = false) {
     page.off('request', onRequest);
     await page.getByRole('link', { name: '← 返回主页', exact: true }).click();
     assert.equal(page.url(), `${base}/index.html`);
-    report.interactions.push({ profile: name, project: demo.project, title: true, preview: true, demo: true, back: true, preload: false, playback });
+    report.interactions.push({ profile: name, project: demo.project, title: true, preview: true, demo: true, back: true, beforePlayRequests, autoplay: false, playback });
     console.log(`${name}: ${demo.title} title, preview, Demo and back${playback ? ', playback and seek' : ''} passed`);
   }
   await page.close();
