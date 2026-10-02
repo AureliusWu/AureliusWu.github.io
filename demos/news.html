@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="全球新闻 Demo：15 秒功能示意视频。">
+  <meta name="description" content="新闻聚合工具，按地区、来源和关键词筛选内容，再跳转来源原文。">
   <meta name="theme-color" content="#f3f5f8">
   <title>全球新闻 Demo · Aurelius</title>
   <link rel="canonical" href="https://aureliuswu.github.io/demos/news.html">
@@ -14,12 +14,16 @@ body { margin:0; background:var(--bg); color:var(--text); -webkit-font-smoothing
 a { color:inherit; }
 .page { width:min(100%,1060px); margin:0 auto; padding:28px 24px 32px; }
 nav { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:30px; }
-.back { color:var(--muted); text-decoration:none; font-size:14px; padding:8px 0; }
+.back { color:var(--muted); text-decoration:none; font-size:14px; min-height:44px; display:inline-flex; align-items:center; padding:10px 0; }
 .back:hover { color:var(--accent); }
 .brand { font-size:14px; font-weight:700; letter-spacing:-.02em; }
 .eyebrow { margin:0 0 8px; color:var(--accent); font-size:12px; font-weight:650; letter-spacing:.06em; }
 h1 { margin:0; font-size:clamp(26px,5vw,38px); line-height:1.3; letter-spacing:-.045em; }
 h1 span { color:var(--muted); font-size:.6em; font-weight:500; margin-left:8px; letter-spacing:0; }
+.summary { margin:12px 0 8px; font-size:16px; line-height:1.7; max-width:760px; }
+.tech { margin:0 0 14px; color:var(--accent); font-size:13px; line-height:1.7; overflow-wrap:anywhere; }
+.engineering { padding:18px 20px; margin:22px 0; background:#fff; border:1px solid var(--line); border-radius:12px; }
+.engineering p { margin:6px 0 0; color:var(--muted); font-size:14px; line-height:1.7; }
 .note { margin:10px 0 20px; color:var(--muted); font-size:14px; line-height:1.7; }
 figure { margin:0; }
 video { display:block; width:100%; height:auto; aspect-ratio:16/9; border:1px solid var(--line); border-radius:16px; background:#fff; }
@@ -43,8 +47,10 @@ footer { margin-top:28px; color:var(--muted); font-size:12px; line-height:1.7; }
   <div class="page">
     <nav aria-label="页面导航"><a class="back" href="../index.html">← 返回主页</a><span class="brand">Aurelius</span></nav>
     <main>
-      <p class="eyebrow">功能示意 · 15 秒</p>
+      <p class="eyebrow">项目展示 · 功能示意 15 秒</p>
       <h1>全球新闻<span>Demo</span></h1>
+      <p class="summary">新闻聚合工具，按地区、来源和关键词筛选内容，再跳转来源原文。</p>
+      <p class="tech"><strong>技术栈</strong> · Vue 3 · TypeScript · Pinia · PWA · FastAPI</p>
       <p class="note">以主页的界面示意展示核心流程，非实际操作录屏。点击播放即可观看。</p>
       <figure>
         <video controls playsinline preload="none" poster="media/news-poster.svg" width="1280" height="720" aria-label="全球新闻 Demo 功能示意视频">
@@ -59,6 +65,7 @@ footer { margin-top:28px; color:var(--muted); font-size:12px; line-height:1.7; }
         <li><span class="step-number">02</span><h2>搜索关键词</h2><p>通过关键词，快速找到关注的话题。</p></li>
         <li><span class="step-number">03</span><h2>阅读原文</h2><p>浏览新闻卡片，再打开来源原文。</p></li>
       </ol>
+      <section class="engineering" aria-label="项目实现"><h2>实现重点</h2><p>前端读取新闻快照，后端聚合与处理来源内容；兼顾筛选交互和数据更新。</p></section>
       <div class="actions">
         <a class="primary" href="https://aureliuswu.github.io/News/">进入项目 ↗</a>
         <a class="secondary" href="media/news.mp4" download="news-demo.mp4">下载视频</a>

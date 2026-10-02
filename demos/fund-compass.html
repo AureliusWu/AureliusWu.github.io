@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="司南基金 Demo：15 秒功能示意视频。">
+  <meta name="description" content="基金分析工具，通过多维评分、择时信号与历史回测辅助筛选和比较。">
   <meta name="theme-color" content="#f3f5f8">
   <title>司南基金 Demo · Aurelius</title>
   <link rel="canonical" href="https://aureliuswu.github.io/demos/fund-compass.html">
@@ -14,12 +14,16 @@ body { margin:0; background:var(--bg); color:var(--text); -webkit-font-smoothing
 a { color:inherit; }
 .page { width:min(100%,1060px); margin:0 auto; padding:28px 24px 32px; }
 nav { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:30px; }
-.back { color:var(--muted); text-decoration:none; font-size:14px; padding:8px 0; }
+.back { color:var(--muted); text-decoration:none; font-size:14px; min-height:44px; display:inline-flex; align-items:center; padding:10px 0; }
 .back:hover { color:var(--accent); }
 .brand { font-size:14px; font-weight:700; letter-spacing:-.02em; }
 .eyebrow { margin:0 0 8px; color:var(--accent); font-size:12px; font-weight:650; letter-spacing:.06em; }
 h1 { margin:0; font-size:clamp(26px,5vw,38px); line-height:1.3; letter-spacing:-.045em; }
 h1 span { color:var(--muted); font-size:.6em; font-weight:500; margin-left:8px; letter-spacing:0; }
+.summary { margin:12px 0 8px; font-size:16px; line-height:1.7; max-width:760px; }
+.tech { margin:0 0 14px; color:var(--accent); font-size:13px; line-height:1.7; overflow-wrap:anywhere; }
+.engineering { padding:18px 20px; margin:22px 0; background:#fff; border:1px solid var(--line); border-radius:12px; }
+.engineering p { margin:6px 0 0; color:var(--muted); font-size:14px; line-height:1.7; }
 .note { margin:10px 0 20px; color:var(--muted); font-size:14px; line-height:1.7; }
 figure { margin:0; }
 video { display:block; width:100%; height:auto; aspect-ratio:16/9; border:1px solid var(--line); border-radius:16px; background:#fff; }
@@ -43,8 +47,10 @@ footer { margin-top:28px; color:var(--muted); font-size:12px; line-height:1.7; }
   <div class="page">
     <nav aria-label="页面导航"><a class="back" href="../index.html">← 返回主页</a><span class="brand">Aurelius</span></nav>
     <main>
-      <p class="eyebrow">功能示意 · 15 秒</p>
+      <p class="eyebrow">项目展示 · 功能示意 15 秒</p>
       <h1>司南基金<span>Demo</span></h1>
+      <p class="summary">基金分析工具，通过多维评分、择时信号与历史回测辅助筛选和比较。</p>
+      <p class="tech"><strong>技术栈</strong> · Vue 3 · TypeScript · Pinia · ECharts · FastAPI</p>
       <p class="note">以主页的界面示意展示核心流程，非实际操作录屏。点击播放即可观看。</p>
       <figure>
         <video controls playsinline preload="none" poster="media/fund-compass-poster.svg" width="1280" height="720" aria-label="司南基金 Demo 功能示意视频">
@@ -59,6 +65,7 @@ footer { margin-top:28px; color:var(--muted); font-size:12px; line-height:1.7; }
         <li><span class="step-number">02</span><h2>辅助选基</h2><p>结合筛选与分析信息，缩小关注范围。</p></li>
         <li><span class="step-number">03</span><h2>切换工具</h2><p>进入分析、择时与回测，继续查看相关信息。</p></li>
       </ol>
+      <section class="engineering" aria-label="项目实现"><h2>实现重点</h2><p>Vue 前端呈现分析图表，Python 服务承担评分与回测计算；支持快照与离线浏览。</p></section>
       <div class="actions">
         <a class="primary" href="https://aureliuswu.github.io/fund-compass/">进入项目 ↗</a>
         <a class="secondary" href="media/fund-compass.mp4" download="fund-compass-demo.mp4">下载视频</a>

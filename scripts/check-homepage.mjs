@@ -1,6 +1,7 @@
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { dirname, resolve, relative, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { gzipSync } from 'node:zlib';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (name) => readFileSync(resolve(root, name), 'utf8');
@@ -82,8 +83,8 @@ const expectedProjects = new Map([
   ['FundVal', { title: '蜉蝣基金', href: 'https://aureliuswu.github.io/FundVal/' }],
   ['fund-compass', { title: '司南基金', href: 'https://aureliuswu.github.io/fund-compass/' }],
   ['News', { title: '全球新闻', href: 'https://aureliuswu.github.io/News/' }],
-  ['Agent', { title: '司忆', href: 'https://github.com/AureliusWu/Agent' }],
-  ['ImageLore', { title: 'ImageLore', href: 'https://github.com/AureliusWu/ImageLore' }],
+  ['Agent', { title: '司忆', href: 'demos/agent.html', sourceHref: 'https://github.com/AureliusWu/Agent' }],
+  ['ImageLore', { title: 'ImageLore', href: 'demos/imagelore.html', sourceHref: 'https://github.com/AureliusWu/ImageLore' }],
 ]);
 const anchors = [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a\s*>/gi)]
   .map((match) => ({ attrs: attributes(match[1]), body: match[2] }));
@@ -103,6 +104,8 @@ for (const { attrs, body } of cards) {
       `${project} 必须有一个包含“${expected.title}”的 h2 标题。`);
   }
   check(!/<a\b/i.test(body), `${project} 卡片内不得嵌套链接。`);
+  check(/class="stack"/.test(body) && /class="card-action"/.test(body),
+    `${project} 必须展示技术栈与可读的入口说明。`);
   const previews = [...body.matchAll(/<svg\b([^>]*)>([\s\S]*?)<\/svg\s*>/gi)]
     .filter((match) => (attributes(match[1]).class ?? '').split(/\s+/).includes('preview-image'));
   check(previews.length === 1, `${project} 必须有一个内联 SVG preview-image。`);
@@ -130,7 +133,7 @@ check(projectItems.length === expectedProjects.size, '每个项目必须有独�
 const seenDemos = new Set();
 for (const demo of demos) {
   const expected = expectedProjects.get(demo.project);
-  check(expected && demo.title === expected.title && demo.href === expected.href,
+  check(expected && demo.title === expected.title && demo.href === (expected.sourceHref ?? expected.href),
     `Demo 清单名称与项目入口不一致：${demo.project}`);
   check(/^[a-z0-9-]+$/.test(demo.slug) && !seenDemos.has(demo.slug), `Demo 标识无效或重复：${demo.slug}`);
   seenDemos.add(demo.slug);
@@ -151,6 +154,8 @@ for (const demo of demos) {
     `${demo.project} 视频必须可控、支持内联播放、按需加载且不自动播放。`);
   check(page.includes('功能示意') && page.includes('非实际操作录屏') && page.includes(demo.title),
     `${demo.project} 播放页必须明确说明视频类型和项目名称。`);
+  check(page.includes('class="summary"') && page.includes('技术栈') && page.includes('实现重点'),
+    `${demo.project} 展示页必须说明用途、技术栈与实现重点。`);
   const sources = tags('source', page);
   check(sources.length === 1 && sources[0].src === `media/${demo.slug}.mp4` && sources[0].type === 'video/mp4',
     `${demo.project} 必须使用对应的 MP4 视频。`);
@@ -191,7 +196,10 @@ for (const { attrs } of anchors) {
   }
 }
 
-check(tags('script').every((tag) => !('src' in tag)), '不得依赖外部 JavaScript 文件。');
+check(tags('script').length === 0, '主页不应加载或执行 JavaScript。');
+check(Buffer.byteLength(html) <= 24 * 1024, '首页 HTML 应保持在 24 KiB 内。');
+check(gzipSync(html).length <= 6500, '首页压缩传输应保持在 6.5 KB 内。');
+check(tags('video|source').length === 0, '主页不得预加载 Demo 视频。');
 check(tags('link').every((tag) => !(tag.rel ?? '').toLowerCase().split(/\s+/).includes('stylesheet')),
   'CSS 必须内联，不得依赖外部样式文件。');
 check(!/@import\s/i.test(html), '不得通过 @import 引入外部 CSS。');

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="ImageLore Demo：15 秒功能示意视频。">
+  <meta name="description" content="本地优先的 AI 视觉生成记忆库，保存 Prompt、生成参数和版本谱系，用自然语言或相似图片找回创作。">
   <meta name="theme-color" content="#f3f5f8">
   <title>ImageLore Demo · Aurelius</title>
   <link rel="canonical" href="https://aureliuswu.github.io/demos/imagelore.html">
@@ -14,12 +14,16 @@ body { margin:0; background:var(--bg); color:var(--text); -webkit-font-smoothing
 a { color:inherit; }
 .page { width:min(100%,1060px); margin:0 auto; padding:28px 24px 32px; }
 nav { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:30px; }
-.back { color:var(--muted); text-decoration:none; font-size:14px; padding:8px 0; }
+.back { color:var(--muted); text-decoration:none; font-size:14px; min-height:44px; display:inline-flex; align-items:center; padding:10px 0; }
 .back:hover { color:var(--accent); }
 .brand { font-size:14px; font-weight:700; letter-spacing:-.02em; }
 .eyebrow { margin:0 0 8px; color:var(--accent); font-size:12px; font-weight:650; letter-spacing:.06em; }
 h1 { margin:0; font-size:clamp(26px,5vw,38px); line-height:1.3; letter-spacing:-.045em; }
 h1 span { color:var(--muted); font-size:.6em; font-weight:500; margin-left:8px; letter-spacing:0; }
+.summary { margin:12px 0 8px; font-size:16px; line-height:1.7; max-width:760px; }
+.tech { margin:0 0 14px; color:var(--accent); font-size:13px; line-height:1.7; overflow-wrap:anywhere; }
+.engineering { padding:18px 20px; margin:22px 0; background:#fff; border:1px solid var(--line); border-radius:12px; }
+.engineering p { margin:6px 0 0; color:var(--muted); font-size:14px; line-height:1.7; }
 .note { margin:10px 0 20px; color:var(--muted); font-size:14px; line-height:1.7; }
 figure { margin:0; }
 video { display:block; width:100%; height:auto; aspect-ratio:16/9; border:1px solid var(--line); border-radius:16px; background:#fff; }
@@ -43,8 +47,10 @@ footer { margin-top:28px; color:var(--muted); font-size:12px; line-height:1.7; }
   <div class="page">
     <nav aria-label="页面导航"><a class="back" href="../index.html">← 返回主页</a><span class="brand">Aurelius</span></nav>
     <main>
-      <p class="eyebrow">功能示意 · 15 秒</p>
+      <p class="eyebrow">项目展示 · 功能示意 15 秒</p>
       <h1>ImageLore<span>Demo</span></h1>
+      <p class="summary">本地优先的 AI 视觉生成记忆库，保存 Prompt、生成参数和版本谱系，用自然语言或相似图片找回创作。</p>
+      <p class="tech"><strong>技术栈</strong> · React · TypeScript · Tauri 2 · SQLite · 本地 CLIP</p>
       <p class="note">以主页的界面示意展示核心流程，非实际操作录屏。点击播放即可观看。</p>
       <figure>
         <video controls playsinline preload="none" poster="media/imagelore-poster.svg" width="1280" height="720" aria-label="ImageLore Demo 功能示意视频">
@@ -59,10 +65,11 @@ footer { margin-top:28px; color:var(--muted); font-size:12px; line-height:1.7; }
         <li><span class="step-number">02</span><h2>查看生成记忆</h2><p>查看对应提示词，回顾图片的创作信息。</p></li>
         <li><span class="step-number">03</span><h2>回看版本与谱系</h2><p>沿版本与谱系，查看创作过程中的不同记录。</p></li>
       </ol>
+      <section class="engineering" aria-label="项目实现"><h2>实现重点</h2><p>SQLite 保存生成记录与谱系，本地 CLIP 支持图文检索；原图保留在原位置，虚拟化图库降低大量图片的浏览开销。</p></section>
       <div class="actions">
-        <a class="primary" href="https://github.com/AureliusWu/ImageLore">打开 GitHub 项目页 ↗</a>
+        <a class="secondary" href="https://github.com/AureliusWu/ImageLore">源码仓库（需权限） ↗</a>
         <a class="secondary" href="media/imagelore.mp4" download="imagelore-demo.mp4">下载视频</a>
-        <span class="access">私有仓库，需要相应 GitHub 访问权限。</span>
+        <span class="access">本页可公开浏览；源码仓库仅对有权限的账号开放。</span>
       </div>
     </main>
     <footer>由 Aurelius Wu 设计与构建 · <a href="../index.html">查看全部项目</a></footer>
