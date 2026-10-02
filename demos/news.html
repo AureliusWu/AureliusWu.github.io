@@ -3,56 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="新闻聚合工具，按地区、来源和关键词筛选内容，再跳转来源原文。">
+  <meta name="description" content="以公开新闻快照提供阅读入口，支持地区、来源与关键词筛选，让读者保留来源上下文并继续访问原文。">
   <meta name="theme-color" content="#f3f5f8">
-  <title>全球新闻 Demo · Aurelius</title>
+  <title>全球新闻 · 项目案例与 Demo · Aurelius Wu</title>
   <link rel="canonical" href="https://aureliuswu.github.io/demos/news.html">
-  <style>
-:root { color-scheme: light; --bg:#f3f5f8; --text:#17191f; --muted:#566171; --line:#dde2eb; --accent:#ad571f; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
-* { box-sizing:border-box; }
-body { margin:0; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
-a { color:inherit; }
-.page { width:min(100%,1060px); margin:0 auto; padding:28px 24px 32px; }
-nav { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:30px; }
-.back { color:var(--muted); text-decoration:none; font-size:14px; min-height:44px; display:inline-flex; align-items:center; padding:10px 0; }
-.back:hover { color:var(--accent); }
-.brand { font-size:14px; font-weight:700; letter-spacing:-.02em; }
-.eyebrow { margin:0 0 8px; color:var(--accent); font-size:12px; font-weight:650; letter-spacing:.06em; }
-h1 { margin:0; font-size:clamp(26px,5vw,38px); line-height:1.3; letter-spacing:-.045em; }
-h1 span { color:var(--muted); font-size:.6em; font-weight:500; margin-left:8px; letter-spacing:0; }
-.summary { margin:12px 0 8px; font-size:16px; line-height:1.7; max-width:760px; }
-.tech { margin:0 0 14px; color:var(--accent); font-size:13px; line-height:1.7; overflow-wrap:anywhere; }
-.engineering { padding:18px 20px; margin:22px 0; background:#fff; border:1px solid var(--line); border-radius:12px; }
-.engineering p { margin:6px 0 0; color:var(--muted); font-size:14px; line-height:1.7; }
-.note { margin:10px 0 20px; color:var(--muted); font-size:14px; line-height:1.7; }
-figure { margin:0; }
-video { display:block; width:100%; height:auto; aspect-ratio:16/9; border:1px solid var(--line); border-radius:16px; background:#fff; }
-figcaption { margin:10px 0 0; color:var(--muted); font-size:12px; line-height:1.6; }
-.steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:24px 0; padding:0; list-style:none; }
-.steps li { padding:16px; background:#fff; border:1px solid var(--line); border-radius:12px; }
-.step-number { display:block; margin-bottom:8px; color:var(--accent); font:12px "SFMono-Regular",Consolas,monospace; }
-h2 { margin:0 0 6px; font-size:16px; line-height:1.4; }
-.steps p { margin:0; color:var(--muted); font-size:13px; line-height:1.65; }
-.actions { display:flex; align-items:center; flex-wrap:wrap; gap:12px; }
-.primary,.secondary { display:inline-flex; align-items:center; min-height:44px; padding:11px 16px; border:1px solid var(--line); border-radius:10px; font-size:14px; font-weight:600; line-height:1.4; text-decoration:none; }
-.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
-.secondary { background:#fff; }
-a:focus-visible,video:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
-.access { color:var(--muted); font-size:12px; line-height:1.6; }
-footer { margin-top:28px; color:var(--muted); font-size:12px; line-height:1.7; }
-@media(max-width:600px) { .page { padding:16px; } nav { margin-bottom:22px; } .steps { grid-template-columns:1fr; margin:20px 0; gap:8px; } .steps li { padding:12px 14px; } .step-number { float:left; margin:3px 12px 0 0; } h2 { font-size:15px; } .steps p { margin-left:30px; } video { border-radius:12px; } }
-  </style>
+  <meta property="og:title" content="全球新闻 · Aurelius Wu 的项目案例">
+  <meta property="og:description" content="以公开新闻快照提供阅读入口，支持地区、来源与关键词筛选，让读者保留来源上下文并继续访问原文。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aureliuswu.github.io/demos/news.html">
+  <style>:root{color-scheme:light;--bg:#f3f5f8;--text:#17191f;--muted:#566171;--line:#dde2eb;--accent:#ad571f;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}a{color:inherit}.page{width:min(100%,1060px);margin:auto;padding:24px 28px 32px}nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}.back{color:var(--muted);text-decoration:none;font-size:14px;min-height:44px;display:inline-flex;align-items:center;padding:10px 0}.back:hover{color:var(--accent)}.brand{font-size:14px;font-weight:700}.eyebrow{margin:0 0 8px;color:var(--accent);font-size:13px;font-weight:650}h1{margin:0;font-size:clamp(28px,5vw,38px);line-height:1.3;letter-spacing:-.04em}.summary{max-width:820px;margin:12px 0;font-size:16px;line-height:1.75}.tech{margin:0 0 16px;color:var(--accent);font-size:13px;line-height:1.7;overflow-wrap:anywhere}.actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px}.primary,.secondary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border:1px solid var(--line);border-radius:9px;font-size:14px;font-weight:650;line-height:1.5;text-decoration:none}.primary{background:var(--accent);border-color:var(--accent);color:#fff}.secondary{background:#fff}.case-overview{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 14px}.panel{padding:20px;background:#fff;border:1px solid var(--line);border-radius:14px}.panel p,.panel li{color:var(--muted);font-size:14px;line-height:1.8}.panel p{margin:8px 0 0}.panel h2{margin:0;font-size:18px;line-height:1.5}.engineering{margin:14px 0}.decisions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;list-style:none;margin:16px 0 0;padding:0}.decisions h3{font-size:15px;color:var(--text);margin:0}.decisions p{margin:8px 0 0}.deliverables ul{margin:12px 0;padding-left:20px}.boundary{padding-top:12px;border-top:1px solid var(--line)}.demo{margin-top:30px;scroll-margin-top:20px}.demo>h2{font-size:22px;margin:0}.note{color:var(--muted);font-size:14px;line-height:1.7;margin:10px 0 16px}figure{margin:0}video{display:block;width:100%;height:auto;aspect-ratio:16/9;border:1px solid var(--line);border-radius:14px;background:#fff}figcaption{margin:10px 0;color:var(--muted);font-size:12px;line-height:1.7}.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0;padding:0;list-style:none}.steps li{padding:16px;background:#fff;border:1px solid var(--line);border-radius:12px}.step-number{display:block;margin-bottom:8px;color:var(--accent);font:12px Consolas,monospace}.steps h3{margin:0 0 6px;font-size:15px;line-height:1.5}.steps p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}.access{color:var(--muted);font-size:13px;line-height:1.7;margin:12px 0 0}a:focus-visible,video:focus-visible{outline:3px solid var(--accent);outline-offset:4px}.related{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px}.related a{display:inline-flex;align-items:center;min-height:44px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;text-decoration:none;font-size:13px}footer{margin-top:26px;color:var(--muted);font-size:12px;line-height:1.7}footer a{display:inline-flex;align-items:center;min-height:44px}@media(max-width:700px){.page{padding:16px}.case-overview,.decisions{grid-template-columns:1fr}.case-overview{margin-top:22px}.decisions{gap:16px}.panel{padding:17px}.steps{grid-template-columns:1fr;gap:8px}.steps li{padding:12px 14px}.step-number{float:left;margin:3px 12px 0 0}.steps p{margin-left:30px}nav{margin-bottom:20px}.demo{scroll-margin-top:16px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>
 </head>
 <body>
   <div class="page">
-    <nav aria-label="页面导航"><a class="back" href="../index.html">← 返回主页</a><span class="brand">Aurelius</span></nav>
+    <nav aria-label="页面导航"><a class="back" href="../index.html">← 返回主页</a><span class="brand">Aurelius Wu</span></nav>
     <main>
-      <p class="eyebrow">项目展示 · 功能示意 15 秒</p>
-      <h1>全球新闻<span>Demo</span></h1>
-      <p class="summary">新闻聚合工具，按地区、来源和关键词筛选内容，再跳转来源原文。</p>
-      <p class="tech"><strong>技术栈</strong> · Vue 3 · TypeScript · Pinia · PWA · FastAPI</p>
-      <p class="note">以主页的界面示意展示核心流程，非实际操作录屏。点击播放即可观看。</p>
-      <figure>
+      <p class="eyebrow">Web 工具 · 信息获取</p>
+      <h1>全球新闻</h1>
+      <p class="summary">以公开新闻快照提供阅读入口，支持地区、来源与关键词筛选，让读者保留来源上下文并继续访问原文。</p>
+      <p class="tech"><strong>技术栈</strong> · Vue 3 · TypeScript · PWA · Python · GitHub Actions</p>
+      <div class="actions"><a class="primary" href="https://aureliuswu.github.io/News/">打开应用 ↗</a><a class="secondary" href="#demo">观看 Demo ↓</a><a class="secondary" href="https://github.com/AureliusWu/News">查看源码 ↗</a></div>
+      <p class="access">如果在线应用暂时不可用，可继续浏览本页介绍与视频。</p>
+      <div class="case-overview">
+        <section class="panel" aria-label="项目背景"><h2>解决的问题</h2><p>新闻分散在不同来源，重复浏览和反复搜索增加阅读成本。希望集中筛选关注内容，同时保留原文和来源信息。</p></section>
+        <section class="panel" aria-label="项目工作"><h2>我做的工作</h2><p>围绕筛选、阅读、来源查看和收藏梳理流程；结合 AI 辅助开发，迭代新闻快照、界面反馈与数据更新链路。</p></section>
+      </div>
+      <section class="panel engineering" aria-label="项目实现">
+        <h2>实现重点与产品取舍</h2>
+        <ol class="decisions">
+          <li><h3>公开阅读使用定时快照</h3><p>通过 GitHub Actions 采集和更新静态数据，GitHub Pages 提供阅读界面，公开站点不依赖常开个人电脑或实时后端。</p></li>
+          <li><h3>保留内容的来源</h3><p>新闻卡片展示来源并跳转原文；地区、来源与关键词筛选帮助缩小范围，收藏与阅读流程支持后续回看。</p></li>
+          <li><h3>数据状态独立可检查</h3><p>采集时间与来源状态保持可见，新闻和健康报告绑定同一快照；自动任务成功与内容新鲜度分别检查。</p></li>
+        </ol>
+      </section>
+      <section class="panel deliverables" aria-label="项目交付与边界">
+        <h2>交付内容与使用条件</h2>
+        <ul>
+          <li>公开可访问的移动端新闻阅读页面。</li>
+          <li>地区、来源与关键词筛选、原文跳转和收藏。</li>
+          <li>定时快照更新与来源状态展示。</li>
+        </ul>
+        <p class="boundary">公开站点采用定时快照，更新存在采集间隔。当前为候选迭代，自动摘要与翻译尚未启用，长期新鲜度和设备验收仍在完善。</p>
+      </section>
+      <section class="demo" id="demo" aria-labelledby="demo-title">
+        <h2 id="demo-title">15 秒功能示意</h2>
+        <p class="note">以界面示意展示核心流程，非实际操作录屏。点击播放即可观看。</p>
+        <figure>
         <video controls playsinline preload="none" poster="media/news-poster.svg" width="1280" height="720" aria-label="全球新闻 Demo 功能示意视频">
           <source src="media/news.mp4" type="video/mp4">
           <track kind="captions" src="media/news.vtt" srclang="zh-CN" label="中文说明" default>
@@ -60,19 +56,16 @@ footer { margin-top:28px; color:var(--muted); font-size:12px; line-height:1.7; }
         </video>
         <figcaption>无音频 · 提供中文说明字幕 · 视频中的界面和图形均为功能示意。</figcaption>
       </figure>
-      <ol class="steps" aria-label="视频功能说明">
-        <li><span class="step-number">01</span><h2>筛选地区</h2><p>按地区筛选，聚合自己关注的新闻内容。</p></li>
-        <li><span class="step-number">02</span><h2>搜索关键词</h2><p>通过关键词，快速找到关注的话题。</p></li>
-        <li><span class="step-number">03</span><h2>阅读原文</h2><p>浏览新闻卡片，再打开来源原文。</p></li>
+        <ol class="steps" aria-label="视频功能说明">
+        <li><span class="step-number">01</span><h3>筛选地区</h3><p>按地区筛选，聚合自己关注的新闻内容。</p></li>
+        <li><span class="step-number">02</span><h3>搜索关键词</h3><p>通过关键词，快速找到关注的话题。</p></li>
+        <li><span class="step-number">03</span><h3>阅读原文</h3><p>浏览新闻卡片，再打开来源原文。</p></li>
       </ol>
-      <section class="engineering" aria-label="项目实现"><h2>实现重点</h2><p>前端读取新闻快照，后端聚合与处理来源内容；兼顾筛选交互和数据更新。</p></section>
-      <div class="actions">
-        <a class="primary" href="https://aureliuswu.github.io/News/">进入项目 ↗</a>
-        <a class="secondary" href="media/news.mp4" download="news-demo.mp4">下载视频</a>
-        
-      </div>
+        <div class="actions"><a class="secondary" href="media/news.mp4" download="news-demo.mp4">下载视频</a><a class="secondary" href="../index.html">查看全部项目 →</a></div>
+      </section>
+      <nav class="related" aria-label="其他项目"><a href="agent.html">司忆 →</a><a href="imagelore.html">ImageLore →</a><a href="fundval.html">蜉蝣基金 →</a><a href="fund-compass.html">司南基金 →</a></nav>
     </main>
-    <footer>由 Aurelius Wu 设计与构建 · <a href="../index.html">查看全部项目</a></footer>
+    <footer>个人项目 · 需求与流程设计 · AI 辅助开发与迭代<br><a href="https://github.com/AureliusWu">GitHub 主页 ↗</a></footer>
   </div>
 </body>
 </html>

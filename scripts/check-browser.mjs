@@ -42,6 +42,7 @@ async function layout(page, name) {
   await page.goto(base);
   await page.evaluate(() => document.fonts.ready);
   assert.equal(await page.locator('.project-card').count(), 5);
+  assert.deepEqual(await page.locator('.project-card').evaluateAll(cards => cards.slice(0, 2).map(card => card.dataset.project)), ['Agent', 'ImageLore']);
   assert.equal(await page.locator('a a').count(), 0);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `${name}: horizontal overflow`);
   for (const button of await page.locator('.demo-link').all()) {
@@ -70,16 +71,23 @@ async function interactions(context, name, playback = false) {
     for (const child of ['h2', '.preview-image']) {
       await page.goto(base);
       await page.locator(`[data-project="${demo.project}"] ${child}`).click();
-      const destination = ['Agent', 'ImageLore'].includes(demo.project) ? `${base}/demos/${demo.slug}.html` : demo.href;
+      const destination = `${base}/demos/${demo.slug}.html`;
       assert.equal(page.url(), destination, `${name}: ${demo.title} ${child} destination`);
+      assert.equal(await page.getByRole('heading', { name: '解决的问题', exact: true }).count(), 1);
+      assert.equal(await page.getByRole('heading', { name: '我做的工作', exact: true }).count(), 1);
+      assert.equal(await page.getByRole('heading', { name: '交付内容与使用条件', exact: true }).count(), 1);
     }
     await page.goto(base);
     const mediaRequests = [];
     const onRequest = req => { if (/\.mp4(?:\?|$)/.test(req.url())) mediaRequests.push(req.url()); };
     page.on('request', onRequest);
-    await page.locator(`.demo-link[href="demos/${demo.slug}.html"]`).click();
+    await page.locator(`.demo-link[href="demos/${demo.slug}.html#demo"]`).click();
     await page.waitForLoadState('load');
-    assert.equal(page.url(), `${base}/demos/${demo.slug}.html`);
+    assert.equal(page.url(), `${base}/demos/${demo.slug}.html#demo`);
+    await page.waitForFunction(() => {
+      const box = document.querySelector('#demo').getBoundingClientRect();
+      return box.top >= -1 && box.top < 80;
+    });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     const video = page.locator('video');
     const beforePlay = await video.evaluate(v => ({ paused: v.paused, currentTime: v.currentTime, autoplay: v.autoplay }));
@@ -104,6 +112,13 @@ async function interactions(context, name, playback = false) {
     }
     await page.screenshot({ path: resolve(output, `${name}-${demo.slug}.png`), fullPage: true });
     page.off('request', onRequest);
+    if (['Agent', 'ImageLore'].includes(demo.project)) {
+      assert.equal(await page.getByRole('link', { name: '源码仓库（需权限） ↗', exact: true }).getAttribute('href'), demo.href);
+    } else {
+      await page.getByRole('link', { name: '打开应用 ↗', exact: true }).click();
+      assert.equal(page.url(), demo.href, `${name}: application destination`);
+      await page.goto(`${base}/demos/${demo.slug}.html`);
+    }
     await page.getByRole('link', { name: '← 返回主页', exact: true }).click();
     assert.equal(page.url(), `${base}/index.html`);
     report.interactions.push({ profile: name, project: demo.project, title: true, preview: true, demo: true, back: true, beforePlayRequests, autoplay: false, playback });
@@ -124,12 +139,14 @@ try {
   await page.setViewportSize({ width: 1366, height: 768 });
   await page.goto(base);
   const focused = [];
-  for (let i = 0; i < 13; i++) {
+  const homeLinkCount = await page.locator('a').count();
+  for (let i = 0; i < homeLinkCount; i++) {
     await page.keyboard.press('Tab');
     const focus = await page.evaluate(() => ({ tag: document.activeElement.tagName, outline: getComputedStyle(document.activeElement).outlineStyle, demo: document.activeElement.classList.contains('demo-link') }));
     assert.equal(focus.tag, 'A'); assert.equal(focus.outline, 'solid'); focused.push(focus);
   }
   assert.equal(focused.filter(f => f.demo).length, 5);
+  report.keyboardLinks = homeLinkCount;
   await page.goto(base); await page.keyboard.press('Tab'); await page.keyboard.press('Enter');
   assert.equal(new URL(page.url()).hash, '#projects');
   await interactions(desktop, 'desktop', true);

@@ -3,56 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="基金盘中估值监控工具，把自选基金、估值趋势与持仓变化集中展示。">
+  <meta name="description" content="面向日常查看的基金盘中观察 PWA，将自选基金、估值与持仓信息集中展示，并通过本地截图识别减少手动录入。">
   <meta name="theme-color" content="#f3f5f8">
-  <title>蜉蝣基金 Demo · Aurelius</title>
+  <title>蜉蝣基金 · 项目案例与 Demo · Aurelius Wu</title>
   <link rel="canonical" href="https://aureliuswu.github.io/demos/fundval.html">
-  <style>
-:root { color-scheme: light; --bg:#f3f5f8; --text:#17191f; --muted:#566171; --line:#dde2eb; --accent:#137d6d; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
-* { box-sizing:border-box; }
-body { margin:0; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
-a { color:inherit; }
-.page { width:min(100%,1060px); margin:0 auto; padding:28px 24px 32px; }
-nav { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:30px; }
-.back { color:var(--muted); text-decoration:none; font-size:14px; min-height:44px; display:inline-flex; align-items:center; padding:10px 0; }
-.back:hover { color:var(--accent); }
-.brand { font-size:14px; font-weight:700; letter-spacing:-.02em; }
-.eyebrow { margin:0 0 8px; color:var(--accent); font-size:12px; font-weight:650; letter-spacing:.06em; }
-h1 { margin:0; font-size:clamp(26px,5vw,38px); line-height:1.3; letter-spacing:-.045em; }
-h1 span { color:var(--muted); font-size:.6em; font-weight:500; margin-left:8px; letter-spacing:0; }
-.summary { margin:12px 0 8px; font-size:16px; line-height:1.7; max-width:760px; }
-.tech { margin:0 0 14px; color:var(--accent); font-size:13px; line-height:1.7; overflow-wrap:anywhere; }
-.engineering { padding:18px 20px; margin:22px 0; background:#fff; border:1px solid var(--line); border-radius:12px; }
-.engineering p { margin:6px 0 0; color:var(--muted); font-size:14px; line-height:1.7; }
-.note { margin:10px 0 20px; color:var(--muted); font-size:14px; line-height:1.7; }
-figure { margin:0; }
-video { display:block; width:100%; height:auto; aspect-ratio:16/9; border:1px solid var(--line); border-radius:16px; background:#fff; }
-figcaption { margin:10px 0 0; color:var(--muted); font-size:12px; line-height:1.6; }
-.steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:24px 0; padding:0; list-style:none; }
-.steps li { padding:16px; background:#fff; border:1px solid var(--line); border-radius:12px; }
-.step-number { display:block; margin-bottom:8px; color:var(--accent); font:12px "SFMono-Regular",Consolas,monospace; }
-h2 { margin:0 0 6px; font-size:16px; line-height:1.4; }
-.steps p { margin:0; color:var(--muted); font-size:13px; line-height:1.65; }
-.actions { display:flex; align-items:center; flex-wrap:wrap; gap:12px; }
-.primary,.secondary { display:inline-flex; align-items:center; min-height:44px; padding:11px 16px; border:1px solid var(--line); border-radius:10px; font-size:14px; font-weight:600; line-height:1.4; text-decoration:none; }
-.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
-.secondary { background:#fff; }
-a:focus-visible,video:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
-.access { color:var(--muted); font-size:12px; line-height:1.6; }
-footer { margin-top:28px; color:var(--muted); font-size:12px; line-height:1.7; }
-@media(max-width:600px) { .page { padding:16px; } nav { margin-bottom:22px; } .steps { grid-template-columns:1fr; margin:20px 0; gap:8px; } .steps li { padding:12px 14px; } .step-number { float:left; margin:3px 12px 0 0; } h2 { font-size:15px; } .steps p { margin-left:30px; } video { border-radius:12px; } }
-  </style>
+  <meta property="og:title" content="蜉蝣基金 · Aurelius Wu 的项目案例">
+  <meta property="og:description" content="面向日常查看的基金盘中观察 PWA，将自选基金、估值与持仓信息集中展示，并通过本地截图识别减少手动录入。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aureliuswu.github.io/demos/fundval.html">
+  <style>:root{color-scheme:light;--bg:#f3f5f8;--text:#17191f;--muted:#566171;--line:#dde2eb;--accent:#137d6d;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}a{color:inherit}.page{width:min(100%,1060px);margin:auto;padding:24px 28px 32px}nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}.back{color:var(--muted);text-decoration:none;font-size:14px;min-height:44px;display:inline-flex;align-items:center;padding:10px 0}.back:hover{color:var(--accent)}.brand{font-size:14px;font-weight:700}.eyebrow{margin:0 0 8px;color:var(--accent);font-size:13px;font-weight:650}h1{margin:0;font-size:clamp(28px,5vw,38px);line-height:1.3;letter-spacing:-.04em}.summary{max-width:820px;margin:12px 0;font-size:16px;line-height:1.75}.tech{margin:0 0 16px;color:var(--accent);font-size:13px;line-height:1.7;overflow-wrap:anywhere}.actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px}.primary,.secondary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border:1px solid var(--line);border-radius:9px;font-size:14px;font-weight:650;line-height:1.5;text-decoration:none}.primary{background:var(--accent);border-color:var(--accent);color:#fff}.secondary{background:#fff}.case-overview{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 14px}.panel{padding:20px;background:#fff;border:1px solid var(--line);border-radius:14px}.panel p,.panel li{color:var(--muted);font-size:14px;line-height:1.8}.panel p{margin:8px 0 0}.panel h2{margin:0;font-size:18px;line-height:1.5}.engineering{margin:14px 0}.decisions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;list-style:none;margin:16px 0 0;padding:0}.decisions h3{font-size:15px;color:var(--text);margin:0}.decisions p{margin:8px 0 0}.deliverables ul{margin:12px 0;padding-left:20px}.boundary{padding-top:12px;border-top:1px solid var(--line)}.demo{margin-top:30px;scroll-margin-top:20px}.demo>h2{font-size:22px;margin:0}.note{color:var(--muted);font-size:14px;line-height:1.7;margin:10px 0 16px}figure{margin:0}video{display:block;width:100%;height:auto;aspect-ratio:16/9;border:1px solid var(--line);border-radius:14px;background:#fff}figcaption{margin:10px 0;color:var(--muted);font-size:12px;line-height:1.7}.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0;padding:0;list-style:none}.steps li{padding:16px;background:#fff;border:1px solid var(--line);border-radius:12px}.step-number{display:block;margin-bottom:8px;color:var(--accent);font:12px Consolas,monospace}.steps h3{margin:0 0 6px;font-size:15px;line-height:1.5}.steps p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}.access{color:var(--muted);font-size:13px;line-height:1.7;margin:12px 0 0}a:focus-visible,video:focus-visible{outline:3px solid var(--accent);outline-offset:4px}.related{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px}.related a{display:inline-flex;align-items:center;min-height:44px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;text-decoration:none;font-size:13px}footer{margin-top:26px;color:var(--muted);font-size:12px;line-height:1.7}footer a{display:inline-flex;align-items:center;min-height:44px}@media(max-width:700px){.page{padding:16px}.case-overview,.decisions{grid-template-columns:1fr}.case-overview{margin-top:22px}.decisions{gap:16px}.panel{padding:17px}.steps{grid-template-columns:1fr;gap:8px}.steps li{padding:12px 14px}.step-number{float:left;margin:3px 12px 0 0}.steps p{margin-left:30px}nav{margin-bottom:20px}.demo{scroll-margin-top:16px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>
 </head>
 <body>
   <div class="page">
-    <nav aria-label="页面导航"><a class="back" href="../index.html">← 返回主页</a><span class="brand">Aurelius</span></nav>
+    <nav aria-label="页面导航"><a class="back" href="../index.html">← 返回主页</a><span class="brand">Aurelius Wu</span></nav>
     <main>
-      <p class="eyebrow">项目展示 · 功能示意 15 秒</p>
-      <h1>蜉蝣基金<span>Demo</span></h1>
-      <p class="summary">基金盘中估值监控工具，把自选基金、估值趋势与持仓变化集中展示。</p>
-      <p class="tech"><strong>技术栈</strong> · JavaScript · ES Modules · PWA · 按需 OCR</p>
-      <p class="note">以主页的界面示意展示核心流程，非实际操作录屏。点击播放即可观看。</p>
-      <figure>
+      <p class="eyebrow">Web 工具 · 移动端体验</p>
+      <h1>蜉蝣基金</h1>
+      <p class="summary">面向日常查看的基金盘中观察 PWA，将自选基金、估值与持仓信息集中展示，并通过本地截图识别减少手动录入。</p>
+      <p class="tech"><strong>技术栈</strong> · JavaScript · ES Modules · PWA · 本地 OCR</p>
+      <div class="actions"><a class="primary" href="https://aureliuswu.github.io/FundVal/">打开应用 ↗</a><a class="secondary" href="#demo">观看 Demo ↓</a><a class="secondary" href="https://github.com/AureliusWu/FundVal">查看源码 ↗</a></div>
+      <p class="access">如果在线应用暂时不可用，可继续浏览本页介绍与视频。</p>
+      <div class="case-overview">
+        <section class="panel" aria-label="项目背景"><h2>解决的问题</h2><p>日常只想快速查看关注基金的变化，手动输入持仓却很繁琐。需要把高频查看与低频导入分开，让打开和录入都更直接。</p></section>
+        <section class="panel" aria-label="项目工作"><h2>我做的工作</h2><p>围绕移动端查看、截图导入与确认流程梳理需求；结合 AI 辅助开发，迭代缓存、数据状态、识别与异常反馈。</p></section>
+      </div>
+      <section class="panel engineering" aria-label="项目实现">
+        <h2>实现重点与产品取舍</h2>
+        <ol class="decisions">
+          <li><h3>日常打开保持轻量</h3><p>基础行情页采用零框架前端。OCR 只在选图后按需加载，独立识别页不加载主盘行情脚本，降低日常查看的资源负担。</p></li>
+          <li><h3>识别后先让人核对</h3><p>截图在本机预处理和识别；候选基金、金额与份额需要确认后才写入持仓，避免把识别结果直接当成可靠数据。</p></li>
+          <li><h3>展示数据的新鲜度</h3><p>缓存先展示、报价再批量刷新；缺失或无法确认的数据保留明确状态，区分正式净值、延迟数据与模型估算。</p></li>
+        </ol>
+      </section>
+      <section class="panel deliverables" aria-label="项目交付与边界">
+        <h2>交付内容与使用条件</h2>
+        <ul>
+          <li>移动端优先的自选与持仓列表。</li>
+          <li>支付宝持仓截图本地 OCR 与人工确认导入。</li>
+          <li>PWA、离线缓存、JSON 导入导出与可选同步。</li>
+        </ul>
+        <p class="boundary">行情依赖外部数据，异常时显示相应状态。OCR 的设备能力与资源加载仍需按实际浏览器核对，模拟设备测试不等同于真机验收。</p>
+      </section>
+      <section class="demo" id="demo" aria-labelledby="demo-title">
+        <h2 id="demo-title">15 秒功能示意</h2>
+        <p class="note">以界面示意展示核心流程，非实际操作录屏。点击播放即可观看。</p>
+        <figure>
         <video controls playsinline preload="none" poster="media/fundval-poster.svg" width="1280" height="720" aria-label="蜉蝣基金 Demo 功能示意视频">
           <source src="media/fundval.mp4" type="video/mp4">
           <track kind="captions" src="media/fundval.vtt" srclang="zh-CN" label="中文说明" default>
@@ -60,19 +56,16 @@ footer { margin-top:28px; color:var(--muted); font-size:12px; line-height:1.7; }
         </video>
         <figcaption>无音频 · 提供中文说明字幕 · 视频中的界面和图形均为功能示意。</figcaption>
       </figure>
-      <ol class="steps" aria-label="视频功能说明">
-        <li><span class="step-number">01</span><h2>查看自选</h2><p>将关注的基金放在同一个自选列表中。</p></li>
-        <li><span class="step-number">02</span><h2>观察估值</h2><p>查看盘中估值趋势，了解日内变化。</p></li>
-        <li><span class="step-number">03</span><h2>集中浏览</h2><p>自选列表与趋势预览，让关注内容一目了然。</p></li>
+        <ol class="steps" aria-label="视频功能说明">
+        <li><span class="step-number">01</span><h3>查看自选</h3><p>将关注的基金放在同一个自选列表中。</p></li>
+        <li><span class="step-number">02</span><h3>观察估值</h3><p>查看盘中估值趋势，了解日内变化。</p></li>
+        <li><span class="step-number">03</span><h3>集中浏览</h3><p>自选列表与趋势预览，让关注内容一目了然。</p></li>
       </ol>
-      <section class="engineering" aria-label="项目实现"><h2>实现重点</h2><p>纯前端 PWA 支持离线使用；图片导入时才加载 OCR，减少日常打开时的开销。</p></section>
-      <div class="actions">
-        <a class="primary" href="https://aureliuswu.github.io/FundVal/">进入项目 ↗</a>
-        <a class="secondary" href="media/fundval.mp4" download="fundval-demo.mp4">下载视频</a>
-        
-      </div>
+        <div class="actions"><a class="secondary" href="media/fundval.mp4" download="fundval-demo.mp4">下载视频</a><a class="secondary" href="../index.html">查看全部项目 →</a></div>
+      </section>
+      <nav class="related" aria-label="其他项目"><a href="agent.html">司忆 →</a><a href="imagelore.html">ImageLore →</a><a href="fund-compass.html">司南基金 →</a><a href="news.html">全球新闻 →</a></nav>
     </main>
-    <footer>由 Aurelius Wu 设计与构建 · <a href="../index.html">查看全部项目</a></footer>
+    <footer>个人项目 · 需求与流程设计 · AI 辅助开发与迭代<br><a href="https://github.com/AureliusWu">GitHub 主页 ↗</a></footer>
   </div>
 </body>
 </html>

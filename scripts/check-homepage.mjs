@@ -80,9 +80,9 @@ check(read('README.md').includes(`v${version}`), 'README.md 必须记录当前�
 check(read('CHANGELOG.md').includes(`## [${version}] - `), 'CHANGELOG.md 必须记录当前版本与日期。');
 
 const expectedProjects = new Map([
-  ['FundVal', { title: '蜉蝣基金', href: 'https://aureliuswu.github.io/FundVal/' }],
-  ['fund-compass', { title: '司南基金', href: 'https://aureliuswu.github.io/fund-compass/' }],
-  ['News', { title: '全球新闻', href: 'https://aureliuswu.github.io/News/' }],
+  ['FundVal', { title: '蜉蝣基金', href: 'demos/fundval.html', sourceHref: 'https://aureliuswu.github.io/FundVal/' }],
+  ['fund-compass', { title: '司南基金', href: 'demos/fund-compass.html', sourceHref: 'https://aureliuswu.github.io/fund-compass/' }],
+  ['News', { title: '全球新闻', href: 'demos/news.html', sourceHref: 'https://aureliuswu.github.io/News/' }],
   ['Agent', { title: '司忆', href: 'demos/agent.html', sourceHref: 'https://github.com/AureliusWu/Agent' }],
   ['ImageLore', { title: 'ImageLore', href: 'demos/imagelore.html', sourceHref: 'https://github.com/AureliusWu/ImageLore' }],
 ]);
@@ -90,6 +90,10 @@ const anchors = [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a\s*>/gi)]
   .map((match) => ({ attrs: attributes(match[1]), body: match[2] }));
 const cards = anchors.filter(({ attrs }) => (attrs.class ?? '').split(/\s+/).includes('project-card'));
 check(cards.length === expectedProjects.size, '主页必须恰好包含五张可点击的 project-card。');
+check(cards.slice(0, 2).map(({ attrs }) => attrs['data-project']).join(',') === 'Agent,ImageLore',
+  '两个 AI 代表项目应首先展示。');
+check(html.includes('AI 产品与应用') && html.includes('AI 辅助开发'),
+  '首页应说明作品集方向和个人项目开发方式。');
 const seenProjects = new Set();
 for (const { attrs, body } of cards) {
   const project = attrs['data-project'];
@@ -139,12 +143,12 @@ for (const demo of demos) {
   seenDemos.add(demo.slug);
   check(demo.steps.length === 3 && demo.steps.every((step) => step.title && step.description),
     `${demo.project} 必须有三段可读的功能说明。`);
-  const link = demoLinks.filter(({ attrs }) => attrs.href === `demos/${demo.slug}.html`);
+  const link = demoLinks.filter(({ attrs }) => attrs.href === `demos/${demo.slug}.html#demo`);
   check(link.length === 1 && (link[0]?.attrs['aria-label'] ?? '').includes(demo.title),
     `${demo.project} Demo 按钮必须唯一且有项目名称。`);
   const item = projectItems.filter((match) => attributes(match[1]).class &&
     match[2].includes(`data-project="${demo.project}"`));
-  check(item.length === 1 && item[0][2].includes(`href="demos/${demo.slug}.html"`),
+  check(item.length === 1 && item[0][2].includes(`href="demos/${demo.slug}.html#demo"`),
     `${demo.project} 项目与 Demo 按钮必须位于同一个容器。`);
   checkLocalAsset(`demos/${demo.slug}.html`, `${demo.project} Demo 页面`);
   const page = read(`demos/${demo.slug}.html`);
@@ -156,6 +160,13 @@ for (const demo of demos) {
     `${demo.project} 播放页必须明确说明视频类型和项目名称。`);
   check(page.includes('class="summary"') && page.includes('技术栈') && page.includes('实现重点'),
     `${demo.project} 展示页必须说明用途、技术栈与实现重点。`);
+  check(tags('section', page).some((tag) => tag.id === 'demo') &&
+    page.includes('解决的问题') && page.includes('我做的工作') && page.includes('交付内容与使用条件'),
+    `${demo.project} 必须有完整公开案例及视频定位目标。`);
+  if (['Agent', 'ImageLore'].includes(demo.project)) {
+    check(page.includes('源码仓库（需权限）') && page.includes('本页可公开浏览'),
+      `${demo.project} 必须说明公开展示与源码权限。`);
+  }
   const sources = tags('source', page);
   check(sources.length === 1 && sources[0].src === `media/${demo.slug}.mp4` && sources[0].type === 'video/mp4',
     `${demo.project} 必须使用对应的 MP4 视频。`);
@@ -165,6 +176,17 @@ for (const demo of demos) {
   check(tags('script', page).length === 0 && tags('link', page).every((tag) => tag.rel !== 'stylesheet'),
     `${demo.project} 播放页不得依赖脚本或外部样式。`);
   check(tags('a', page).some((tag) => tag.href === demo.href), `${demo.project} 播放页必须能进入对应项目。`);
+  for (const anchor of tags('a', page)) {
+    const href = anchor.href ?? '';
+    check(Boolean(href) && href !== '#' && !/^(?:javascript|data|vbscript|file):/i.test(href),
+      `${demo.project} 展示页链接必须有效：${href}`);
+    if (href.startsWith('#')) {
+      check(tags('[a-z][a-z\\d:-]*', page).some((tag) => tag.id === href.slice(1)),
+        `${demo.project} 展示页内链接目标不存在：${href}`);
+    } else if (!/^https?:\/\//.test(href)) {
+      checkLocalAsset(href, `${demo.project} 展示页链接`, resolve(root, 'demos'));
+    }
+  }
   for (const tag of tags('video|source|track', page)) {
     for (const attr of ['src', 'poster']) {
       if (attr in tag) checkLocalAsset(tag[attr], `${demo.project} 视频 ${attr}`, resolve(root, 'demos'));

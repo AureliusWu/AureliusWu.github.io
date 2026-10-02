@@ -8,23 +8,23 @@
 
 ## 当前版本
 
-**v1.2.0 · 2026-10-02**。首页补充项目用途、技术栈和明确的入口。电脑端保留紧凑总览，手机端改为可读的单列布局与 44px Demo 按钮，允许自然滚动。司忆与 ImageLore 从首页进入公开展示页，无需 GitHub 权限。五个 Demo 仍为明确标注的 15 秒功能示意，非实际操作录屏。完整记录见 [CHANGELOG.md](CHANGELOG.md)。
+**v1.3.0 · 2026-10-03**。按「AI 产品与应用」方向展示个人项目的需求、流程设计和 AI 辅助开发。司忆与 ImageLore 为代表项目，五张卡片均进入公开案例；Demo 按钮直达视频区域。案例说明问题、项目工作、实现取舍、交付内容与使用条件。联系方式使用公开 GitHub 主页，不添加未指定的邮箱或简历。五个视频仍为明确标注的 15 秒功能示意，非实际操作录屏。内容依据见 [作品集内容依据](docs/portfolio-content.md)，更新记录见 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 当前项目
 
 | 项目 | 形态 | 入口与用途 | Demo |
 | --- | --- | --- | --- |
-| 蜉蝣基金 / FundVal | 网页应用 | [打开应用](https://aureliuswu.github.io/FundVal/)：基金盘中估值监控 PWA。 | [功能示意视频](demos/fundval.html) |
-| 司南基金 / fund-compass | 网页应用 | [打开应用](https://aureliuswu.github.io/fund-compass/)：基金选基、择时与资产分析。 | [功能示意视频](demos/fund-compass.html) |
-| 全球新闻 / News | 网页应用 | [打开应用](https://aureliuswu.github.io/News/)：地区与来源筛选、关键词搜索和原文跳转；使用定时快照。 | [功能示意视频](demos/news.html) |
+| 蜉蝣基金 / FundVal | 网页应用 | [公开案例](demos/fundval.html)，[打开应用](https://aureliuswu.github.io/FundVal/)：基金盘中估值监控 PWA。 | [功能示意视频](demos/fundval.html) |
+| 司南基金 / fund-compass | 网页应用 | [公开案例](demos/fund-compass.html)，[打开应用](https://aureliuswu.github.io/fund-compass/)：基金选基、择时与资产分析。 | [功能示意视频](demos/fund-compass.html) |
+| 全球新闻 / News | 网页应用 | [公开案例](demos/news.html)，[打开应用](https://aureliuswu.github.io/News/)：地区与来源筛选、关键词搜索和原文跳转；使用定时快照。 | [功能示意视频](demos/news.html) |
 | 司忆 / Agent | 桌面项目 | [公开展示页](demos/agent.html)：个人 Agent 工作台，支持工具、记忆及任务执行。 | [功能示意视频](demos/agent.html) |
 | ImageLore | 桌面项目 | [公开展示页](demos/imagelore.html)：本地优先的 AI 视觉生成记忆库，保存生成参数、版本与谱系，支持语义召回及以图找图。 | [功能示意视频](demos/imagelore.html) |
 
-司忆与 ImageLore 的首页入口与展示页均可公开浏览。展示页保留标明“需权限”的可选源码链接，源码仓库仍为私有。其余三个入口为公开网页应用。
+五个项目的首页入口与案例页均可公开浏览。司忆与 ImageLore 展示页保留标明“需权限”的可选源码链接，源码仓库仍为私有。其余三个入口为公开网页应用。
 
 ## 技术
 
-- 主页 `index.html` 与五个静态 `demos/*.html` 播放页。
+- 主页 `index.html` 与五个静态 `demos/*.html` 项目案例与视频页。
 - CSS 与 SVG 界面示意预览内联。
 - 零构建、零运行时依赖；无外部字体或脚本。首页 HTML 不超过 24 KiB，gzip 不超过 6.5 KB。
 - 静态门禁 `scripts/check-homepage.mjs` 仅使用 Node.js 内置模块。
@@ -40,7 +40,7 @@
 node scripts/check-homepage.mjs
 ```
 
-静态门禁验证三个版本标识、五个项目名称与链接、预览资源、空链接及外部脚本/样式依赖，并检查 Demo 对应关系、视频快速起播结构、文件大小、按需加载和中文字幕。浏览器回归验证 320–1440px 视窗、横屏、相当于桌面 200% 缩放的窄视窗、触控目标、键盘焦点、标题/预览/Demo/返回跳转、初始请求与视频播放。Chrome 验证 H.264 播放，WebKit 补充 iPhone 布局与链接检查。`preload="none"` 是浏览器提示，WebKit 可能预先请求视频数据，回归记录请求并验证不会自动播放；首页在所有检查环境中均不请求视频。CI 将截图和 JSON 结果保存为 `browser-report`；浏览器模拟不替代真机与招聘者所在网络的可达性检查。
+静态门禁验证三个版本标识、五个项目名称与链接、预览资源、空链接及外部脚本/样式依赖，并检查 Demo 对应关系、视频快速起播结构、文件大小、按需加载和中文字幕。浏览器回归验证 320–1440px 视窗、横屏、相当于桌面 200% 缩放的窄视窗、触控目标、键盘焦点、标题/预览/视频定位、公开案例/应用/返回跳转、初始请求与视频播放。Chrome 验证 H.264 播放，WebKit 补充 iPhone 布局与链接检查。`preload="none"` 是浏览器提示，WebKit 可能预先请求视频数据，回归记录请求并验证不会自动播放；首页在所有检查环境中均不请求视频。CI 将截图和 JSON 结果保存为 `browser-report`；浏览器模拟不替代真机与招聘者所在网络的可达性检查。
 
 开发环境运行浏览器回归：
 
@@ -53,7 +53,7 @@ node scripts/check-browser.mjs
 ## 版本管理
 
 - 主页版本独立于五个项目，遵循 `主版本.次版本.修订版本`；不兼容的结构调整升级主版本，功能增加升级次版本，修正升级修订版本。
-- 发布时同步修改 `VERSION`、`index.html` 的 `application-version` 元数据，以及可见的 `#site-version`（格式为 `v1.2.0`）。
+- 发布时同步修改 `VERSION`、`index.html` 的 `application-version` 元数据，以及可见的 `#site-version`（格式为 `v1.3.0`）。
 - 在本文件与 `CHANGELOG.md` 记录版本和日期；通过静态门禁与浏览器验收后，将改动提交并使用同版本 Git 标签（如 `v1.0.0`）标记发布。
 
 ## 部署
