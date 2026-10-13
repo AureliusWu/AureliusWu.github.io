@@ -8,19 +8,19 @@
 
 ## 当前版本
 
-**v1.3.0 · 2026-10-03**。按「AI 产品与应用」方向展示个人项目的需求、流程设计和 AI 辅助开发。司忆与 ImageLore 为代表项目，五张卡片均进入公开案例；Demo 按钮直达视频区域。案例说明问题、项目工作、实现取舍、交付内容与使用条件。联系方式使用公开 GitHub 主页，不添加未指定的邮箱或简历。五个视频仍为明确标注的 15 秒功能示意，非实际操作录屏。内容依据见 [作品集内容依据](docs/portfolio-content.md)，更新记录见 [CHANGELOG.md](CHANGELOG.md)。
+**v1.4.0 · 2026-10-13**。按当前五个公开仓库重新核对作品集，补充真实实现依据、应用版本和发行边界。司忆与 ImageLore 为代表项目，五张卡片均进入公开案例；Demo 按钮直达视频区域。桌面保持紧凑总览，手机使用可读单列并允许自然滚动。联系方式使用公开 GitHub 主页，不添加未指定的邮箱或简历。五个视频仍为明确标注的 15 秒功能示意，非实际操作录屏。固定源码提交与能力依据见 [作品集内容依据](docs/portfolio-content.md)，更新记录见 [CHANGELOG.md](CHANGELOG.md)。主页版本不代表五个应用的版本或正式发行资格。
 
 ## 当前项目
 
-| 项目 | 形态 | 入口与用途 | Demo |
-| --- | --- | --- | --- |
-| 蜉蝣基金 / FundVal | 网页应用 | [公开案例](demos/fundval.html)，[打开应用](https://aureliuswu.github.io/FundVal/)：基金盘中估值监控 PWA。 | [功能示意视频](demos/fundval.html) |
-| 司南基金 / fund-compass | 网页应用 | [公开案例](demos/fund-compass.html)，[打开应用](https://aureliuswu.github.io/fund-compass/)：基金选基、择时与资产分析。 | [功能示意视频](demos/fund-compass.html) |
-| 全球新闻 / News | 网页应用 | [公开案例](demos/news.html)，[打开应用](https://aureliuswu.github.io/News/)：地区与来源筛选、关键词搜索和原文跳转；使用定时快照。 | [功能示意视频](demos/news.html) |
-| 司忆 / Agent | 桌面项目 | [公开展示页](demos/agent.html)：个人 Agent 工作台，支持工具、记忆及任务执行。 | [功能示意视频](demos/agent.html) |
-| ImageLore | 桌面项目 | [公开展示页](demos/imagelore.html)：本地优先的 AI 视觉生成记忆库，保存生成参数、版本与谱系，支持语义召回及以图找图。 | [功能示意视频](demos/imagelore.html) |
+| 项目 | 形态 | 应用状态 | 入口与用途 | Demo |
+| --- | --- | --- | --- | --- |
+| 蜉蝣基金 / FundVal | 网页应用 | `15.0.2`；V16 未发行，真机验收边界保留 | [公开案例](demos/fundval.html)，[打开应用](https://aureliuswu.github.io/FundVal/)：基金盘中观察、本地 OCR 确认导入与行情隔离。 | [功能示意视频](demos/fundval.html) |
+| 司南基金 / fund-compass | 网页应用 | `8.0.0` 候选；正式耐久存储门禁未解除 | [公开案例](demos/fund-compass.html)，[打开应用](https://aureliuswu.github.io/fund-compass/)：筛选、评分、信号、回测与证据条件。 | [功能示意视频](demos/fund-compass.html) |
+| 全球新闻 / News | 网页应用 | `0.9.0-alpha.1` M5 候选 | [公开案例](demos/news.html)，[打开应用](https://aureliuswu.github.io/News/)：同代快照、事件聚合、多来源筛选与原文跳转；AI 摘要和翻译未启用。 | [功能示意视频](demos/news.html) |
+| 司忆 / Agent | 桌面项目 | `16.0.0` 开发候选；历史安装包为 `v8.0.1` | [公开案例](demos/agent.html)：持久任务、受控执行、按验收要求验证与限定返工；内置批量文件操作。 | [功能示意视频](demos/agent.html) |
+| ImageLore | 桌面项目 | `0.26.0`；无正式安装包 | [公开案例](demos/imagelore.html)：生成记忆、Visual DNA、Remix 多参考与 Reference Inbox，保留本地检索和生成谱系。 | [功能示意视频](demos/imagelore.html) |
 
-五个项目的首页入口与案例页均可公开浏览。司忆与 ImageLore 展示页保留标明“需权限”的可选源码链接，源码仓库仍为私有。其余三个入口为公开网页应用。
+截至 2026-10-13，五个源码仓库均为公开：[Agent](https://github.com/AureliusWu/Agent)、[ImageLore](https://github.com/AureliusWu/ImageLore)、[FundVal](https://github.com/AureliusWu/FundVal)、[fund-compass](https://github.com/AureliusWu/fund-compass)、[News](https://github.com/AureliusWu/News)。源码可访问不代表当前版本有安装包、已正式发行或完成设备验收；司南私人 owner 数据与决策面板仍受鉴权限制。应用异常不应阻断公开案例和视频介绍。
 
 ## 技术
 
@@ -53,8 +53,8 @@ node scripts/check-browser.mjs
 ## 版本管理
 
 - 主页版本独立于五个项目，遵循 `主版本.次版本.修订版本`；不兼容的结构调整升级主版本，功能增加升级次版本，修正升级修订版本。
-- 发布时同步修改 `VERSION`、`index.html` 的 `application-version` 元数据，以及可见的 `#site-version`（格式为 `v1.3.0`）。
-- 在本文件与 `CHANGELOG.md` 记录版本和日期；通过静态门禁与浏览器验收后，将改动提交并使用同版本 Git 标签（如 `v1.0.0`）标记发布。
+- 发布时同步修改 `VERSION`、`index.html` 的 `application-version` 元数据，以及可见的 `#site-version`（格式为 `v1.4.0`）。
+- 在本文件与 `CHANGELOG.md` 记录版本和日期；通过静态门禁与浏览器验收后，将改动提交并使用同版本 Git 标签（如 `v1.4.0`）标记发布。
 
 ## 部署
 

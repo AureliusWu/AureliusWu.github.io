@@ -42,6 +42,7 @@ async function layout(page, name) {
   await page.goto(base);
   await page.evaluate(() => document.fonts.ready);
   assert.equal(await page.locator('.project-card').count(), 5);
+  assert.equal(await page.locator('#site-version').innerText(), `v${readFileSync(resolve(root, 'VERSION'), 'utf8').trim()}`);
   assert.deepEqual(await page.locator('.project-card').evaluateAll(cards => cards.slice(0, 2).map(card => card.dataset.project)), ['Agent', 'ImageLore']);
   assert.equal(await page.locator('a a').count(), 0);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `${name}: horizontal overflow`);
@@ -57,6 +58,9 @@ async function layout(page, name) {
   }
   await page.evaluate(() => scrollTo(0, 0));
   const metrics = await page.evaluate(() => ({ width: innerWidth, height: innerHeight, pageHeight: document.documentElement.scrollHeight, resources: performance.getEntriesByType('resource').filter(r => !r.name.startsWith('data:')).map(r => r.name) }));
+  if (metrics.width >= 1366 && metrics.height >= 768) {
+    assert(metrics.pageHeight <= metrics.height, `${name}: desktop overview must fit one screen`);
+  }
   assert.equal(metrics.resources.length, 0, `${name}: homepage should only request its document`);
   await page.screenshot({ path: resolve(output, `${name}.png`), fullPage: true });
   report.layouts.push({ name, ...metrics });
@@ -112,9 +116,9 @@ async function interactions(context, name, playback = false) {
     }
     await page.screenshot({ path: resolve(output, `${name}-${demo.slug}.png`), fullPage: true });
     page.off('request', onRequest);
-    if (['Agent', 'ImageLore'].includes(demo.project)) {
-      assert.equal(await page.getByRole('link', { name: '源码仓库（需权限） ↗', exact: true }).getAttribute('href'), demo.href);
-    } else {
+    assert.equal(await page.getByRole('link', { name: '查看源码 ↗', exact: true }).getAttribute('href'), `https://github.com/AureliusWu/${demo.project}`);
+    assert.equal(await page.locator('.project-status').isVisible(), true, `${name}: project version must be visible`);
+    if (!['Agent', 'ImageLore'].includes(demo.project)) {
       await page.getByRole('link', { name: '打开应用 ↗', exact: true }).click();
       assert.equal(page.url(), demo.href, `${name}: application destination`);
       await page.goto(`${base}/demos/${demo.slug}.html`);

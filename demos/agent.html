@@ -21,9 +21,10 @@
       <p class="eyebrow">代表项目 · AI 工作流</p>
       <h1>司忆</h1>
       <p class="summary">面向个人任务的 Windows AI 工作台，把任务拆解、工具执行、权限确认与结果验证连成可追溯的流程。</p>
-      <p class="tech"><strong>技术栈</strong> · React · TypeScript · Tauri 2 · FastAPI · SQLite</p>
-      <div class="actions"><a class="secondary" href="#demo">观看 Demo ↓</a><a class="secondary" href="https://github.com/AureliusWu/Agent">源码仓库（需权限） ↗</a></div>
-      <p class="access">本页可公开浏览；源码仓库仅对有权限的账号开放。</p>
+      <p class="tech"><strong>技术栈</strong> · React · TypeScript · Tauri 2 · Rust · FastAPI · SQLite</p>
+      <p class="access project-status"><strong>源码版本</strong> · v16.0.0 · 开发候选，尚非正式发行</p>
+      <div class="actions"><a class="secondary" href="#demo">观看 Demo ↓</a><a class="secondary" href="https://github.com/AureliusWu/Agent">查看源码 ↗</a></div>
+      <p class="access">源码仓库公开，无需登录即可查看。核验日期：2026-10-13；依据主线提交 <a href="https://github.com/AureliusWu/Agent/blob/8251d69b6e2e624e2a9e15c6dca871c0f047e3fc/README.md">8251d69b 的 README</a>。源码版本不等于正式发行或安装包版本。</p>
       <div class="case-overview">
         <section class="panel" aria-label="项目背景"><h2>解决的问题</h2><p>聊天给出的建议还需要人去执行；任务一长，进度、文件变化和完成依据容易分散。希望在一个工作台里继续任务、查看过程并核对结果。</p></section>
         <section class="panel" aria-label="项目工作"><h2>我做的工作</h2><p>围绕任务入口、工作区选择、授权与执行反馈梳理交互；结合 AI 辅助开发，迭代桌面界面、工具能力和验收流程。</p></section>
@@ -32,9 +33,10 @@
         <h2>实现重点与产品取舍</h2>
         <ol class="decisions">
           <li><h3>把执行与验证分开</h3><p>任务先形成计划与验收条件，再由工具执行；验证模块依据文件、命令和工具结果判断是否完成，并记录需要返工的条件。</p></li>
-          <li><h3>长任务保留进度</h3><p>SQLite 保存任务队列与执行片段。达到分段边界时保存检查点与上下文，支持继续处理；运行中也能停止或引导任务。</p></li>
-          <li><h3>让权限与变化可见</h3><p>聊天和工作区工具有明确边界。选择目录后才使用项目工具，授权和执行轨迹保留记录，便于检查文件差异与任务结果。</p></li>
+          <li><h3>任务和文件变化留痕</h3><p>本地保存任务队列、检查点和逐步文件日志，支持停止、引导与继续任务。批量文件操作先预览，再核对文件版本执行，恢复时也检查后续变化。</p></li>
+          <li><h3>按任务发现所需能力</h3><p>工具按阅读、写入、执行与记忆等能力组织，结合当前任务和配置查找、加载。能力目录显示可用条件，文件变更继续遵循工作区与授权规则。</p></li>
         </ol>
+        <p class="access">实现依据：<a href="https://github.com/AureliusWu/Agent/blob/8251d69b6e2e624e2a9e15c6dca871c0f047e3fc/siyi/app/runtime/verification.py">结果验证</a> · <a href="https://github.com/AureliusWu/Agent/blob/8251d69b6e2e624e2a9e15c6dca871c0f047e3fc/desktop/frontend/src/shared/bulkFilePlan.ts">批量文件计划</a> · <a href="https://github.com/AureliusWu/Agent/blob/8251d69b6e2e624e2a9e15c6dca871c0f047e3fc/siyi/app/plugins/discovery.py">能力发现</a>。</p>
       </section>
       <section class="panel deliverables" aria-label="项目交付与边界">
         <h2>交付内容与使用条件</h2>
@@ -42,8 +44,11 @@
           <li>Windows 桌面界面与本地执行核心。</li>
           <li>持久任务、工具调用、执行轨迹与文件差异查看。</li>
           <li>计划、验证与返工记录组成可检查的任务闭环。</li>
+          <li>文件工作台支持批量改名、按扩展名分类移动、字面替换与恢复已记录操作。</li>
+          <li>可选的音频文件转写和文字合成音频，使用独立语音服务配置。</li>
         </ul>
-        <p class="boundary">桌面程序需要在 Windows 本机运行，模型调用与远程 MCP 需要相应配置。本页公开介绍核心流程，源码入口需要权限。</p>
+        <p class="boundary">桌面程序在 Windows 本机运行。普通聊天不需要工作区，读写文件须主动选择目录；模型和远程 MCP 需要自行配置。文件式语音默认关闭，须单独配置并明确批准调用。</p>
+        <p class="access">v16 仍按开发候选展示，真实模型、麦克风、最终桌面流程及安装升级需要分别完成版本绑定验收；当前源码和 CI 通过不代表已发布 v16 安装包。详见<a href="https://github.com/AureliusWu/Agent/blob/8251d69b6e2e624e2a9e15c6dca871c0f047e3fc/docs/16.0.0/IMPLEMENTATION_STATUS.md">候选状态与验收边界</a>。</p>
       </section>
       <section class="demo" id="demo" aria-labelledby="demo-title">
         <h2 id="demo-title">15 秒功能示意</h2>

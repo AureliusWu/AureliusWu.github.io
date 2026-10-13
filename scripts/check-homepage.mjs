@@ -110,6 +110,8 @@ for (const { attrs, body } of cards) {
   check(!/<a\b/i.test(body), `${project} 卡片内不得嵌套链接。`);
   check(/class="stack"/.test(body) && /class="card-action"/.test(body),
     `${project} 必须展示技术栈与可读的入口说明。`);
+  check(/<span\b[^>]*class="type"[^>]*>[^<]*v\d+\.\d+\.\d+/.test(body),
+    `${project} 卡片必须外显已核实的项目版本及状态。`);
   const previews = [...body.matchAll(/<svg\b([^>]*)>([\s\S]*?)<\/svg\s*>/gi)]
     .filter((match) => (attributes(match[1]).class ?? '').split(/\s+/).includes('preview-image'));
   check(previews.length === 1, `${project} 必须有一个内联 SVG preview-image。`);
@@ -163,10 +165,14 @@ for (const demo of demos) {
   check(tags('section', page).some((tag) => tag.id === 'demo') &&
     page.includes('解决的问题') && page.includes('我做的工作') && page.includes('交付内容与使用条件'),
     `${demo.project} 必须有完整公开案例及视频定位目标。`);
-  if (['Agent', 'ImageLore'].includes(demo.project)) {
-    check(page.includes('源码仓库（需权限）') && page.includes('本页可公开浏览'),
-      `${demo.project} 必须说明公开展示与源码权限。`);
-  }
+  const sourceLink = [...page.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a\s*>/gi)]
+    .filter((match) => textContent(match[2]) === '查看源码 ↗');
+  check(sourceLink.length === 1 && attributes(sourceLink[0][1]).href === `https://github.com/AureliusWu/${demo.project}`,
+    `${demo.project} 必须提供唯一且正确的公开源码入口。`);
+  check(page.includes('源码仓库公开') && !page.includes('源码仓库（需权限）'),
+    `${demo.project} 不得沿用过期的私有源码说明。`);
+  check(/<p\b[^>]*class="access project-status"[^>]*>[\s\S]*?v\d+\.\d+\.\d+[\s\S]*?<\/p>/.test(page),
+    `${demo.project} 案例必须外显项目版本、状态与核验日期。`);
   const sources = tags('source', page);
   check(sources.length === 1 && sources[0].src === `media/${demo.slug}.mp4` && sources[0].type === 'video/mp4',
     `${demo.project} 必须使用对应的 MP4 视频。`);

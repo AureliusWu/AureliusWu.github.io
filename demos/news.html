@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="以公开新闻快照提供阅读入口，支持地区、来源与关键词筛选，让读者保留来源上下文并继续访问原文。">
+  <meta name="description" content="以公开快照聚合新闻与多来源事件，支持筛选、事件追踪和可解释热度，让读者保留来源上下文并继续访问原文。">
   <meta name="theme-color" content="#f3f5f8">
   <title>全球新闻 · 项目案例与 Demo · Aurelius Wu</title>
   <link rel="canonical" href="https://aureliuswu.github.io/demos/news.html">
   <meta property="og:title" content="全球新闻 · Aurelius Wu 的项目案例">
-  <meta property="og:description" content="以公开新闻快照提供阅读入口，支持地区、来源与关键词筛选，让读者保留来源上下文并继续访问原文。">
+  <meta property="og:description" content="以公开快照聚合新闻与多来源事件，支持筛选、事件追踪和可解释热度，让读者保留来源上下文并继续访问原文。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://aureliuswu.github.io/demos/news.html">
   <style>:root{color-scheme:light;--bg:#f3f5f8;--text:#17191f;--muted:#566171;--line:#dde2eb;--accent:#ad571f;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
@@ -20,30 +20,31 @@
     <main>
       <p class="eyebrow">Web 工具 · 信息获取</p>
       <h1>全球新闻</h1>
-      <p class="summary">以公开新闻快照提供阅读入口，支持地区、来源与关键词筛选，让读者保留来源上下文并继续访问原文。</p>
+      <p class="summary">以公开快照聚合新闻与多来源事件，支持筛选、事件追踪和可解释热度，让读者保留来源上下文并继续访问原文。</p>
       <p class="tech"><strong>技术栈</strong> · Vue 3 · TypeScript · PWA · Python · GitHub Actions</p>
+      <p class="access project-status"><strong>在线版本 v0.9.0-alpha.1 · M5 候选</strong> · 版本状态核验于 2026-10-13。</p>
       <div class="actions"><a class="primary" href="https://aureliuswu.github.io/News/">打开应用 ↗</a><a class="secondary" href="#demo">观看 Demo ↓</a><a class="secondary" href="https://github.com/AureliusWu/News">查看源码 ↗</a></div>
-      <p class="access">如果在线应用暂时不可用，可继续浏览本页介绍与视频。</p>
+      <p class="access">源码仓库公开，无需 GitHub 账号即可浏览。<a href="https://github.com/AureliusWu/News/blob/b0f3b2b4bd2364f7ecf56d1f16e86bfb6a66abd8/docs/V1.0_HANDOFF.md">版本与实现依据 ↗</a>。如果在线应用暂时不可用，可继续浏览本页介绍与视频。</p>
       <div class="case-overview">
         <section class="panel" aria-label="项目背景"><h2>解决的问题</h2><p>新闻分散在不同来源，重复浏览和反复搜索增加阅读成本。希望集中筛选关注内容，同时保留原文和来源信息。</p></section>
-        <section class="panel" aria-label="项目工作"><h2>我做的工作</h2><p>围绕筛选、阅读、来源查看和收藏梳理流程；结合 AI 辅助开发，迭代新闻快照、界面反馈与数据更新链路。</p></section>
+        <section class="panel" aria-label="项目工作"><h2>我做的工作</h2><p>围绕筛选、阅读和多来源事件追踪梳理流程；结合 AI 辅助开发，迭代事件详情、热度解释与数据更新链路。</p></section>
       </div>
       <section class="panel engineering" aria-label="项目实现">
         <h2>实现重点与产品取舍</h2>
         <ol class="decisions">
           <li><h3>公开阅读使用定时快照</h3><p>通过 GitHub Actions 采集和更新静态数据，GitHub Pages 提供阅读界面，公开站点不依赖常开个人电脑或实时后端。</p></li>
-          <li><h3>保留内容的来源</h3><p>新闻卡片展示来源并跳转原文；地区、来源与关键词筛选帮助缩小范围，收藏与阅读流程支持后续回看。</p></li>
-          <li><h3>数据状态独立可检查</h3><p>采集时间与来源状态保持可见，新闻和健康报告绑定同一快照；自动任务成功与内容新鲜度分别检查。</p></li>
+          <li><h3>从新闻进入事件脉络</h3><p>相关报道聚合成稳定事件入口，可按地区和来源筛选、查看时间线并通过直达链接回到详情；热度说明活动量、来源多样性与时间因素。</p></li>
+          <li><h3>同一批数据一起展示</h3><p>新闻、事件与健康报告绑定同一代快照，验证一致后才显示；采集时间与来源状态保持可见，自动任务成功与内容新鲜度分别检查。</p></li>
         </ol>
       </section>
       <section class="panel deliverables" aria-label="项目交付与边界">
         <h2>交付内容与使用条件</h2>
         <ul>
           <li>公开可访问的移动端新闻阅读页面。</li>
-          <li>地区、来源与关键词筛选、原文跳转和收藏。</li>
-          <li>定时快照更新与来源状态展示。</li>
+          <li>新闻筛选、原文跳转、收藏与本地记录导入导出。</li>
+          <li>多来源事件详情、时间线、可解释热度与来源状态。</li>
         </ul>
-        <p class="boundary">公开站点采用定时快照，更新存在采集间隔。当前为候选迭代，自动摘要与翻译尚未启用，长期新鲜度和设备验收仍在完善。</p>
+        <p class="boundary">当前为 v0.9.0-alpha.1 M5 候选，V1.0 尚未正式发行。公开站点采用定时快照，热度反映报道活动而非事实可信度；自动摘要与翻译尚未启用，长期新鲜度和设备验收仍在完善。</p>
       </section>
       <section class="demo" id="demo" aria-labelledby="demo-title">
         <h2 id="demo-title">15 秒功能示意</h2>

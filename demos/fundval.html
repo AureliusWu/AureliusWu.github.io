@@ -22,8 +22,9 @@
       <h1>蜉蝣基金</h1>
       <p class="summary">面向日常查看的基金盘中观察 PWA，将自选基金、估值与持仓信息集中展示，并通过本地截图识别减少手动录入。</p>
       <p class="tech"><strong>技术栈</strong> · JavaScript · ES Modules · PWA · 本地 OCR</p>
+      <p class="access project-status"><strong>在线版本 v15.0.2</strong> · 版本状态核验于 2026-10-13；V16 仍在开发验收。</p>
       <div class="actions"><a class="primary" href="https://aureliuswu.github.io/FundVal/">打开应用 ↗</a><a class="secondary" href="#demo">观看 Demo ↓</a><a class="secondary" href="https://github.com/AureliusWu/FundVal">查看源码 ↗</a></div>
-      <p class="access">如果在线应用暂时不可用，可继续浏览本页介绍与视频。</p>
+      <p class="access">源码仓库公开，无需 GitHub 账号即可浏览。<a href="https://github.com/AureliusWu/FundVal/blob/abfb6313f12efb66b9096b60472b6dd457094485/docs/v15.0.2/RELEASE_CHECKLIST.md">版本与实现依据 ↗</a>。如果在线应用暂时不可用，可继续浏览本页介绍与视频。</p>
       <div class="case-overview">
         <section class="panel" aria-label="项目背景"><h2>解决的问题</h2><p>日常只想快速查看关注基金的变化，手动输入持仓却很繁琐。需要把高频查看与低频导入分开，让打开和录入都更直接。</p></section>
         <section class="panel" aria-label="项目工作"><h2>我做的工作</h2><p>围绕移动端查看、截图导入与确认流程梳理需求；结合 AI 辅助开发，迭代缓存、数据状态、识别与异常反馈。</p></section>
@@ -33,7 +34,7 @@
         <ol class="decisions">
           <li><h3>日常打开保持轻量</h3><p>基础行情页采用零框架前端。OCR 只在选图后按需加载，独立识别页不加载主盘行情脚本，降低日常查看的资源负担。</p></li>
           <li><h3>识别后先让人核对</h3><p>截图在本机预处理和识别；候选基金、金额与份额需要确认后才写入持仓，避免把识别结果直接当成可靠数据。</p></li>
-          <li><h3>展示数据的新鲜度</h3><p>缓存先展示、报价再批量刷新；缺失或无法确认的数据保留明确状态，区分正式净值、延迟数据与模型估算。</p></li>
+          <li><h3>行情与个人数据分开</h3><p>外部行情脚本在隔离页面执行，只通过校验后的消息返回报价；缓存先展示、再刷新，缺失值和正式净值、延迟数据、估算保持不同状态。</p></li>
         </ol>
       </section>
       <section class="panel deliverables" aria-label="项目交付与边界">
@@ -43,7 +44,7 @@
           <li>支付宝持仓截图本地 OCR 与人工确认导入。</li>
           <li>PWA、离线缓存、JSON 导入导出与可选同步。</li>
         </ul>
-        <p class="boundary">行情依赖外部数据，异常时显示相应状态。OCR 的设备能力与资源加载仍需按实际浏览器核对，模拟设备测试不等同于真机验收。</p>
+        <p class="boundary">当前在线版为 v15.0.2，V16 尚未发行。行情依赖外部数据，异常时显示相应状态；OCR 的设备能力与资源加载仍需按实际浏览器核对，模拟设备测试不等同于真机验收。</p>
       </section>
       <section class="demo" id="demo" aria-labelledby="demo-title">
         <h2 id="demo-title">15 秒功能示意</h2>

@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="本地优先的 AI 图片生成记忆库，将图片与 Prompt、模型参数、版本和生成谱系关联，帮助找回、比较并复用创作过程。">
+  <meta name="description" content="本地优先的 AI 创作记忆库，将已生成图片与提示词、模型参数、参考来源和版本谱系关联，帮助找回、比较并复用创作过程。">
   <meta name="theme-color" content="#f3f5f8">
   <title>ImageLore · 项目案例与 Demo · Aurelius Wu</title>
   <link rel="canonical" href="https://aureliuswu.github.io/demos/imagelore.html">
   <meta property="og:title" content="ImageLore · Aurelius Wu 的项目案例">
-  <meta property="og:description" content="本地优先的 AI 图片生成记忆库，将图片与 Prompt、模型参数、版本和生成谱系关联，帮助找回、比较并复用创作过程。">
+  <meta property="og:description" content="本地优先的 AI 创作记忆库，将已生成图片与提示词、模型参数、参考来源和版本谱系关联，帮助找回、比较并复用创作过程。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://aureliuswu.github.io/demos/imagelore.html">
   <style>:root{color-scheme:light;--bg:#f3f5f8;--text:#17191f;--muted:#566171;--line:#dde2eb;--accent:#137d6d;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
@@ -20,21 +20,23 @@
     <main>
       <p class="eyebrow">代表项目 · AI 创作管理</p>
       <h1>ImageLore</h1>
-      <p class="summary">本地优先的 AI 图片生成记忆库，将图片与 Prompt、模型参数、版本和生成谱系关联，帮助找回、比较并复用创作过程。</p>
-      <p class="tech"><strong>技术栈</strong> · React · TypeScript · Tauri 2 · SQLite · 本地 CLIP</p>
-      <div class="actions"><a class="secondary" href="#demo">观看 Demo ↓</a><a class="secondary" href="https://github.com/AureliusWu/ImageLore">源码仓库（需权限） ↗</a></div>
-      <p class="access">本页可公开浏览；源码仓库仅对有权限的账号开放。</p>
+      <p class="summary">本地优先的 AI 创作记忆库，将已生成图片与提示词、模型参数、参考来源和版本谱系关联，帮助找回、比较并复用创作过程。</p>
+      <p class="tech"><strong>技术栈</strong> · React · TypeScript · Tauri 2 · Rust · SQLite · 本地 CLIP</p>
+      <p class="access project-status"><strong>源码版本</strong> · v0.26.0 · 暂无公开正式安装包</p>
+      <div class="actions"><a class="secondary" href="#demo">观看 Demo ↓</a><a class="secondary" href="https://github.com/AureliusWu/ImageLore">查看源码 ↗</a></div>
+      <p class="access">源码仓库公开，无需登录即可查看。核验日期：2026-10-13；依据主线提交 <a href="https://github.com/AureliusWu/ImageLore/blob/c94028dcc9468088fc6e5cdcfe4c2b40fcce0531/README.md">c94028dc 的 README</a>。源码版本与开发运行时不等于正式发行。</p>
       <div class="case-overview">
         <section class="panel" aria-label="项目背景"><h2>解决的问题</h2><p>图片越存越多，文件名很难回答“怎么生成的、改过什么、参考了哪张图”。把生成记录留在图片旁边，才能继续利用过去的创作。</p></section>
-        <section class="panel" aria-label="项目工作"><h2>我做的工作</h2><p>从导入、记录、检索到版本比较设计创作管理流程；结合 AI 辅助开发，逐步补充中文界面、元数据适配、语义召回与回归检查。</p></section>
+        <section class="panel" aria-label="项目工作"><h2>我做的工作</h2><p>从导入、记录、检索到参考素材复用设计创作管理流程；结合 AI 辅助开发，迭代中文界面、元数据适配、语义召回、版本谱系和回归检查。</p></section>
       </div>
       <section class="panel engineering" aria-label="项目实现">
         <h2>实现重点与产品取舍</h2>
         <ol class="decisions">
-          <li><h3>保留原图与结构化记录</h3><p>原图留在原位置，SQLite 保存生成信息与关联记录。通过元数据适配、图片指纹和来源信息整理内容，减少重复与上下文丢失。</p></li>
-          <li><h3>让创作过程可以回看</h3><p>Prompt 修订历史、父子图片比较、Prompt Diff 与生成谱系关联不同版本，帮助追踪调整和复用过程。</p></li>
-          <li><h3>区分本地检索与可选分析</h3><p>CLIP 模型按需下载后可在本机检索，语义结果可叠加生成参数筛选；图像转提示词由用户配置视觉模型并主动触发。</p></li>
+          <li><h3>保留图片的参考来源</h3><p>原图留在原位置，本地数据库保存生成记录与关系。浏览器扩展采集网页图片、页面地址和用途；重复导入合并参考来源，创作上下文也能通过配套记录文件迁移。</p></li>
+          <li><h3>把参考复用连成谱系</h3><p>Visual DNA 记录主体、构图、光线等视觉信息。Remix 从多张参考图选取字段组合提示词，导入实际生成结果后记录派生与参考关系；修订历史、图片比较与提示词差异帮助回看调整。</p></li>
+          <li><h3>区分本地检索与在线分析</h3><p>CLIP 模型下载后可在本机找图，并叠加生成参数筛选。图像转提示词由用户主动调用视觉服务；分析结果经审阅后补充记录或保存修订，不自动覆盖手工内容。</p></li>
         </ol>
+        <p class="access">实现依据：<a href="https://github.com/AureliusWu/ImageLore/blob/c94028dcc9468088fc6e5cdcfe4c2b40fcce0531/src-tauri/src/vision.rs">视觉记录与分析</a> · <a href="https://github.com/AureliusWu/ImageLore/blob/c94028dcc9468088fc6e5cdcfe4c2b40fcce0531/src-tauri/src/remix.rs">参考复用与谱系</a> · <a href="https://github.com/AureliusWu/ImageLore/blob/c94028dcc9468088fc6e5cdcfe4c2b40fcce0531/browser-extension/background.js">网页素材采集</a>。</p>
       </section>
       <section class="panel deliverables" aria-label="项目交付与边界">
         <h2>交付内容与使用条件</h2>
@@ -42,8 +44,11 @@
           <li>中文 Windows 桌面应用，支持图片、文件夹与拖拽导入。</li>
           <li>图片与 Prompt、生成参数、修订历史和谱系关联。</li>
           <li>自然语言找图、相似图片检索及参数组合筛选。</li>
+          <li>Chrome / Edge 网页素材采集、参考收件箱与多来源记录。</li>
+          <li>结构化视觉记录、多图参考复用与实际生成结果的关系追踪。</li>
         </ul>
-        <p class="boundary">本地语义检索首次使用需要下载模型；图像转提示词需要配置视觉服务。原图不复制进数据库，删除记录不会删除原始图片。</p>
+        <p class="boundary">图片由外部工具生成。首次本地语义检索需要下载模型；图像转提示词须配置视觉服务，所选图片会发送至该服务。浏览器扩展目前按开发模式加载。原图不复制进数据库，删除记录不会删除原图；元数据备份不包含原图，图片文件须另行备份。</p>
+        <p class="access">当前公开源码与开发运行时的验证不等于正式安装包验收。完整性能、长期使用、离线及安装升级仍有待完成的门槛，详见<a href="https://github.com/AureliusWu/ImageLore/blob/c94028dcc9468088fc6e5cdcfe4c2b40fcce0531/docs/V0_26_CURRENT_RUNTIME_ACCEPTANCE.md">运行时验收与发行边界</a>。</p>
       </section>
       <section class="demo" id="demo" aria-labelledby="demo-title">
         <h2 id="demo-title">15 秒功能示意</h2>
