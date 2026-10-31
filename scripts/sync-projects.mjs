@@ -1,6 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { updateCardVersion } from './project-card.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const owner = 'AureliusWu';
@@ -114,10 +115,6 @@ function markdownStatus(project) {
   return text;
 }
 
-function cardStatus(project, config) {
-  return `v${project.current_version}`;
-}
-
 function demoStatus(project) {
   const sourceUrl = project.current_source === 'release'
     ? project.latest_release?.url
@@ -144,7 +141,7 @@ function updateReadme(showcase) {
   return writeIfChanged('README.md', text);
 }
 
-function updateIndex(showcase, configs) {
+function updateIndex(showcase) {
   let text = read('index.html');
   for (const project of showcase) {
     const marker = `data-project="${project.repo}"`;
@@ -154,12 +151,7 @@ function updateIndex(showcase, configs) {
     const endAt = text.indexOf('</a>', markerAt);
     if (start < 0 || endAt < 0) throw new Error(`index card bounds not found: ${project.repo}`);
     const end = endAt + 4;
-    let card = text.slice(start, end);
-    const before = card;
-    const config = configs.get(project.repo);
-    card = card.replace(/<span\b([^>]*\bclass="[^"]*\btype\b[^"]*"[^>]*)>[\s\S]*?<\/span>/i,
-      (_all, attrs) => `<span${attrs}>${htmlEscape(cardStatus(project, config))}</span>`);
-    if (card === before) throw new Error(`index type span not found: ${project.repo}`);
+    const card = updateCardVersion(text.slice(start, end), project.current_version, project.repo);
     text = text.slice(0, start) + card + text.slice(end);
   }
   return writeIfChanged('index.html', text);
@@ -237,7 +229,7 @@ const jsonChanged = writeIfChanged('data/projects.json', `${JSON.stringify(data,
 const showcase = output.filter((project) => project.showcase);
 if (showcase.length !== 5) throw new Error(`Expected 5 showcase projects, got ${showcase.length}`);
 const readmeChanged = updateReadme(showcase);
-const indexChanged = updateIndex(showcase, configs);
+const indexChanged = updateIndex(showcase);
 const demosChanged = updateDemos(showcase, configs);
 
 console.log(JSON.stringify({

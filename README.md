@@ -19,6 +19,7 @@
 ## 本地验证
 
 ```bash
+node --test scripts/project-card.test.mjs
 node scripts/check-portfolio-sync.mjs
 node scripts/check-homepage.mjs
 ```

@@ -25,6 +25,9 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Test repeated metadata synchronization
+        run: node --test scripts/project-card.test.mjs
+
       - name: Sync project versions and statuses
         env:
           GH_TOKEN: ${{ github.token }}

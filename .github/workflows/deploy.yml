@@ -22,6 +22,8 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version: '24'
+    - name: Test repeated metadata synchronization
+      run: node --test scripts/project-card.test.mjs
     - name: Verify portfolio sync consistency
       run: node scripts/check-portfolio-sync.mjs
     - name: Verify homepage and version
