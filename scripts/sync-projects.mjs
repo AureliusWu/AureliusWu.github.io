@@ -115,11 +115,7 @@ function markdownStatus(project) {
 }
 
 function cardStatus(project, config) {
-  let text = `${config.cardType} · v${project.current_version} · ${project.current_status}`;
-  if (project.current_source === 'readme' && project.latest_release && project.latest_release.version !== project.current_version) {
-    text += ` · 正式版 v${project.latest_release.version}`;
-  }
-  return text;
+  return `v${project.current_version}`;
 }
 
 function demoStatus(project) {

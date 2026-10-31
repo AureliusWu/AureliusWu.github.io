@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "owner": "AureliusWu",
+  "policy": {
+    "release_first": [
+      "FundVal",
+      "News",
+      "ImageLore"
+    ],
+    "readme_current_version": [
+      "Agent",
+      "fund-compass"
+    ],
+    "private_repositories": "Not queried from the public portfolio workflow."
+  },
+  "projects": [
+    {
+      "repo": "FundVal",
+      "display_name": "蜉蝣基金 / FundVal",
+      "showcase": true,
+      "current_version": "16.0.1",
+      "current_source": "release",
+      "current_status": "正式版（带已知限制）",
+      "current_source_url": "https://github.com/AureliusWu/FundVal/releases/tag/v16.0.1",
+      "latest_release": {
+        "version": "16.0.1",
+        "tag": "v16.0.1",
+        "url": "https://github.com/AureliusWu/FundVal/releases/tag/v16.0.1",
+        "published_at": "2026-10-30T06:43:56Z",
+        "status": "正式版（带已知限制）",
+        "prerelease": false
+      }
+    },
+    {
+      "repo": "fund-compass",
+      "display_name": "司南基金 / fund-compass",
+      "showcase": true,
+      "current_version": "8.0.0",
+      "current_source": "readme",
+      "current_status": "开发候选",
+      "current_source_url": "https://github.com/AureliusWu/fund-compass/blob/main/README.md",
+      "latest_release": null
+    },
+    {
+      "repo": "News",
+      "display_name": "全球新闻 / News",
+      "showcase": true,
+      "current_version": "1.1.0",
+      "current_source": "release",
+      "current_status": "正式版（带已知限制）",
+      "current_source_url": "https://github.com/AureliusWu/News/releases/tag/v1.1.0",
+      "latest_release": {
+        "version": "1.1.0",
+        "tag": "v1.1.0",
+        "url": "https://github.com/AureliusWu/News/releases/tag/v1.1.0",
+        "published_at": "2026-10-26T07:32:30Z",
+        "status": "正式版（带已知限制）",
+        "prerelease": false
+      }
+    },
+    {
+      "repo": "Agent",
+      "display_name": "司忆 / Agent",
+      "showcase": true,
+      "current_version": "16.0.1",
+      "current_source": "readme",
+      "current_status": "开发 / 用户测试基线",
+      "current_source_url": "https://github.com/AureliusWu/Agent/blob/main/README.md",
+      "latest_release": {
+        "version": "8.0.1",
+        "tag": "v8.0.1",
+        "url": "https://github.com/AureliusWu/Agent/releases/tag/v8.0.1",
+        "published_at": "2026-07-26T05:47:22Z",
+        "status": "正式版",
+        "prerelease": false
+      }
+    },
+    {
+      "repo": "ImageLore",
+      "display_name": "ImageLore",
+      "showcase": true,
+      "current_version": "1.0.0",
+      "current_source": "release",
+      "current_status": "正式版（带已知限制）",
+      "current_source_url": "https://github.com/AureliusWu/ImageLore/releases/tag/v1.0.0",
+      "latest_release": {
+        "version": "1.0.0",
+        "tag": "v1.0.0",
+        "url": "https://github.com/AureliusWu/ImageLore/releases/tag/v1.0.0",
+        "published_at": "2026-10-28T08:26:24Z",
+        "status": "正式版（带已知限制）",
+        "prerelease": false
+      }
+    },
+    {
+      "repo": "Rain",
+      "display_name": "雨停之前 / Before the Rain Stops",
+      "showcase": false,
+      "current_version": "1.7.0",
+      "current_source": "release",
+      "current_status": "正式版",
+      "current_source_url": "https://github.com/AureliusWu/Rain/releases/tag/v1.7.0",
+      "latest_release": {
+        "version": "1.7.0",
+        "tag": "v1.7.0",
+        "url": "https://github.com/AureliusWu/Rain/releases/tag/v1.7.0",
+        "published_at": "2026-10-24T12:40:51Z",
+        "status": "正式版",
+        "prerelease": false
+      }
+    },
+    {
+      "repo": "Healing",
+      "display_name": "湿性愈合",
+      "showcase": false,
+      "current_version": "1.5.4",
+      "current_source": "release",
+      "current_status": "正式版",
+      "current_source_url": "https://github.com/AureliusWu/Healing/releases/tag/v1.5.4",
+      "latest_release": {
+        "version": "1.5.4",
+        "tag": "v1.5.4",
+        "url": "https://github.com/AureliusWu/Healing/releases/tag/v1.5.4",
+        "published_at": "2026-10-25T06:12:11Z",
+        "status": "正式版",
+        "prerelease": false
+      }
+    },
+    {
+      "repo": "NetLove",
+      "display_name": "“网”恋 / NetLove",
+      "showcase": false,
+      "current_version": "1.1.1",
+      "current_source": "release",
+      "current_status": "正式版",
+      "current_source_url": "https://github.com/AureliusWu/NetLove/releases/tag/v1.1.1",
+      "latest_release": {
+        "version": "1.1.1",
+        "tag": "v1.1.1",
+        "url": "https://github.com/AureliusWu/NetLove/releases/tag/v1.1.1",
+        "published_at": "2026-10-25T01:11:05Z",
+        "status": "正式版",
+        "prerelease": false
+      }
+    },
+    {
+      "repo": "Circuit",
+      "display_name": "回路 / Circuit",
+      "showcase": false,
+      "current_version": "1.10.1",
+      "current_source": "release",
+      "current_status": "正式版",
+      "current_source_url": "https://github.com/AureliusWu/Circuit/releases/tag/v1.10.1",
+      "latest_release": {
+        "version": "1.10.1",
+        "tag": "v1.10.1",
+        "url": "https://github.com/AureliusWu/Circuit/releases/tag/v1.10.1",
+        "published_at": "2026-10-25T06:30:49Z",
+        "status": "正式版",
+        "prerelease": false
+      }
+    },
+    {
+      "repo": "Remotion",
+      "display_name": "Remotion",
+      "showcase": false,
+      "current_version": "1.0.0",
+      "current_source": "release",
+      "current_status": "正式版",
+      "current_source_url": "https://github.com/AureliusWu/Remotion/releases/tag/v1.0.0",
+      "latest_release": {
+        "version": "1.0.0",
+        "tag": "v1.0.0",
+        "url": "https://github.com/AureliusWu/Remotion/releases/tag/v1.0.0",
+        "published_at": "2026-10-30T01:36:18Z",
+        "status": "正式版",
+        "prerelease": false
+      }
+    },
+    {
+      "repo": "VN-Engine-v2",
+      "display_name": "VN Engine v2",
+      "showcase": false,
+      "current_version": "1.0.0",
+      "current_source": "release",
+      "current_status": "正式版",
+      "current_source_url": "https://github.com/AureliusWu/VN-Engine-v2/releases/tag/v1.0.0",
+      "latest_release": {
+        "version": "1.0.0",
+        "tag": "v1.0.0",
+        "url": "https://github.com/AureliusWu/VN-Engine-v2/releases/tag/v1.0.0",
+        "published_at": "2026-10-30T02:52:09Z",
+        "status": "正式版",
+        "prerelease": false
+      }
+    },
+    {
+      "repo": "RESET",
+      "display_name": "回留 / RESET",
+      "showcase": false,
+      "current_version": "1.3.1",
+      "current_source": "release",
+      "current_status": "正式版",
+      "current_source_url": "https://github.com/AureliusWu/RESET/releases/tag/v1.3.1",
+      "latest_release": {
+        "version": "1.3.1",
+        "tag": "v1.3.1",
+        "url": "https://github.com/AureliusWu/RESET/releases/tag/v1.3.1",
+        "published_at": "2026-10-30T08:32:52Z",
+        "status": "正式版",
+        "prerelease": false
+      }
+    }
+  ]
+}
