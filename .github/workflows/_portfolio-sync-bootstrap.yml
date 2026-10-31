@@ -64,6 +64,16 @@ jobs:
           if count != 1:
               raise SystemExit('inline style block not found exactly once')
 
+          text, icon_count = re.subn(
+              r'(<link\s+rel="icon"\s+type="image/svg\+xml"\s+href=")[^"]+("\s*/?>)',
+              r'\1favicon.svg\2',
+              text,
+              count=1,
+              flags=re.I,
+          )
+          if icon_count != 1:
+              raise SystemExit('inline favicon link not found exactly once')
+
           text = re.sub(r'<!--[\s\S]*?-->', '', text)
           text = re.sub(r'(?m)^[ \t]+', '', text)
           text = re.sub(r'\n[ \t]*\n+', '\n', text)
