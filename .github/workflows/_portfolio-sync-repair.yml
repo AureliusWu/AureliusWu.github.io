@@ -1,0 +1,80 @@
+name: Repair portfolio sync homepage budget
+
+on:
+  push:
+    branches: [chore/portfolio-sync-v1]
+    paths:
+      - .github/workflows/_portfolio-sync-repair.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Re-inline favicon and compact accessibility ids
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+
+          favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2317191f'/%3E%3Cpath d='M17 46 29 17h6l12 29h-7l-3-8H27l-3 8zm13-14h5l-2.5-7z' fill='white'/%3E%3C/svg%3E"
+          text, count = re.subn(
+              r'<link\s+rel="icon"(?:\s+type="image/svg\+xml")?\s+href="favicon\.svg"\s*/?>',
+              f'<link rel="icon" href="{favicon}">',
+              text,
+              count=1,
+              flags=re.I,
+          )
+          if count != 1:
+              raise SystemExit('external favicon link not found exactly once')
+
+          mapping = {
+              'preview-fundval': 'p1',
+              'preview-fund-compass': 'p2',
+              'preview-news': 'p3',
+              'preview-agent': 'p4',
+              'preview-imagelore': 'p5',
+          }
+          for old, new in mapping.items():
+              text = text.replace(f'aria-labelledby="{old}"', f'aria-labelledby="{new}"')
+              text = text.replace(f'id="{old}"', f'id="{new}"')
+
+          path.write_text(text, encoding='utf-8')
+          favicon_path = Path('favicon.svg')
+          if favicon_path.exists():
+              favicon_path.unlink()
+          PY
+
+      - name: Report homepage transfer budget
+        run: node -e "const fs=require('fs'),z=require('zlib');const n=z.gzipSync(fs.readFileSync('index.html')).length;console.log('index.html gzip bytes:',n);if(n>6656)process.exit(1)"
+
+      - name: Validate synchronized state
+        run: |
+          node scripts/check-portfolio-sync.mjs
+          node scripts/check-homepage.mjs
+
+      - name: Remove repair workflow
+        run: rm .github/workflows/_portfolio-sync-repair.yml
+
+      - name: Commit repair and cleanup
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A index.html favicon.svg .github/workflows/_portfolio-sync-repair.yml
+          git commit -m "fix(portfolio): preserve zero-request homepage budget"
+          git push
