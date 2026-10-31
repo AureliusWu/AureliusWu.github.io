@@ -31,7 +31,7 @@ jobs:
           path = Path('scripts/sync-projects.mjs')
           text = path.read_text(encoding='utf-8')
           replacement = '''function cardStatus(project, config) {
-            return `${config.cardType} · v${project.current_version}`;
+            return `v${project.current_version}`;
           }'''
           updated, count = re.subn(r'function cardStatus\(project, config\) \{[\s\S]*?\n\}', replacement, text, count=1)
           if count != 1:
