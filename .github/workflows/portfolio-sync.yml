@@ -1,0 +1,68 @@
+name: Sync portfolio projects
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: portfolio-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Sync project versions and statuses
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/sync-projects.mjs
+
+      - name: Validate synchronized metadata
+        run: node scripts/check-portfolio-sync.mjs
+
+      - name: Verify homepage structure
+        run: node scripts/check-homepage.mjs
+
+      - name: Detect changes
+        id: changes
+        shell: bash
+        run: |
+          if git diff --quiet -- README.md index.html data/projects.json demos/*.html; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install browser test tools
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          npm install --no-save --package-lock=false playwright@1.63.0
+          npx playwright install --with-deps chrome webkit
+          sudo apt-get install -y fonts-noto-cjk
+
+      - name: Check desktop and mobile UI
+        if: steps.changes.outputs.changed == 'true'
+        run: node scripts/check-browser.mjs
+
+      - name: Commit synchronized portfolio state
+        if: steps.changes.outputs.changed == 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md index.html data/projects.json demos/*.html
+          git commit -m "chore(portfolio): sync project versions"
+          git push
