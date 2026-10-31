@@ -44,7 +44,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/sync-projects.mjs
 
-      - name: Minify inline homepage CSS without changing content
+      - name: Compact homepage source without changing DOM content
         shell: bash
         run: |
           python - <<'PY'
@@ -53,17 +53,21 @@ jobs:
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
 
-          def minify(match):
+          def minify_style(match):
               attrs, css = match.group(1), match.group(2)
               css = re.sub(r'/\*[\s\S]*?\*/', '', css)
               css = re.sub(r'\s+', ' ', css)
               css = re.sub(r'\s*([{}:;,>])\s*', r'\1', css)
               return f'<style{attrs}>{css.strip()}</style>'
 
-          updated, count = re.subn(r'<style\b([^>]*)>([\s\S]*?)</style>', minify, text, count=1, flags=re.I)
+          text, count = re.subn(r'<style\b([^>]*)>([\s\S]*?)</style>', minify_style, text, count=1, flags=re.I)
           if count != 1:
               raise SystemExit('inline style block not found exactly once')
-          path.write_text(updated, encoding='utf-8')
+
+          text = re.sub(r'<!--[\s\S]*?-->', '', text)
+          text = re.sub(r'(?m)^[ \t]+', '', text)
+          text = re.sub(r'\n[ \t]*\n+', '\n', text)
+          path.write_text(text, encoding='utf-8')
           PY
 
       - name: Report homepage transfer budget
