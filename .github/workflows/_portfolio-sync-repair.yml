@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Re-inline compact favicon and compact accessibility ids
+      - name: Re-inline minimal favicon and compact accessibility ids
         shell: bash
         run: |
           python - <<'PY'
@@ -31,7 +31,7 @@ jobs:
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
 
-          favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M0 8 4 0l4 8H6L4 4 2 8z'/%3E%3C/svg%3E"
+          favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
           text, count = re.subn(
               r'<link\s+rel="icon"(?:\s+type="image/svg\+xml")?\s+href="favicon\.svg"\s*/?>',
               f'<link rel="icon" href="{favicon}">',
