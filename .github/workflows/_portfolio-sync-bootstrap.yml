@@ -44,6 +44,31 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/sync-projects.mjs
 
+      - name: Minify inline homepage CSS without changing content
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+
+          def minify(match):
+              attrs, css = match.group(1), match.group(2)
+              css = re.sub(r'/\*[\s\S]*?\*/', '', css)
+              css = re.sub(r'\s+', ' ', css)
+              css = re.sub(r'\s*([{}:;,>])\s*', r'\1', css)
+              return f'<style{attrs}>{css.strip()}</style>'
+
+          updated, count = re.subn(r'<style\b([^>]*)>([\s\S]*?)</style>', minify, text, count=1, flags=re.I)
+          if count != 1:
+              raise SystemExit('inline style block not found exactly once')
+          path.write_text(updated, encoding='utf-8')
+          PY
+
+      - name: Report homepage transfer budget
+        run: node -e "const fs=require('fs'),z=require('zlib');const n=z.gzipSync(fs.readFileSync('index.html')).length;console.log('index.html gzip bytes:',n)"
+
       - name: Validate synchronized state
         run: |
           node scripts/check-portfolio-sync.mjs
