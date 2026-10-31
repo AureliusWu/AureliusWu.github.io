@@ -14,13 +14,13 @@
 
 | 项目 | 形态 | 应用状态 | 入口与用途 | Demo |
 | --- | --- | --- | --- | --- |
-| 蜉蝣基金 / FundVal | 网页应用 | `15.0.2`；V16 未发行，真机验收边界保留 | [公开案例](demos/fundval.html)，[打开应用](https://aureliuswu.github.io/FundVal/)：基金盘中观察、本地 OCR 确认导入与行情隔离。 | [功能示意视频](demos/fundval.html) |
-| 司南基金 / fund-compass | 网页应用 | `8.0.0` 候选；正式耐久存储门禁未解除 | [公开案例](demos/fund-compass.html)，[打开应用](https://aureliuswu.github.io/fund-compass/)：筛选、评分、信号、回测与证据条件。 | [功能示意视频](demos/fund-compass.html) |
-| 全球新闻 / News | 网页应用 | `0.9.0-alpha.1` M5 候选 | [公开案例](demos/news.html)，[打开应用](https://aureliuswu.github.io/News/)：同代快照、事件聚合、多来源筛选与原文跳转；AI 摘要和翻译未启用。 | [功能示意视频](demos/news.html) |
-| 司忆 / Agent | 桌面项目 | `16.0.0` 开发候选；历史安装包为 `v8.0.1` | [公开案例](demos/agent.html)：持久任务、受控执行、按验收要求验证与限定返工；内置批量文件操作。 | [功能示意视频](demos/agent.html) |
-| ImageLore | 桌面项目 | `0.26.0`；无正式安装包 | [公开案例](demos/imagelore.html)：生成记忆、Visual DNA、Remix 多参考与 Reference Inbox，保留本地检索和生成谱系。 | [功能示意视频](demos/imagelore.html) |
+| 蜉蝣基金 / FundVal | 网页应用 | `16.0.1` 正式版（带已知限制） | [公开案例](demos/fundval.html)，[打开应用](https://aureliuswu.github.io/FundVal/)：基金盘中观察、本地 OCR 确认导入与行情隔离。 | [功能示意视频](demos/fundval.html) |
+| 司南基金 / fund-compass | 网页应用 | `8.0.0` 开发候选 | [公开案例](demos/fund-compass.html)，[打开应用](https://aureliuswu.github.io/fund-compass/)：筛选、评分、信号、回测与证据条件。 | [功能示意视频](demos/fund-compass.html) |
+| 全球新闻 / News | 网页应用 | `1.1.0` 正式版（带已知限制） | [公开案例](demos/news.html)，[打开应用](https://aureliuswu.github.io/News/)：同代快照、事件聚合、多来源筛选与原文跳转；AI 摘要和翻译未启用。 | [功能示意视频](demos/news.html) |
+| 司忆 / Agent | 桌面项目 | `16.0.1` 开发 / 用户测试基线；最新正式 Release `8.0.1` | [公开案例](demos/agent.html)：持久任务、受控执行、按验收要求验证与限定返工；内置批量文件操作。 | [功能示意视频](demos/agent.html) |
+| ImageLore | 桌面项目 | `1.0.0` 正式版（带已知限制） | [公开案例](demos/imagelore.html)：生成记忆、Visual DNA、Remix 多参考与 Reference Inbox，保留本地检索和生成谱系。 | [功能示意视频](demos/imagelore.html) |
 
-截至 2026-10-13，五个源码仓库均为公开：[Agent](https://github.com/AureliusWu/Agent)、[ImageLore](https://github.com/AureliusWu/ImageLore)、[FundVal](https://github.com/AureliusWu/FundVal)、[fund-compass](https://github.com/AureliusWu/fund-compass)、[News](https://github.com/AureliusWu/News)。源码可访问不代表当前版本有安装包、已正式发行或完成设备验收；司南私人 owner 数据与决策面板仍受鉴权限制。应用异常不应阻断公开案例和视频介绍。
+五个源码仓库均为公开：[Agent](https://github.com/AureliusWu/Agent)、[ImageLore](https://github.com/AureliusWu/ImageLore)、[FundVal](https://github.com/AureliusWu/FundVal)、[fund-compass](https://github.com/AureliusWu/fund-compass)、[News](https://github.com/AureliusWu/News)。源码可访问不代表当前版本有安装包、已正式发行或完成设备验收；司南私人 owner 数据与决策面板仍受鉴权限制。应用异常不应阻断公开案例和视频介绍。
 
 ## 技术
 
