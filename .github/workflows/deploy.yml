@@ -1,29 +1,42 @@
-name: Verify portfolio
+name: Verify and deploy portfolio
 
 on:
   push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
-  workflow_run:
-    workflows: ["pages build and deployment"]
-    types: [completed]
+    inputs:
+      expected_sha:
+        description: Exact main commit requested by Portfolio Sync
+        type: string
+        required: false
 
 permissions:
   contents: read
 
+concurrency:
+  group: portfolio-pages-${{ github.event_name == 'pull_request' && github.ref || 'main' }}
+  cancel-in-progress: false
+
 jobs:
   verify:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
+    - name: Check requested commit
+      if: inputs.expected_sha != ''
+      env:
+        EXPECTED_SHA: ${{ inputs.expected_sha }}
+      run: test "$EXPECTED_SHA" = "$GITHUB_SHA"
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
     - uses: actions/setup-node@v6
       with:
         node-version: '24'
     - name: Test repeated metadata synchronization
-      run: node --test scripts/project-card.test.mjs
+      run: node --test scripts/*.test.mjs
     - name: Verify portfolio sync consistency
       run: node scripts/check-portfolio-sync.mjs
     - name: Verify homepage and version
@@ -42,3 +55,43 @@ jobs:
         name: browser-report
         path: browser-report/
         retention-days: 7
+    - name: Prepare verified static site
+      if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+      run: |
+        mkdir _site
+        git archive HEAD -- index.html favicon.ico favicon.svg VERSION demos data | tar -x -C _site
+        printf '{"commit":"%s","version":"%s"}\n' "$GITHUB_SHA" "$(cat VERSION)" > _site/portfolio-build.json
+    - name: Upload Pages artifact
+      if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+      uses: actions/upload-pages-artifact@v4
+      with:
+        path: _site
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - name: Check main still points to the verified commit
+      env:
+        REPO_URL: ${{ github.server_url }}/${{ github.repository }}.git
+      run: test "$(git ls-remote "$REPO_URL" refs/heads/main | cut -f1)" = "$GITHUB_SHA"
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+    - name: Deploy verified site to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+    - name: Verify live commit and files
+      run: node scripts/check-deployed-homepage.mjs "$GITHUB_SHA"

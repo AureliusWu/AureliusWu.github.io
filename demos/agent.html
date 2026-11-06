@@ -22,9 +22,9 @@
       <h1>司忆</h1>
       <p class="summary">面向个人任务的 Windows AI 工作台，把任务拆解、工具执行、权限确认与结果验证连成可追溯的流程。</p>
       <p class="tech"><strong>技术栈</strong> · React · TypeScript · Tauri 2 · Rust · FastAPI · SQLite</p>
-      <p class="access project-status"><strong>当前版本 v17.0.1</strong> · 开发 / 用户测试基线；最新正式 Release 为 <a href="https://github.com/AureliusWu/Agent/releases/tag/v17.0.0">v17.0.0</a> · <a href="https://github.com/AureliusWu/Agent/blob/main/README.md">版本来源 ↗</a></p>
-      <div class="actions"><a class="primary" href="https://github.com/AureliusWu/Agent/releases/tag/v17.0.0">查看 Windows 发布 ↗</a><a class="secondary" href="#demo">观看 Demo ↓</a><a class="secondary" href="https://github.com/AureliusWu/Agent">查看源码 ↗</a></div>
-      <p class="access">源码仓库公开，无需登录即可查看。核验日期：2026-11-06；<a href="https://github.com/AureliusWu/Agent/blob/585d3b94ae424aa562ca3073effc178073a12b83/README.md">主线 585d3b94</a> 是 v17.0.1 补丁候选，当前可下载的正式版是 <a href="https://github.com/AureliusWu/Agent/commit/d447ccd33acb8c71c1b3037008c7463f136a4c2b">d447ccd3</a> 构建的 v17.0.0。</p>
+      <p class="access project-status"><strong>开发候选</strong> <a href="https://github.com/AureliusWu/Agent/blob/main/README.md">v17.0.1</a> · <strong>正式发布（带已知限制）</strong> <a href="https://github.com/AureliusWu/Agent/releases/tag/v17.0.0">v17.0.0</a></p>
+      <div class="actions"><a class="primary" data-release-link href="https://github.com/AureliusWu/Agent/releases/tag/v17.0.0">查看 Windows 发布 ↗</a><a class="secondary" href="#demo">观看 Demo ↓</a><a class="secondary" href="https://github.com/AureliusWu/Agent">查看源码 ↗</a></div>
+      <p class="access">源码仓库公开，无需登录即可查看。源码候选和公开安装包按各自来源列在上方；下文介绍项目的工作流程。</p>
       <div class="case-overview">
         <section class="panel" aria-label="项目背景"><h2>解决的问题</h2><p>聊天给出的建议还需要人去执行；任务一长，进度、文件变化和完成依据容易分散。希望在一个工作台里继续任务、查看过程并核对结果。</p></section>
         <section class="panel" aria-label="项目工作"><h2>我做的工作</h2><p>围绕任务入口、工作区选择、授权与执行反馈梳理交互；结合 AI 辅助开发，迭代桌面界面、工具能力和验收流程。</p></section>
@@ -48,8 +48,7 @@
           <li>可选的音频文件转写和文字合成音频，使用独立语音服务配置。</li>
         </ul>
         <p class="boundary">桌面程序在 Windows 本机运行。普通聊天不需要工作区，读写文件须主动选择目录；模型和远程 MCP 需要自行配置。文件式语音默认关闭，须单独配置并明确批准调用。</p>
-        <p class="access">v17.0.0 提供 Windows x64 的 EXE 和 MSI，任选其一。两包均未签名，请从发布页下载并校验 SHA-256，升级前备份数据。该版本通过干净 Windows 环境的安装、升级数据保留、卸载和重装预检，以版本例外正式发布；常规最终发布门禁及桌面模型、文件操作、麦克风等实机签收仍未完成。详见 <a href="https://github.com/AureliusWu/Agent/releases/tag/v17.0.0">发布说明与验收范围</a>。</p>
-        <p class="access">v17.0.1 源码补丁增加无工作区对话首次请求失败后的手动继续，并修正切换项目与个人记忆时的显示隔离；<a href="https://github.com/AureliusWu/Agent/blob/585d3b94ae424aa562ca3073effc178073a12b83/docs/17.0.1/RELEASE_STATUS.json">尚未正式发行</a>。<a href="https://github.com/AureliusWu/Agent/blob/585d3b94ae424aa562ca3073effc178073a12b83/docs/17.0.1/RELEASE_NOTES.md">补丁说明</a>。</p>
+        <p class="access">请通过上方正式发布入口核对安装包、签名和该版本的验收范围。升级前备份数据；开发候选的功能和测试记录不用于判断已发布安装包的验收结果。</p>
       </section>
       <section class="demo" id="demo" aria-labelledby="demo-title">
         <h2 id="demo-title">15 秒功能示意</h2>

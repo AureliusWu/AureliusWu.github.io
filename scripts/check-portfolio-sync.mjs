@@ -1,73 +1,69 @@
 import { readFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { configs, owner, projectPages, releaseUrl, snapshot, versionOf } from './project-card.mjs';
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const read = (name) => readFileSync(resolve(root, name), 'utf8');
+const read = name => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8');
 const data = JSON.parse(read('data/projects.json'));
 const failures = [];
+const check = (condition, message) => { if (!condition) failures.push(message); };
 
-function check(condition, message) {
-  if (!condition) failures.push(message);
-}
+check(data.schema_version === 2, 'data/projects.json schema_version must be 2');
+check(data.owner === owner, `data/projects.json owner must be ${owner}`);
+check(Array.isArray(data.projects), 'data/projects.json projects must be an array');
+const projectRecords = Array.isArray(data.projects) ? data.projects : [];
+const settings = new Map(configs.map(config => [config.repo, config]));
+const seen = new Set();
 
-check(data?.schema_version === 1, 'data/projects.json schema_version must be 1');
-check(data?.owner === 'AureliusWu', 'data/projects.json owner must be AureliusWu');
-check(Array.isArray(data?.projects), 'data/projects.json projects must be an array');
-
-const repos = new Set();
-for (const project of data.projects ?? []) {
-  check(Boolean(project.repo), 'project repo is required');
-  check(!repos.has(project.repo), `duplicate project: ${project.repo}`);
-  repos.add(project.repo);
-  check(/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(project.current_version ?? ''),
-    `${project.repo}: current_version is not semantic`);
-  check(['release', 'readme'].includes(project.current_source), `${project.repo}: invalid current_source`);
-  check(Boolean(project.current_status), `${project.repo}: current_status is required`);
-  if (project.latest_release) {
-    check(/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(project.latest_release.version ?? ''),
-      `${project.repo}: latest_release.version is not semantic`);
-    check(/^https:\/\/github\.com\/AureliusWu\//.test(project.latest_release.url ?? ''),
-      `${project.repo}: latest_release.url must point to AureliusWu GitHub`);
+for (const project of projectRecords) {
+  const repo = project?.repo;
+  const config = settings.get(repo);
+  check(Boolean(config), `unexpected project: ${repo}`);
+  check(!seen.has(repo), `duplicate project: ${repo}`);
+  seen.add(repo);
+  if (!config) continue;
+  check(project.showcase === Boolean(config.demo), `${repo}: wrong showcase setting`);
+  check(project.display_name === config.displayName, `${repo}: wrong display name`);
+  const { development, latest_release: formal, latest_prerelease: preview } = project;
+  for (const key of ['development', 'latest_release', 'latest_prerelease']) {
+    check(project[key] !== undefined, `${repo}: missing ${key} evidence field`);
+  }
+  if (development) {
+    check(Boolean(config.readme || config.readmeFallback || (config.demo && development.status === '开发候选')),
+      `${repo}: undeclared README policy`);
+    check(versionOf(development.version) === development.version, `${repo}: invalid source version`);
+    check(['源码版本', '开发候选'].includes(development.status), `${repo}: invalid source status`);
+    check(development.url === `https://github.com/${owner}/${repo}/blob/main/README.md`, `${repo}: invalid README URL`);
+  }
+  if (config.readme) check(Boolean(development), `${repo}: declared README evidence missing`);
+  for (const [record, expectedPreview] of [[formal, false], [preview, true]]) {
+    if (!record) continue;
+    check(record.draft === false && record.prerelease === expectedPreview, `${repo}: wrong release classification`);
+    check(versionOf(record.tag) !== null && versionOf(record.tag) === record.version, `${repo}: invalid release version`);
+    check(record.url === releaseUrl(repo, record.tag), `${repo}: invalid release URL`);
+    check(Number.isFinite(Date.parse(record.published_at)), `${repo}: invalid publication date`);
+    const allowed = expectedPreview ? ['预发布'] : ['正式发布', '正式发布（带已知限制）'];
+    check(allowed.includes(record.status), `${repo}: invalid release status`);
+  }
+  if (formal && preview) check(Date.parse(preview.published_at) > Date.parse(formal.published_at), `${repo}: stale preview shown beside formal release`);
+  if (!development && !formal && !preview) {
+    check(false, `${repo}: no verifiable project version`);
+    continue;
+  }
+  const expected = snapshot(config, development, formal, preview);
+  for (const key of ['current_version', 'current_source', 'current_status', 'current_source_url']) {
+    check(project[key] === expected[key], `${repo}: ${key} disagrees with evidence`);
   }
 }
 
-const showcase = (data.projects ?? []).filter((project) => project.showcase);
-check(showcase.length === 5, `expected 5 showcase projects, got ${showcase.length}`);
-const expectedShowcase = ['FundVal', 'fund-compass', 'News', 'Agent', 'ImageLore'];
-for (const repo of expectedShowcase) check(showcase.some((project) => project.repo === repo), `missing showcase project: ${repo}`);
-
-const readme = read('README.md');
-const index = read('index.html');
-const demos = {
-  FundVal: read('demos/fundval.html'),
-  'fund-compass': read('demos/fund-compass.html'),
-  News: read('demos/news.html'),
-  Agent: read('demos/agent.html'),
-  ImageLore: read('demos/imagelore.html'),
-};
-
-for (const project of showcase) {
-  check(readme.includes(`\`${project.current_version}\``),
-    `${project.repo}: README does not expose current version ${project.current_version}`);
-
-  const marker = `data-project="${project.repo}"`;
-  const markerAt = index.indexOf(marker);
-  check(markerAt >= 0, `${project.repo}: index project card missing`);
-  if (markerAt >= 0) {
-    const start = index.lastIndexOf('<a', markerAt);
-    const end = index.indexOf('</a>', markerAt);
-    const card = start >= 0 && end >= 0 ? index.slice(start, end + 4) : '';
-    check(card.includes(`v${project.current_version}`),
-      `${project.repo}: index card does not expose v${project.current_version}`);
-  }
-
-  const demo = demos[project.repo];
-  check(Boolean(demo), `${project.repo}: demo page mapping missing`);
-  if (demo) {
-    check(/class="access project-status"/.test(demo), `${project.repo}: demo project-status missing`);
-    check(demo.includes(`v${project.current_version}`),
-      `${project.repo}: demo does not expose v${project.current_version}`);
+for (const config of configs.filter(item => item.demo)) {
+  check(seen.has(config.repo), `missing showcase project: ${config.repo}`);
+}
+if (failures.length === 0) {
+  try {
+    for (const [path, expected] of projectPages(projectRecords, read)) {
+      check(expected === read(path), `${path}: generated project versions or release links differ from data/projects.json`);
+    }
+  } catch (error) {
+    failures.push(error.message);
   }
 }
 
@@ -76,5 +72,4 @@ if (failures.length) {
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
-
-console.log(`Portfolio sync validation passed: ${data.projects.length} tracked, ${showcase.length} showcased.`);
+console.log(`Portfolio sync validation passed: ${projectRecords.length} tracked, ${projectRecords.filter(project => project.showcase).length} showcased.`);

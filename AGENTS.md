@@ -40,7 +40,7 @@
 - 视频使用单段不超过 1 MiB 的 H.264 MP4、fast-start 和中文字幕；播放页使用 `controls playsinline preload="none"`，不自动播放。主页不加载视频资源。
 - SVG 预览使用 `preview-image` 类、`role="img"` 及非空 `title`，保证键盘与辅助技术可使用。
 - 发布前通过静态门禁并在浏览器验证布局、标题/预览/Demo 跳转、键盘焦点和视频播放。
-- 首页 HTML 不超过 24 KiB，gzip 不超过 6.5 KB；不加载脚本、外部字体或视频。性能结论应区分文档体积和外部网络连接耗时。
+- 首页 HTML 不超过 24 KiB，gzip 不超过 6.5 KB；首屏只允许加载同源 SVG / ICO 站点图标，不加载脚本、外部字体或视频。性能结论应区分文档体积和外部网络连接耗时。
 
 ## 版本管理
 
@@ -48,7 +48,8 @@
 - 同步维护 `VERSION`、HTML 的 `meta[name="application-version"]` 和可见 `span#site-version`；前两处使用裸版本号，后者带 `v` 前缀。
 - 每次发布更新 `CHANGELOG.md` 与 `README.md`，验收后使用同版本 Git 标签。
 - 主页版本不代表所链接应用的版本，不在入口中硬编码未经核实的应用版本。
-- 卡片、案例版本段与 README 项目状态由 Portfolio Sync 根据 `data/projects.json` 同步；更新时使用同步器。案例正文与发行依据须独立核实，避免自动同步后的新版本标识和旧正文互相矛盾。
+- Portfolio Sync 使用公开来源同时生成 `data/projects.json`、卡片、案例版本段、正式发布入口和 README 项目状态；更新时使用同步器。案例正文描述已核对的能力，具体版本与验收限制放在生成区域或带固定来源的历史资料中。
+- GitHub Pages 发布源为 GitHub Actions。普通 `main` 推送与定时同步走同一个显式部署工作流；验证线上 `portfolio-build.json` 与精确文件内容。
 
 ## 项目映射
 

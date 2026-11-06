@@ -22,9 +22,9 @@
       <h1>ImageLore</h1>
       <p class="summary">本地优先的 AI 创作记忆库，将已生成图片与提示词、模型参数、参考来源和版本谱系关联，帮助找回、比较并复用创作过程。</p>
       <p class="tech"><strong>技术栈</strong> · React · TypeScript · Tauri 2 · Rust · SQLite · 本地 CLIP</p>
-      <p class="access project-status"><strong>当前版本 v1.0.0</strong> · 正式版（带已知限制） · <a href="https://github.com/AureliusWu/ImageLore/releases/tag/v1.0.0">版本来源 ↗</a></p>
-      <div class="actions"><a class="primary" href="https://github.com/AureliusWu/ImageLore/releases/tag/v1.0.0">查看 Windows 发布 ↗</a><a class="secondary" href="#demo">观看 Demo ↓</a><a class="secondary" href="https://github.com/AureliusWu/ImageLore">查看源码 ↗</a></div>
-      <p class="access">源码仓库公开，无需登录即可查看。核验日期：2026-11-06；<a href="https://github.com/AureliusWu/ImageLore/blob/8f2e027b238a4196bca145a609c86ea84dbcca45/README.md">主线 8f2e027b</a> 继续维护 v1.0.0；公开安装包来自 <a href="https://github.com/AureliusWu/ImageLore/commit/d2cfc67ea402969b28c1ea1bba0a9148583cc696">d2cfc67e</a>，详见<a href="https://github.com/AureliusWu/ImageLore/releases/download/v1.0.0/release-manifest.json">发布清单</a>。</p>
+      <p class="access project-status"><strong>正式发布（带已知限制）</strong> <a href="https://github.com/AureliusWu/ImageLore/releases/tag/v1.0.0">v1.0.0</a></p>
+      <div class="actions"><a class="primary" data-release-link href="https://github.com/AureliusWu/ImageLore/releases/tag/v1.0.0">查看 Windows 发布 ↗</a><a class="secondary" href="#demo">观看 Demo ↓</a><a class="secondary" href="https://github.com/AureliusWu/ImageLore">查看源码 ↗</a></div>
+      <p class="access">源码仓库公开，无需登录即可查看。发行说明列有对应的安装包、构建来源和使用限制。</p>
       <div class="case-overview">
         <section class="panel" aria-label="项目背景"><h2>解决的问题</h2><p>图片越存越多，文件名很难回答“怎么生成的、改过什么、参考了哪张图”。把生成记录留在图片旁边，才能继续利用过去的创作。</p></section>
         <section class="panel" aria-label="项目工作"><h2>我做的工作</h2><p>从导入、记录、检索到参考素材复用设计创作管理流程；结合 AI 辅助开发，迭代中文界面、元数据适配、语义召回、版本谱系和回归检查。</p></section>
@@ -49,7 +49,7 @@
           <li>本地数据库自动备份、故障恢复和缺失文件重定位。</li>
         </ul>
         <p class="boundary">图片由外部工具生成。首次本地语义检索需要下载模型；图像转提示词须配置视觉服务，所选图片会发送至该服务。浏览器扩展目前按开发模式加载。原图不复制进数据库，删除记录不会删除原图；元数据备份不包含原图，图片文件须另行备份。</p>
-        <p class="access">v1.0.0 带已知限制正式发布，提供 Windows x64 安装包。应用与安装器未签名，更新需手动下载安装；建议核对发布页的 SHA-256，升级前关闭应用并备份资料库。发布验证覆盖两个旧版本的数据回读与覆盖升级，完整用户机流程、性能、长时间运行及离线验收仍未全部完成。详见 <a href="https://github.com/AureliusWu/ImageLore/releases/tag/v1.0.0">发布说明与验收范围</a>。</p>
+        <p class="access">安装或升级前，先查看上方发行说明的系统要求、签名和验收范围。升级前关闭应用，并分别备份资料库和原图。</p>
       </section>
       <section class="demo" id="demo" aria-labelledby="demo-title">
         <h2 id="demo-title">15 秒功能示意</h2>

@@ -228,6 +228,19 @@ check(tags('script').length === 0, '主页不应加载或执行 JavaScript。');
 check(Buffer.byteLength(html) <= 24 * 1024, '首页 HTML 应保持在 24 KiB 内。');
 check(gzipSync(html).length <= 6500, '首页压缩传输应保持在 6.5 KB 内。');
 check(tags('video|source').length === 0, '主页不得预加载 Demo 视频。');
+const faviconLinks = tags('link').filter((tag) => (tag.rel ?? '').toLowerCase().split(/\s+/).includes('icon'));
+const faviconAssets = [
+  ['/favicon.ico', 'image/x-icon', '16x16 32x32 48x48', 4096],
+  ['/favicon.svg', 'image/svg+xml', 'any', 1024],
+];
+check(faviconLinks.length === faviconAssets.length, '主页只应声明 ICO 与 SVG 两个站点图标。');
+for (const [href, type, sizes, budget] of faviconAssets) {
+  check(faviconLinks.some((tag) => tag.href === href && tag.type === type && tag.sizes === sizes),
+    `缺少站点图标或格式声明不正确：${href}`);
+  const path = resolve(root, href.slice(1));
+  const size = existsSync(path) && statSync(path).isFile() ? statSync(path).size : 0;
+  check(size > 0 && size <= budget, `站点图标必须存在且不超过 ${budget} 字节：${href}`);
+}
 check(tags('link').every((tag) => !(tag.rel ?? '').toLowerCase().split(/\s+/).includes('stylesheet')),
   'CSS 必须内联，不得依赖外部样式文件。');
 check(!/@import\s/i.test(html), '不得通过 @import 引入外部 CSS。');

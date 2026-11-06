@@ -9,7 +9,7 @@ import { chromium, webkit, devices } from 'playwright';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const output = resolve(root, 'browser-report');
 const catalog = JSON.parse(readFileSync(resolve(root, 'demos/catalog.json'), 'utf8'));
-const mime = { '.html': 'text/html; charset=utf-8', '.svg': 'image/svg+xml', '.mp4': 'video/mp4', '.vtt': 'text/vtt; charset=utf-8' };
+const mime = { '.html': 'text/html; charset=utf-8', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.mp4': 'video/mp4', '.vtt': 'text/vtt; charset=utf-8' };
 const report = { layouts: [], interactions: [], htmlBytes: statSync(resolve(root, 'index.html')).size, gzipBytes: gzipSync(readFileSync(resolve(root, 'index.html'))).length };
 mkdirSync(output, { recursive: true });
 
@@ -36,6 +36,7 @@ const server = createServer((req, res) => {
 });
 await new Promise(done => server.listen(0, '127.0.0.1', done));
 const base = `http://127.0.0.1:${server.address().port}`;
+const faviconUrls = new Set([`${base}/favicon.ico`, `${base}/favicon.svg`]);
 const browsers = [];
 
 async function layout(page, name) {
@@ -61,10 +62,10 @@ async function layout(page, name) {
   if (metrics.width >= 1366 && metrics.height >= 768) {
     assert(metrics.pageHeight <= metrics.height, `${name}: desktop overview must fit one screen`);
   }
-  assert.equal(metrics.resources.length, 0, `${name}: homepage should only request its document`);
+  assert(metrics.resources.every(url => faviconUrls.has(url)), `${name}: unexpected initial resources: ${metrics.resources.join(', ')}`);
   await page.screenshot({ path: resolve(output, `${name}.png`), fullPage: true });
   report.layouts.push({ name, ...metrics });
-  console.log(`${name}: no overflow, five accessible 44px Demo buttons, no extra initial requests`);
+  console.log(`${name}: no overflow, five accessible 44px Demo buttons, no initial resources other than site icons`);
 }
 
 async function interactions(context, name, playback = false) {

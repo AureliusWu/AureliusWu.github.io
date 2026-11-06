@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: portfolio-sync
@@ -14,6 +15,7 @@ concurrency:
 
 jobs:
   sync:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -26,7 +28,7 @@ jobs:
           node-version: '24'
 
       - name: Test repeated metadata synchronization
-        run: node --test scripts/project-card.test.mjs
+        run: node --test scripts/*.test.mjs
 
       - name: Sync project versions and statuses
         env:
@@ -68,4 +70,23 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md index.html data/projects.json demos/*.html
           git commit -m "chore(portfolio): sync project versions"
-          git push
+          git push origin HEAD:main
+
+      - name: Deploy synchronized commit or recover an unpublished one
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          sha=$(git rev-parse HEAD)
+          remote_sha=$(git ls-remote origin refs/heads/main | cut -f1)
+          if [ "$sha" != "$remote_sha" ]; then
+            echo 'Main changed during synchronization; the newer commit takes precedence.'
+            exit 0
+          fi
+          deployed=$({ curl -fsS --retry 1 --max-time 10 "https://aureliuswu.github.io/portfolio-build.json?sha=$sha" || true; } \
+            | node -e 'try { console.log(JSON.parse(require("node:fs").readFileSync(0, "utf8")).commit ?? "") } catch {}')
+          if [ "$deployed" = "$sha" ]; then
+            echo 'This commit is already live.'
+            exit 0
+          fi
+          gh workflow run deploy.yml --ref main -f "expected_sha=$sha"
