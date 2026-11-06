@@ -59,7 +59,7 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
       run: |
         mkdir _site
-        git archive HEAD -- index.html favicon.ico favicon.svg VERSION demos data | tar -x -C _site
+        git archive HEAD -- index.html repositories.html favicon.ico favicon.svg VERSION demos data | tar -x -C _site
         printf '{"commit":"%s","version":"%s"}\n' "$GITHUB_SHA" "$(cat VERSION)" > _site/portfolio-build.json
     - name: Upload Pages artifact
       if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

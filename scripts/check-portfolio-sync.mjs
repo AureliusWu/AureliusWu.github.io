@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { configs, owner, projectPages, releaseUrl, snapshot, versionOf } from './project-card.mjs';
+import { normalizePublicRepositories, renderRepositoriesPage, updateRepositoryLink } from './public-repositories.mjs';
 
 const read = name => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8');
 const data = JSON.parse(read('data/projects.json'));
@@ -56,6 +57,18 @@ for (const project of projectRecords) {
 
 for (const config of configs.filter(item => item.demo)) {
   check(seen.has(config.repo), `missing showcase project: ${config.repo}`);
+}
+try {
+  const { owner: directoryOwner, repositories } = JSON.parse(read('data/repositories.json'));
+  check(directoryOwner === owner, `data/repositories.json owner must be ${owner}`);
+  const canonical = normalizePublicRepositories(owner, repositories.map(name => ({ name, owner: { login: owner }, private: false })));
+  check(JSON.stringify(repositories) === JSON.stringify(canonical), 'data/repositories.json names must be valid, unique and sorted');
+  const index = read('index.html');
+  check(updateRepositoryLink(index, canonical) === index, 'Homepage repository count differs from the public directory');
+  check(renderRepositoriesPage(owner, canonical) === read('repositories.html').replaceAll('\r\n', '\n'),
+    'Generated public repository directory differs from its inventory');
+} catch (error) {
+  failures.push(`Public repository directory: ${error.message}`);
 }
 if (failures.length === 0) {
   try {

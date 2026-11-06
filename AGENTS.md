@@ -36,6 +36,7 @@
 - 每个项目使用单个 `a.project-card` 包裹标题和预览，标题为 `h2`；禁止嵌套链接。`data-project` 使用下方仓库名。
 - `article.project-item` 包裹项目卡片与并列的 `a.demo-link`，Demo 按钮不可放进项目链接内。
 - 所有卡片先进入公开案例页；Demo 按钮进入该页的 `#demo` 区域。三个 Web 应用入口放在案例页，外部应用暂时不可用不应阻断项目介绍。
+- 首页保留八个固定应用入口；公开仓库清单和首页计数由同步器生成。完整列表置于 `repositories.html`，数量变化不应影响桌面一屏布局。
 - Demo 为明确标注的功能示意视频，非实际操作录屏；不使用真实持仓、私有任务或用户图片数据。
 - 视频使用单段不超过 1 MiB 的 H.264 MP4、fast-start 和中文字幕；播放页使用 `controls playsinline preload="none"`，不自动播放。主页不加载视频资源。
 - SVG 预览使用 `preview-image` 类、`role="img"` 及非空 `title`，保证键盘与辅助技术可使用。

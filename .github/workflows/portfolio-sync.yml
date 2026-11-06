@@ -30,7 +30,7 @@ jobs:
       - name: Test repeated metadata synchronization
         run: node --test scripts/*.test.mjs
 
-      - name: Sync project versions and statuses
+      - name: Sync project versions and public repositories
         env:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/sync-projects.mjs
@@ -45,7 +45,7 @@ jobs:
         id: changes
         shell: bash
         run: |
-          if git diff --quiet -- README.md index.html data/projects.json demos/*.html; then
+          if [ -z "$(git status --porcelain --untracked-files=all -- README.md index.html repositories.html data/projects.json data/repositories.json demos/*.html)" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -68,8 +68,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md index.html data/projects.json demos/*.html
-          git commit -m "chore(portfolio): sync project versions"
+          git add README.md index.html repositories.html data/projects.json data/repositories.json demos/*.html
+          git commit -m "chore(portfolio): sync project versions and public repositories"
           git push origin HEAD:main
 
       - name: Deploy synchronized commit or recover an unpublished one

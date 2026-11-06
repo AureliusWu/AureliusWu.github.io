@@ -34,7 +34,7 @@ for (let attempt = 0; attempt < 12; attempt++) {
 }
 if (lastError) throw lastError;
 
-const files = ['index.html', 'favicon.svg', 'favicon.ico', 'data/projects.json',
+const files = ['index.html', 'repositories.html', 'favicon.svg', 'favicon.ico', 'data/projects.json', 'data/repositories.json',
   ...catalog.flatMap(({ slug }) => [`demos/${slug}.html`, `demos/media/${slug}.mp4`])];
 await Promise.all(files.map(async (file) => {
   const actual = await fetchFile(file === 'index.html' ? '' : file);

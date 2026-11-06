@@ -68,6 +68,39 @@ async function layout(page, name) {
   console.log(`${name}: no overflow, five accessible 44px Demo buttons, no initial resources other than site icons`);
 }
 
+async function repositoryDirectory(page) {
+  await page.goto(base);
+  const pagesOrigin = 'https://aureliuswu.github.io/';
+  const appLinks = page.locator(`footer a[href^="${pagesOrigin}"]`);
+  const expectedApps = ['FundVal', 'fund-compass', 'News', 'Rain', 'Healing', 'NetLove', 'Circuit', 'RESET'];
+  const actualApps = await appLinks.evaluateAll(links => links.map(link => link.href));
+  assert.deepEqual(actualApps.sort(), expectedApps.map(name => `${pagesOrigin}${name}/`).sort(),
+    'homepage must retain its direct Pages application links');
+
+  const entry = page.locator('footer a[data-public-repositories]');
+  assert.equal(await entry.count(), 1, 'homepage must expose one public repository directory link');
+  assert.equal(await entry.getAttribute('href'), 'repositories.html');
+  const counts = (await entry.innerText()).match(/\d+/g) ?? [];
+  assert.equal(counts.length, 1, 'directory link must display the number of public repositories');
+  const count = Number(counts[0]);
+
+  await Promise.all([page.waitForURL(`${base}/repositories.html`), entry.click()]);
+  assert.equal(await page.getByRole('heading', { level: 1, name: '公开仓库', exact: true }).count(), 1);
+  const repositories = page.locator('main a[href^="https://github.com/AureliusWu/" i]');
+  const links = await repositories.evaluateAll(anchors => anchors.map(anchor => anchor.href));
+  assert.equal(links.length, count, 'homepage count must equal the directory repository count');
+  assert.equal(await repositories.filter({ visible: true }).count(), count, 'repository links must be visible');
+  assert(links.every(url => /^https:\/\/github\.com\/AureliusWu\/[\w.-]+$/i.test(url)),
+    'directory links must point to the owner’s repository roots');
+  assert.equal(new Set(links.map(url => url.toLowerCase())).size, count, 'directory must not repeat a repository');
+
+  const back = page.locator('a[href="index.html"]:visible').first();
+  await Promise.all([page.waitForURL(`${base}/index.html`), back.click()]);
+  assert.equal(await entry.count(), 1, 'return link must land on the homepage');
+  report.repositoryDirectory = { repositoryCount: count, pagesLinks: actualApps.length, navigation: true, back: true };
+  console.log(`repository directory: ${count} visible GitHub repositories, ${actualApps.length} direct Pages links, navigation and return passed`);
+}
+
 async function interactions(context, name, playback = false) {
   const page = await context.newPage();
   // Verify the three outgoing URLs without depending on the applications' availability in CI.
@@ -161,6 +194,7 @@ try {
     skipPage.keyboard.press('Enter'),
   ]);
   await skipPage.close();
+  await repositoryDirectory(page);
   await interactions(desktop, 'desktop', true);
   const android = await chrome.newContext({ ...devices['Pixel 5'] });
   const phonePage = await android.newPage();
