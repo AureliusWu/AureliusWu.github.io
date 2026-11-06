@@ -152,8 +152,15 @@ try {
   }
   assert.equal(focused.filter(f => f.demo).length, 5);
   report.keyboardLinks = homeLinkCount;
-  await page.goto(base); await page.keyboard.press('Tab'); await page.keyboard.press('Enter');
-  assert.equal(new URL(page.url()).hash, '#projects');
+  const skipPage = await desktop.newPage();
+  await skipPage.goto(base);
+  await skipPage.keyboard.press('Tab');
+  await skipPage.waitForFunction(() => document.activeElement.matches('a.skip-link[href="#projects"]'));
+  await Promise.all([
+    skipPage.waitForURL(url => url.hash === '#projects'),
+    skipPage.keyboard.press('Enter'),
+  ]);
+  await skipPage.close();
   await interactions(desktop, 'desktop', true);
   const android = await chrome.newContext({ ...devices['Pixel 5'] });
   const phonePage = await android.newPage();

@@ -78,7 +78,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || 'https://aureliuswu.github.io/' }}
     steps:
     - name: Check main still points to the verified commit
       env:
@@ -90,7 +90,19 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version: '24'
+    - name: Detect an already published dispatch
+      if: inputs.expected_sha != ''
+      id: already-live
+      shell: bash
+      run: |
+        deployed=$({ curl -fsS --retry 1 --max-time 10 "https://aureliuswu.github.io/portfolio-build.json?sha=$GITHUB_SHA" || true; } \
+          | node -e 'try { console.log(JSON.parse(require("node:fs").readFileSync(0, "utf8")).commit ?? "") } catch {}')
+        if [ "$deployed" = "$GITHUB_SHA" ]; then
+          echo 'This commit became live while waiting; verify its files without redeploying.'
+          echo 'skip=true' >> "$GITHUB_OUTPUT"
+        fi
     - name: Deploy verified site to GitHub Pages
+      if: steps.already-live.outputs.skip != 'true'
       id: deployment
       uses: actions/deploy-pages@v4
     - name: Verify live commit and files
