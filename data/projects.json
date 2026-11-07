@@ -84,11 +84,11 @@
         "url": "https://github.com/AureliusWu/Agent/blob/main/README.md"
       },
       "latest_release": {
-        "version": "17.0.0",
-        "tag": "v17.0.0",
-        "url": "https://github.com/AureliusWu/Agent/releases/tag/v17.0.0",
-        "published_at": "2026-11-06T10:06:59Z",
-        "status": "正式发布（带已知限制）",
+        "version": "17.0.2",
+        "tag": "v17.0.2",
+        "url": "https://github.com/AureliusWu/Agent/releases/tag/v17.0.2",
+        "published_at": "2026-11-07T01:13:01Z",
+        "status": "正式发布",
         "draft": false,
         "prerelease": false
       },
